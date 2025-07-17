@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<style>
+			#outputParent {
+				position: relative;
+				margin: 20px auto;
+				width: 100px;
+				height: 70px;
+				background-color: #aef;
+			}
+
+			#output {
+				position: absolute;
+				left: 0;
+				display: inline-block;
+				background-color: #f006;
+				height: 70px;
+				font-size: 70px;
+				transform-origin: left center;
+				align-items: center;
+			}
+			#outputSpan {
+				display: inline-block;
+				background-color: #0f02;
+				white-space: nowrap;
+				translate: 0 -20%;
+				
+			}
+		</style>
+	</head>
+  <body id="body" style="text-align: center;">
+		元<input type="number" step="any" id="amount" value="10"><br>
+		回数<input type="number" step="any" id="times" value="3"><br>
+		倍率<input type="number" step="any" id="mulval" value="2"><br>
+		<label>Is this a Big Int Number?<input type="checkbox" id="isInputBig"></label><br>
+		<button onclick="
+			try {
+				if(el('isInputBig').checked) {
+					alert(amountCalc(BigInt(Math.trunc(elVal('amount'))),elVal('times'),elVal('mulval')));
+				} else {
+					alert(amountCalc(elVal('amount'), elVal('times'),elVal('mulval')));
+				};
+			}catch(error) {alert(`${error.name}\n${error.stack}`)};
+		">Start</button>
+		<script>
+			function el(id) {return document.getElementById(id)};
+			function elVal(id) {return el(id).value};
+			const mode = null;
+			function amountCalc(amount, times, mulVal) { // mulVal -> multplay Value
+				let result = typeof amount === "bigint" ? 0n : 0;
+				let decimalLength = String(mulVal).split(".")[1] ? String(mulVal).split(".")[1].length : 0; // 小数点の位置
+				alert(decimalLength);
+				for(let i=0;i<times;i++) {
+					if(String(mulVal).includes(".")) {
+						if(typeof amount === "bigint") {
+							result += (amount * BigInt(Math.round(mulVal**(i)*10**(decimalLength*(i+1))))) / (10n**BigInt(decimalLength*(i+1)));
+							alert((amount * BigInt(Math.round(mulVal**(i)*10**(decimalLength*(i+1))))) / (10n**BigInt(decimalLength*(i+1))) +"\n"+ result);
+						} else {
+							result += (amount * mulVal**i);
+						};
+					} else {
+						if(typeof amount === "bigint") {
+							result += amount * BigInt(mulVal**i);
+						} else {
+							result += amount * mulVal**i;
+						};
+					};
+				};
+				result = conversion(result, mode)
+				return result;
+			};
+			function conversion(result,mode) {
+				return result;
+			};
+		</script>
+  </body>
+</html>

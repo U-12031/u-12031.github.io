@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		#circle {
+			margin: 50px auto;
+			width: 300px;
+			height: 300px;
+			border-radius: 150px;
+			border: 0;
+			position: relative;
+		}
+		#circle2 {
+			position: absolute;
+			left: 25px;
+			top: 25px;
+			width: 250px;
+			height: 250px;
+			border-radius: 100%;
+			border: 0px solid #fff;
+		}
+		#circle3 {
+			position: absolute;
+			left: 25px;
+			top: 25px;
+			width: 200px;
+			height: 200px;
+			border-radius: 100%;
+			border: 0px solid #fff;
+			background-color: #f88;
+		}
+		#circle4 {
+			position: absolute;
+			left: 25px;
+			top: 25px;
+			width: 150px;
+			height: 150px;
+			border-radius: 100%;
+			border: 0px solid #fff;
+			background-color: #fbb;
+		}
+		#circleHole {
+			position: absolute;
+			left: 25px;
+			top: 25px;
+			width: 100px;
+			height: 100px;
+			background-color: #fff;
+			border-radius: 137.5px;
+			border: 0;
+			text-align: center;
+			line-height: 100px;
+		}
+	</style>
+</head>
+<body style="text-align: center;">
+	<select id="typeSelect" style="margin: auto;" oninput="el('circle').style.background = angleChange(el('angle').value,'#f00'); el('circle2').style.background = angleChange(el('angle2').value,'#f44');el('circle3').style.background = angleChange(el('angle3').value,'#f88'); el('circle4').style.background = angleChange(el('angle4').value,'#fbb');">
+		<option value="1">Type 1</option>
+		<option value="2">Type 2</option>
+		<option value="3">Type 3</option>
+		<option value="4">Type 4</option>
+		<option value="5">Type 5</option>
+		<option value="6">Type 6</option>
+		<option value="7">Type 7</option>
+		<option value="8">Type 8</option>
+		<option value="9">Type 9</option>
+		<option value="10">Type 10</option>
+		<option value="11">Type 11</option>
+	</select>
+	<div id="circle">
+			<div id="circle2">
+				<div id="circle3">
+					<div id="circle4">
+						<div id="circleHole">Sample Text</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	<div style="text-align: center;">
+		<input id="angle" type="range" style="width: 500px;" min="0" max="1" step="0.001" value="0.5" oninput="el('angleP').innerHTML = `${String(Math.trunc(this.value*1000)/1000)}turn(${Math.trunc(this.value*3600)/10})`; el('circle').style.background = angleChange(this.value,'#f00')">
+		<p id="angleP">0.500turn(180)</p>
+		<input id="angle2" type="range" style="width: 500px;" min="0" max="1" step="0.001" value="0.25" oninput="el('angleP2').innerHTML = `${String(Math.trunc(this.value*1000)/1000)}turn(${Math.trunc(this.value*3600)/10})`; el('circle2').style.background = angleChange(this.value,'#f44')">
+		<p id="angleP2">0.250turn(90)</p>
+		<input id="angle3" type="range" style="width: 500px;" min="0" max="1" step="0.001" value="0.75" oninput="el('angleP3').innerHTML = `${String(Math.trunc(this.value*1000)/1000)}turn(${Math.trunc(this.value*3600)/10})`; el('circle3').style.background = angleChange(this.value,'#f88')">
+		<p id="angleP3">0.750turn(180)</p>
+		<input id="angle4" type="range" style="width: 500px;" min="0" max="1" step="0.001" value="1" oninput="el('angleP4').innerHTML = `${String(Math.trunc(this.value*1000)/1000)}turn(${Math.trunc(this.value*3600)/10})`; el('circle4').style.background = angleChange(this.value,'#fbb')">
+		<p id="angleP4">1.000turn(90)</p>
+	</div>
+	<script>
+		function el(id) {return document.getElementById(id)};
+		function angleChange(angle,color,width="3%") {
+			const value = Number(angle);
+			switch (el("typeSelect").value) {
+				case "1":
+					return `conic-gradient(${color} ${value}turn,#fff ${value}turn 1turn)`;
+				case "2":
+					if(value <= 0.99) {
+						if(value >= 0.01) {
+							return `conic-gradient(#fff ${value-0.01}turn,${color} ${value-0.01}turn ${value+0.01}turn,#fff ${value+0.01}turn 1turn)`;
+						} else {
+							return `conic-gradient(${color} ${value+0.01}turn,#fff ${value+0.01}turn ${value+0.99}turn,${color} ${value+0.99}turn 1turn`;
+						};
+					} else {
+						return `conic-gradient(${color} ${value-0.99}turn,#fff ${value-0.99}turn ${value-0.01}turn,${color} ${value-0.01}turn 1turn)`;
+					};
+				case "3":
+					return `conic-gradient(${color} 0turn,#fff ${value}turn 1turn)`;
+				case "4":
+					return `conic-gradient(#000 0turn,${color} ${value/2}turn ${value}turn,#fff ${value}turn 1turn)`;
+				case "5":
+					return `conic-gradient(${color} ${value/2}turn,#fff ${value/2}turn ${1-value/2}turn,${color} ${1-value/2}turn 1turn)`;
+				case "6":
+					return `conic-gradient(#fff ${0.5-value/2}turn,${color} ${0.5-value/2}turn ${0.5+value/2}turn,#fff ${0.5+value/2}turn 1turn)`
+				case "7":
+					return `conic-gradient(#fff 0turn ${0.5-value/2}turn,${color} 0.5turn, #fff ${0.5+value/2}turn 1turn)`;
+				case "8":
+					let theta = (value*4+1)*Math.PI/2;
+					return `radial-gradient(circle at ${50-45.5*Math.cos(theta)}% ${50-45.5*Math.sin(theta)}%,${color} ${width},#fff ${width})`;
+			};
+		};
+		el('circle').style.backgroundImage = angleChange(el("angle").value,"#f00");
+		el('circle2').style.background = angleChange(el("angle2").value,"#f44");
+		el('circle3').style.backgroundImage = angleChange(el("angle3").value,"#f88");
+		el('circle4').style.background = angleChange(el("angle4").value,"#fbb");
+	</script>
+</body>
+</html>

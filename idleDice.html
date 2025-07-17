@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Idle Dice</title>
+	<style>
+		@font-face {
+			font-family: "original";
+			src: url("font/simpleFont3-regular.ttf");
+		}
+
+		* {font-family: "original";}
+
+		@font-face {
+			font-family: "bold";
+			src: url("font/simpleFont3-medium.ttf");
+		}
+
+		.bold {font-family: "bold";}
+
+		@keyframes colorAni {
+			from {background-color: #ddd;}
+			50% {background-color: #e8e27b;}
+			to {background-color: #ddd;}
+		}
+
+		@keyframes addedScore {
+			from {translate: 0;}
+			to {translate: 0 -25px;}
+		}
+
+		@keyframes fadeInOut {
+			from {opacity: 1;}
+			50% {opacity: 0;}
+			to {opacity: 1;}
+		}
+
+		body {
+			margin: 0;
+			overflow-x: hidden;
+		}
+
+		img {
+			width: 1.4em;
+			translate: 0 .3em;
+			margin: 0;
+			padding: 0;
+			display: inline;
+			height: 1.4em;
+		}
+
+		input[type="number"] {
+			border: 1px solid #666;
+			border-radius: 3px;
+		}
+
+		.cursorMenu {
+			display: none;
+			/* 初期値として */
+			position: absolute;
+			pointer-events: none;
+			background-color: #1113;
+			border-radius: 10px;
+			padding: 5px;
+			padding-bottom: 0;
+		}
+
+		.cursorMenu, .cursorMenu * {color: #333;}
+
+		#scoreParent {
+			position: relative;
+			margin: 0;
+			width: calc(100% - 10px);
+			padding: 5px 5px 10px;
+			border-radius: 0 0 15px 15px;
+			background-color: #c5deb1;
+		}
+
+		#scoreParent * {word-wrap: break-word;}
+
+		.scoreMark {
+			display: inline-block;
+			text-align: center;
+			background-color: #fc0;
+			border-radius: 1000px;
+			width: 1.5em;
+			margin-right: 10px;
+		}
+
+		#addedScore {
+			display: none;
+			/*初期値*/
+			position: absolute;
+			left: 20px;
+			top: 20px;
+			font-size: 20px;
+		}
+
+		#scoreParent>br~* {font-size: 18px;}
+
+
+		#shakeBt {
+			position: absolute;
+			top: 25px;
+			right: 5%;
+			cursor: pointer;
+			width: 200px;
+			height: 50px;
+			background-color: #ddd;
+			font-size: 23px !important;
+			border-radius: 10px;
+			text-align: center;
+			line-height: 50px;
+			animation: auto ease 0s 1 normal none running none;
+			/* 初期値として */
+		}
+
+		#buyTimesRadio {
+			position: absolute;
+			top: 100px;
+			right: 5%;
+			display: inline-flex;
+			cursor: default;
+		}
+
+		#buyTimesRadio input[type="radio"] {display: none;}
+
+		#buyTimesRadio label {
+			display: inline-flex;
+			margin: 0;
+			padding: 2px;
+			background-color: #ad3;
+			width: 50px;
+			cursor: pointer;
+		}
+
+		#buyTimesRadio label:not(#buyTimesRadio label:nth-of-type(5)) {
+			border-right: 3px solid #aaa;
+		}
+
+		#buyTimesRadio input[type="radio"]:checked+label {
+			background-color: #ef8;
+		}
+
+		#selectBuyTimes {
+			width: 50px;
+			padding: 1px;
+			margin: 1px 5px;
+		}
+
+		#openInfo {
+			display: flexbox;
+			cursor: pointer;
+			width: 25px;
+			height: 25px;
+			margin: 0 5px;
+			font-size: 25px;
+		}
+
+		#infoDiv {
+			display: none;
+			position: relative;
+			overflow: scroll;
+			margin-top: 10px;
+			padding: 5px;
+			background-color: #b5cfa1;
+			width: auto;
+			height: 90px;
+			border-radius: 5px;
+			font-weight: normal;
+			font-size: 15px !important;
+		}
+
+		#infoDiv table:not(#shakeHistory) {
+			height: 1em;
+			margin-left: -10px;
+		}
+
+		#infoDiv table:not(#shakeHistory) th {
+			font-weight: normal;
+			text-align: end;
+		}
+
+		#infoDiv table:not(#shakeHistory) tr>th:nth-child(1) {width: 130px;}
+
+		#shakeHistory {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			background-color: #d9e8cc;
+			font-size: 20px;
+			border-collapse: collapse;
+			border: 2px solid black;
+			table-layout: fixed;
+			width: 400px;
+		}
+
+		#shakeHistory tr {height: 1.8em;}
+
+		#shakeHistory td,#shakeHistory th {
+			width: 80px;
+			border: 1px dashed black;
+			border-bottom: 1px solid black;
+			overflow: scroll;
+			white-space: nowrap;
+		}
+
+		#shakeHistory th {background-color: #c5deb1;}
+
+		#dices>div {
+			display: flex;
+			overflow-x: auto;
+			background-color: #eff;
+			padding: 15px 5px;
+			width: calc(100% - 10px);
+			border: 0 solid black;
+			border-width: 3px 0;
+			font-size: 60px;
+			align-items: center;
+		}
+
+		#dices>span {margin: auto 10px;}
+
+		#dices>div>div {
+			width: 150px;
+			margin: 5px;
+		}
+
+		#dices>div>div>div:not(.buyBt) {
+			position: relative;
+			flex-shrink: 0;
+			vertical-align: middle;
+			text-align: center;
+			overflow-wrap: break-word;
+			overflow-y: scroll;
+			width: 150px;
+			height: 150px;
+			font-size: 90px;
+			border: 3px solid black;
+			background-color: white;
+		}
+
+		.buyBt {
+			display: flex;
+			position: relative;
+			margin: 5px auto;
+			width: 130px;
+			border: 2px solid black;
+			cursor: pointer;
+			border-radius: 10px;
+			font-size: 15px;
+			background-color: #ffe;
+		}
+
+		.buyBt table tr:nth-child(2) td * {margin-top: -15px;}
+
+		.buyBt td button {
+			font-size: 13px;
+			border: 1px solid #444;
+			border-radius: 3px;
+			padding: 1px;
+		}
+
+		.buyBt td:nth-of-type(1) button:nth-of-type(1) {
+			background-color: #fbba;
+		}
+
+		.buyBt td:nth-of-type(1) button:nth-of-type(2) {
+			background-color: #ffba;
+		}
+
+		.buyBt td:nth-of-type(1) button:nth-of-type(3) {
+			background-color: #bfba;
+		}
+
+		.buyBt td:nth-of-type(2) button:nth-of-type(1) {
+			background-color: #bffa;
+		}
+
+		.buyBt td:nth-of-type(2) button:nth-of-type(2) {
+			background-color: #bbfa;
+		}
+
+		.btInfo {
+			display: none; /* 初期値として */
+			position: absolute;
+			bottom: calc(100% + 2px);
+			left: -2px;
+			min-width: 125px;
+			font-size: 15px;
+			border: 2px solid #cc5a;
+			border-radius: 10px;
+			padding: 3px;
+			cursor: default;
+			background-color: #ffbc;
+			z-index: calc(infinity);
+		}
+
+		.btInfo * {white-space: nowrap;}
+
+		.btInfo button {padding: 0;}
+
+		.numberText {
+			font-family: "bold";
+			position: absolute;
+			font-size: 15px;
+			top: 2px;
+			left: 5px;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<h1 class="bold" id="scoreParent">
+		<img src="img/scoreMark.svg">
+		<span id="score">0</span>
+		<span id="addedScore"></span>
+		<br>
+		<span>total:
+			<span id="totalScore">0</span>
+		</span>
+		<div id="shakeBt" onclick='shake()'>Shake!</div>
+		<div id="buyTimesRadio">
+			<input type="radio" name="buyTimesRadio" value="1" id="buy1Times" checked><label for="buy1Times"
+				style="border-radius: 5px 0 0 5px;">×1</label>
+			<input type="radio" name="buyTimesRadio" value="10" id="buy10Times"><label for="buy10Times">×10</label>
+			<input type="radio" name="buyTimesRadio" value="100" id="buy100Times"><label for="buy100Times">×100</label>
+			<input type="radio" name="buyTimesRadio" value="MAX" id="buyMaxTimes"><label for="buyMaxTimes">MAX</label>
+			<input type="radio" name="buyTimesRadio" value="select" id="buySelectTimes"><label for="buySelectTimes"
+				style="width: 135px !important; border-radius: 0 5px 5px 0;">カスタム<input type="number" id="selectBuyTimes"
+					min="1" step="1" placeholder="回数" value="10"></label>
+		</div>
+		<br>
+		<div id="openInfo" onclick="openInfo()">▼</div>
+		<div id="infoDiv">
+			<table>
+				<tr>
+					<th>最高記録:</th>
+					<td id="highestScore">---</td>
+				</tr>
+				<tr>
+					<th>総Shake回数:</th>
+					<td id="totalShakes">0</td>
+				</tr>
+				<tr>
+					<th>最高記録(理論上):</th>
+					<td id="theoryScore">---</td>
+				</tr>
+				<tr>
+					<td><button onclick="
+						var intervalDao = setInterval(() => {
+							let beforeBestScore = highestScore;
+							shake();
+							if(beforeBestScore < highestScore) {
+								clearInterval(intervalDao);
+							};
+						},0);
+					">CHEAT</button></td>
+					<td><button onclick="addDice(3)">ADDDICE(3)</button></td>
+				</tr>
+			</table>
+			<table id="shakeHistory">
+				<tr>
+					<th id="shakeHistoryTh1"></th>
+					<th id="shakeHistoryTh2"></th>
+					<th id="shakeHistoryTh3"></th>
+					<th id="shakeHistoryTh4"></th>
+					<th id="shakeHistoryTh5"></th>
+				</tr>
+				<tr>
+					<td id="shakeHistory1"></td>
+					<td id="shakeHistory2"></td>
+					<td id="shakeHistory3"></td>
+					<td id="shakeHistory4"></td>
+					<td id="shakeHistory5"></td>
+				</tr>
+			</table>
+		</div>
+	</h1>
+	<div id="dices">
+		<div id="1Parent"></div>
+		<div id="2Parent"></div>
+		<div id="3Parent"></div>
+	</div>
+	<select id="convMode" oninput="convUpdate(this.value);">
+		<option value="normal">普通表記</option>
+		<option value="japanese" selected>日本語</option>
+		<option value="power">指数</option>
+	</select>
+	<script>
+		const japaneseNum = [
+			["", "万", "億", "兆", "京", "垓", "𥝱", "穣", "溝", "澗", "正", "載", "極", "恒河沙", "阿僧祇", "那由他", "不可思議", "無量大数"],
+			"洛叉",
+			["倶胝", "阿庾多", "那由他", "頻波羅", "矜羯羅", "阿伽羅", "最勝", "摩婆羅", "阿婆羅", "多婆羅", "界分", "普摩", "禰摩", "阿婆鈐", "弥伽婆", "毘攞伽", "毘伽婆", "僧羯邏摩", "毘薩羅", "毘贍婆", "毘盛伽", "毘素陀", "毘婆訶", "毘薄底", "毘佉擔", "称量", "一持", "異路", "顛倒", "三末耶", "毘睹羅", "奚婆羅", "伺察", "周広", "高出", "最妙", "泥羅婆", "訶理婆", "一動", "訶理蒲", "訶理三", "奚魯伽", "達攞歩陀", "訶魯那", "摩魯陀", "懺慕陀", "瑿攞陀", "摩魯摩", "調伏", "離憍慢", "不動", "極量", "阿麼怛羅", "勃麼怛羅", "伽麼怛羅", "那麼怛羅", "奚麼怛羅", "鞞麼怛羅", "鉢羅麼怛羅", "尸婆麼怛羅", "翳羅", "薜羅", "諦羅", "偈羅", "窣歩羅", "泥羅", "計羅", "細羅", "睥羅", "謎羅", "娑攞荼", "訶羅荼", "嚩羅荼", "室羅荼", "一羅荼", "須婆羅", "阿婆羅", "奚婆羅", "毘婆羅", "極羅", "阿伽羅", "摩伽羅", "須陀羅", "阿蘇羅", "婆蘇羅", "婆訶羅", "阿訶羅", "婆蘇訶羅", "阿蘇訶羅", "摩訶訶羅", "須摩訶羅", "波摩訶羅", "摩訶摩訶羅", "須摩訶摩訶羅", "波摩訶摩訶羅", "阿僧祇", "那由他", "頻波羅", "恒河沙", "阿僧祇恒河沙", "不可説", "不可説転", "不可説不可説", "不可説不可説転"]
+		];
+		let
+			cursorMenuPosition = {},
+			mode = "japanese",
+			magnification = {
+				amountMax: 1.15,
+				amountMin: 3
+			},
+			customBuyTimes = 10,
+			score = 0n,
+			totalScore = 0n,
+			totalShakes = 0n,
+			maxValue = 0n,
+			highestScore = 0n,
+			HSShakenTimes = 0, // HS = highestScore
+			HSChance = 0,
+			theoryScore = 0n,
+			level = 3,
+			assignTimeOut = {},
+			diceInfo = [[], [], []],
+			shakeHistory = ["", "", "", "", ""];
+		el("selectBuyTimes").addEventListener("input",() => {
+			let value = el("selectBuyTimes").value;
+			if((value.includes(".") || value.includes("-") || value == "0" || value != Number(value))) {
+				el("selectBuyTimes").style.color = "red";
+				el("selectBuyTimes").style.backgroundColor = "#fcc";
+			} else {
+				el("selectBuyTimes").style.color = "black";
+				el("selectBuyTimes").style.backgroundColor = "white";
+				customBuyTimes = Number(value);
+				customBuyUpdate();
+			};
+		});
+		function el(id) {return document.getElementById(id)};
+		function random(num = 1, isRoundDown = false) {
+			if(isRoundDown) {
+				return Math.floor(Math.random() * num + 1);
+			} else {
+				return Math.random() * num + 1;
+			};
+		};
+		function createEl(elementName, placeId, info = {}) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+		function amountCalc(amount, times, mulVal) { // mulVal -> multplay Value
+			let result = 0n;
+			let decimalLength = String(mulVal).split(".")[1].length
+			for(let i=0;i<times;i++) {
+				if(String(mulVal).includes(".")) {
+					result += (amount * BigInt(Math.round(mulVal**(i+1)*10**decimalLength))) / (10n**BigInt(decimalLength));
+				} else {
+					result += amount * mulVal**(i+1);
+				};
+			};
+			result = conversion(result, mode)
+			return result;
+		};
+		function creBtInfo(origId, option = {}) {
+			createEl("div", origId, Object.assign({id: origId + "Info", class: "btInfo"}, option));
+			el(origId).addEventListener("mousemove", () => {
+				el(origId + "Info").style.display = "inline";
+			});
+			el(origId).addEventListener("mouseleave", () => {
+				el(origId + "Info").style.display = "none";
+			})
+		};
+		function creCursorMenu(origId, option = {}) {
+			/*引数の入れ方
+				origId:元の要素のID
+				option:カーソルメニューの属性*/
+			let newId = origId + "CursorMenu";
+			cursorMenuPosition[origId] = [0, 0];
+			el(origId).style.position = "relative";
+			createEl("div", "body", Object.assign({id: newId, }, option));
+			el(newId).classList.add("cursorMenu");
+			el(origId).addEventListener("mousemove", (event) => {
+				if(cursorMenuPosition[origId][0] < el(newId).clientWidth) {cursorMenuPosition[origId][0] = el(newId).clientWidth;};
+				if(cursorMenuPosition[origId][1] < el(newId).clientHeight) {cursorMenuPosition[origId][1] = el(newId).clientHeight};
+				el(newId).style.display = "flex";
+				if(event.pageX <= window.innerWidth - cursorMenuPosition[origId][0]) {//もしカーソルのX座標が(ウィンドウの横幅-要素の横幅)以下なら
+					el(newId).style.left = event.pageX + "px";
+				} else {
+					el(newId).style.left = (window.innerWidth - el(newId).clientWidth) + "px";
+				};
+				if(event.pageY <= window.innerHeight - cursorMenuPosition[origId][1]) {//上のやつをYにしてやってる
+					el(newId).style.top = event.pageY + "px";
+				} else {
+					el(newId).style.top = (window.innerHeight - el(newId).clientHeight) + "px";
+				};
+			});
+			el(origId).addEventListener("mouseleave", () => {
+				el(newId).style.display = "none";
+			});
+		};
+		function customBuyUpdate() {
+			try {
+			let fee = null;
+			for(let i=0;i<3;i++) {
+				for(let j=0;j<diceInfo[i].length;j++) {
+					el(`${i+1}-${j+1}CustomBuyBt`).innerHTML = `カスタム ${amountCalc(diceInfo[i][j].amountMax,customBuyTimes,magnification.amountMax)}`
+				};
+			};
+		}catch(error) {alert(`${error.name}\n${error.stack}`)}
+		};
+		function conversion(num, mode, output = false, attached = ["", ""]) {
+			let
+				value = String(num),
+				length = value.length;
+			switch (mode) {
+				case "normal":
+					if(output) {
+						el(output).innerHTML = attached[0] + value + attached[1];
+					} else {
+						return attached[0] + value + attached[1];
+					};
+					break;
+				case "japanese":
+					if(output) {
+						el(output).innerHTML = attached[0] + japaneseConv(value, length) + attached[1];
+					} else {
+						return attached[0] + japaneseConv(value, length) + attached[1];
+					}
+					break;
+				case "power":
+					if(output) {
+						el(output).innerHTML = attached[0] + powerConv(value, length) + attached[1]
+					} else {
+						return attached[0] + powerConv(value, length) + attached[1];
+					};
+					break;
+			};
+		};
+		function japaneseConv(value, length) {
+			if(length <= 4) {return value;} else {
+				if(length <= 72) {
+					return `${value.slice(0,(length-1)%4+1)}.${value.slice((length-1)%4 + 1,(length-1)%4+4)}` + (japaneseNum[0][Math.trunc((length-1)/4)]);
+				} else {
+					let
+						temporany = "",
+						binary = Math.trunc((length-1)/7).toString(2);
+					for(let i=0;i<binary.length;i++) {
+						if(Number(binary.slice(-(i+1)))) {
+							temporany += japaneseNum[2][i];
+						};
+					};
+					return (((length - 1)%7+1 <= 5) ?
+						(`${value.slice(0,(length-1)%7+1)}.${value.slice((length-1)%7+1,(length-1)%7+4)}`) :
+						(`${value.slice(0,(length-1)%7-4)}.${value.slice((length - 1)%7-4,(length-1)%7-1)}${japaneseNum[1]}`)) + temporany;
+				};
+			};
+		};
+		function powerConv(value, length) {
+			if(length == 1) {
+				return value + " e0";
+			} else {
+				return `${value[0]}.${value.slice(1, 4)}e${length - 1}`;
+			};
+		};
+		function convUpdate(modeInput) {
+			mode = modeInput;
+			conversion(score, mode, "score");
+			conversion(totalScore, mode, "totalScore");
+			conversion(highestScore, mode, "highestScore", ["",`(${HSShakenTimes}回目)`]);
+			conversion(theoryScore, mode, "theoryScore", ["", `(${HSChance}%,${conversion(1 / HSChance, mode)}回に1回)`]);
+			for(let i=0;i<5;i++) {
+				if(i < totalShakes) {
+					conversion(shakeHistory[i], mode, `shakeHistory${i + 1}`);
+				};
+			};
+		};
+		function data(key) {
+			localStorage.getItem(String(key));
+		};
+		function saveData(key, data) {
+			localStorage.setItem(String(key), String(data));
+		};
+		function setNum(num, valName, idName = false, doConv = true, attached = ["", ""]) {
+			eval(`${valName} = num;`);
+			if(doConv) {
+				eval(`conversion(${valName},mode,idName,attached)`);
+			} else if(idName) {
+				eval(`el(idName).innerHTML = attached[0] + ${valName} + attached[1];`);
+			};
+		};
+		function addNum(num, valName, idName = false, isBig = false, doConv = true, attached = ["", ""]) {
+			eval(`${valName} += ${isBig ? "BigInt" : ""}(num);`);
+			if(doConv) {
+				eval(`conversion(${valName},mode,idName,attached)`);
+			} else if(idName) {
+				eval(`el(idName).innerHTML = attached[0] + ${valName} + attached[1];`);
+			};
+		};
+		/*function shakeBtColor() {
+			if(el("shakeBt").style.animation == "auto ease 0s 1 normal none running none") {
+				void el("shakeBt").offsetWidth;
+				el("shakeBt").style.animation = "colorAni .75s linear infinite";
+			} else {
+				void el("shakeBt").offsetWidth;
+				el("shakeBt").style.animation = "none";
+			};
+		};*/
+		function openInfo() {
+			if(el("openInfo").style.scale == "1 -1") {
+				el("openInfo").style.scale = "1";
+				el("infoDiv").style.display = "none";
+			} else {
+				el("openInfo").style.scale = "1 -1";
+				el("infoDiv").style.display = "flex";
+			};
+		};
+		function shake() {
+			addNum(1, "totalShakes", "totalShakes", true, false);
+			let
+				index = null,
+				content = null,
+				result = 0n;
+			for(let i=0;i<level;i++) {
+				index = diceInfo[i];
+				for(let j=0;j<index.length;j++) {
+					content = index[j];
+					if(i === 0) {
+						content.value = random(content.max, true);
+					} else {
+						content.value = (random() < content.chance + 1) ? random(content.max, true) :  -1 // 普通の1と区別するために-1にする
+					};
+					el(`${i + 1}-${j + 1}Dice`).style.color = (content.value === -1) ? "#888" : "#000";
+					if(content.value === -1) {
+						content.value = 1; // ここで-1を直す
+					};
+					el(`${i + 1}-${j + 1}Dice`).innerHTML = content.value;
+					el(`${i + 1}-${j + 1}Dice`).style.fontSize = Math.min(Math.max(300 / (String(Math.trunc(content.max)).length * 2), 20), 100) + "px";
+					switch (i) {
+						case 0:
+							result += BigInt(content.value);
+							break;
+						case 1:
+							result *= BigInt(content.value);
+							break;
+						case 2:
+							result **= BigInt(content.value)
+							break;
+					};
+				};
+			};
+			addNum(result, "score", "score", true);
+			addNum(result, "totalScore", "totalScore", true);
+			if(result > highestScore) {
+				setNum(totalShakes, "HSShakenTimes")
+				setNum(result, "highestScore", "highestScore", true, ["", `(${HSShakenTimes}回目)`]);
+				el("addedScore").style.color = "red";
+				el("shakeHistory1").style.color = "red";
+			} else {
+				el("addedScore").style.color = "white";
+				el("shakeHistory1").style.color = "black";
+			};
+			conversion(result, mode, "addedScore", ["+", ""]); // ここからは足されたスコアを表示するプログラム
+			el("addedScore").style.left = (random(20, true) + 20) + "px";
+			el("addedScore").style.top = (random(20, true) + 10) + "px";
+			el("addedScore").style.display = "flex";
+			el("addedScore").style.animation = "none";
+			void el("addedScore").offsetWidth; // アニメーションをなくしてからその要素を再読み込みさせる
+			el("addedScore").style.animation = "addedScore 0.8s 1 ease-out";
+			clearTimeout(assignTimeOut.addedScore);
+			assignTimeOut.addedScore = setTimeout(() => {
+				el("addedScore").style.display = "none";
+			}, 800);
+			for(let i=0;i<4;i++) {
+				setNum(shakeHistory[3-i], `shakeHistory[${4-i}]`, `shakeHistory${5-i}`,(5-i <= totalShakes));
+				el(`shakeHistory${5-i}`).style.color = (shakeHistory[4-i] == highestScore) ? "red" : "black";
+				el(`shakeHistoryTh${5-i}`).innerHTML = (5-i <= totalShakes) ? totalShakes - BigInt(4-i) : "";
+			};
+			setNum(String(result), "shakeHistory[0]", "shakeHistory1");
+			el("shakeHistoryTh1").innerHTML = totalShakes;
+		};
+		function buyUpgrade(type, money, times, displayEl=[false,false], attached=[["",""],["",""]]) {
+			/* 
+			
+			*/
+		};
+		function theoryUpdate() {
+			let
+				result = 0n,
+				chance = 1;
+			for(let i=0;i<diceInfo[0].length;i++) {
+				result += BigInt(diceInfo[0][i].max);
+				chance *= 1 / (diceInfo[0][i].max-diceInfo[0][i].min+1)
+			};
+			for(let i=0;i<diceInfo[1].length;i++) {
+				result *= BigInt(diceInfo[1][i].max);
+				chance *= diceInfo[1][i].chance * 100;
+				chance *= 1 / (diceInfo[1][i].max-diceInfo[1][i].min+1)
+			};
+			for(let i=0;i<diceInfo[2].length;i++) {
+				result **= BigInt(diceInfo[2][i].max);
+				chance *= diceInfo[2][i].chance * 100;
+				chance *= 1 / (diceInfo[2][i].max-diceInfo[2][i].min+1)
+			};
+			chance *= 10 ** -(2 * (diceInfo[1].length+diceInfo[2].length) - 2);
+			setNum(chance, "HSChance");
+			setNum(result, "theoryScore", "theoryScore", true, ["", `(${chance}%,${conversion(1/chance, mode)}回に1回)`]);
+		};
+		function addDice(type) {
+			let btPart = null;
+			let addTypeDiceInfo = diceInfo[type-1];
+			switch (type) {
+				case 1:
+					if(diceInfo[0].length !== 0) {
+						createEl("span", `${type}Parent`, {innerHTML: "+", style: "translate: 0 -35px;"});
+					};
+					addTypeDiceInfo[addTypeDiceInfo.length] = {min: 1, max: 6, value: null, amountMax: 20n, amountMin: 300n}; //初期値として 
+					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"><table><tr><td>Max値UP ${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}</td></tr><tr><td><img src=\"img/scoreMark.svg\">800</td></tr></table></div>`;
+					break;
+				case 2:
+					createEl("span", `${type}Parent`, {innerHTML: "×", style: "translate: 0 -35px;"});
+					addTypeDiceInfo[addTypeDiceInfo.length] = {min: 1, max: 2, chance: 0.5, value: null, amountMax: 3000n, amountMin: 8000n}; //初期値として
+					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"><table><tr><td>Max値UP ${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}</td></tr><tr><td><img src=\"img/scoreMark.svg\">800</td></tr></table></div>`
+					break;
+				case 3:
+					createEl("span", `${type}Parent`, {innerHTML: "^", style: "translate: 0 -35px;"});
+					addTypeDiceInfo[addTypeDiceInfo.length] = {min: 1, max: 2, chance: 0.01, value: null, amountMax: 500000n, amountMin: 3000000n}; //初期値として
+					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"></div>`
+					break;
+			};
+			createEl("div", `${type}Parent`, {innerHTML: `<div><span class="numberText">No.${type}-${(addTypeDiceInfo.length)}</span><span id="${type}-${(addTypeDiceInfo.length)}Dice"></span></div>${btPart}`});
+			creBtInfo(`${type}-${addTypeDiceInfo.length}MaxBuyBt`, {
+				innerHTML: `
+				<table>
+					<tr>
+						<td>
+							Max値UP<br>${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}→${addTypeDiceInfo[addTypeDiceInfo.length - 1].max + 1}
+							<br>
+							<button>×1 ${addTypeDiceInfo[addTypeDiceInfo.length - 1].amountMax}</button><br>
+							<button>×10 ${amountCalc(addTypeDiceInfo[addTypeDiceInfo.length - 1].amountMax, 10, magnification.amountMax)}</button><br>
+							<button>×100 ${amountCalc(addTypeDiceInfo[addTypeDiceInfo.length - 1].amountMax, 100, magnification.amountMax)}</button>
+						</td>
+						<td style=\"vertical-align: bottom;\">
+							<button>MAX ${addTypeDiceInfo[addTypeDiceInfo.length - 1].amountMax}</button><br>
+							<button id=\"${type}-${addTypeDiceInfo.length}CustomBuyBt\">カスタム ${amountCalc(addTypeDiceInfo[addTypeDiceInfo.length-1].amountMax,customBuyTimes,magnification.amountMax)}</button>
+						</td>
+					</tr>
+				</table>
+			`});
+			theoryUpdate();
+		};
+		try {
+			for(let i=0;i<5;i++) {
+				addDice(1);
+				addDice(2);
+				addDice(3);
+			};
+		} catch (error) {alert(error.name + "\n" + error.stack)};
+	</script>
+</body>
+
+</html>

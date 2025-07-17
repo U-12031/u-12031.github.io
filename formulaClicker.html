@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mathematical Clicker</title>
+	<style>
+		body {
+			background-color: #333;
+		}
+
+		* {color: #fff;}
+
+		#mainFormula {font-size: 50px;}
+	</style>
+</head>
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<h1 id="mainFormula">\[m=t-m_s\]</h1>
+
+	<input id="input" type="range" min="0" max="10" step="0.001" style="width: 300px;">
+	<script>
+		function el(id) {return document.getElementById(id)};
+		function createEl(elementName,placeId,info) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+		el("input").addEventListener("input",()=>{
+			// el("mainFormula").innerHTML = "\\[ax^2+bx+c=10\\]"
+			el("mainFormula").innerHTML = `\\[ax^2+bx+c=${el("input").value}\\]`;
+			MathJax.typesetPromise([el("mainFormula")]);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>おめでとうございます！</title>
+	<style>
+		.bodyAnimation {
+			animation:bodyGradation 0.5s linear infinite;
+		}
+		@keyframes bodyGradation {
+			0%	 {background-color:#f88;}
+			16%	{background-color:#ff8;}
+			33%	{background-color:#8f8;}
+			50%	{background-color:#8ff;}
+			67%	{background-color:#88f;}
+			83%	{background-color:#f8f;}
+			100% {background-color:#f88;}
+		}
+		button {
+			border-radius:1000000000000000px;
+			background-image: linear-gradient(180deg, #e5e5e5 50%, #d5d5d5 50%, #e5e5e5 70%);
+			animation:1s linear infinite rotation;
+		}
+		@keyframes rotation {
+			0%	 {transform:rotateY(0);}
+			100% {transform:rotateY(360deg);}
+		}
+		img {
+			animation:0.5s linear infinite imgRotation;
+		}
+		@keyframes imgRotation {
+			0%	 {transform:rotateX(0);}
+			50%	{transform:rotateX(180deg);}
+			100% {transform:rotateX(360deg);}
+		}
+		@keyframes random {
+		}
+	</style>
+</head>
+<body>
+<h1>あなたは選ばれました！</h1>
+<h3>あなたは100万人の中から選ばれた、時期聖徳太子になるべき人です！</h3>
+<h3>下の「聖徳太子になる」ボタンを押して、聖徳太子になりましょう！！！</h3>
+<button style="width:500px;height:500px;font-size:100px" onclick="
+	execute = true;
+	document.body.classList.remove('bodyAnimation');
+	setInterval(() => {
+	div.appendChild(el[number]);
+	number++;
+	document.body.style.transform='rotateZ(' + Math.random()*360 + 'deg)'
+	},50);
+">聖徳太子になる</button>ABCabc123
+<br>
+<div id="div">
+</div>
+<script>
+	document.body.classList.add('bodyAnimation')
+	var
+		execute = false,
+		number = 0,
+		random = 0,
+		el = [],
+		numberHex = [[0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"],""]
+	for(let i=0;i<10000;i++) {
+		random = (Math.random() * 100) + 1;
+		el[i] = document.createElement('img');
+		el[i].src = "img/橋本.jpg";
+		el[i].style.width = random + "px";
+		el[i].style.height = random + "px";
+		el[i].style.position = "fixed";
+		el[i].style.top = Math.random()*1200 + "px";
+		el[i].style.left = Math.random()*1200 + "px";
+	};
+	const div = document.getElementById('div');
+	setInterval(() => {
+		if(execute) {
+			numberHex[1] = "#";
+			for(let i=0;i<6;i++) {
+				numberHex[1] += numberHex[0][Math.round(Math.random() * 16)]
+			};
+			document.body.style.backgroundColor=numberHex[1];
+			// document.body.style.backgroundColor="#000";
+		};
+	},100);
+</script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>シャトルラン音源ジェネレーター</title>
+<style>
+	* {
+		font-family: "originalFont";
+	}
+	label,input,button {
+		font-family: initial;
+	}
+	:not(.tableLabel) {
+		text-align: center;
+	}
+	@font-face {
+		font-family: "originalFont";
+		src: url(font/simpleFont2-Light.ttf);
+	}
+	table {
+		border-collapse: collapse;
+		border: 1px solid #ccc;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	td {
+		border: 1px solid #ccc;
+		font-size: 70px;
+		width: 300px;
+		height: 100px;
+	}
+	.tableLabel {
+		text-align: left;
+		margin-left: 5px;
+		margin-top: 5px;
+		display: block;
+		font-size: 20px;
+		height: 20px;
+		padding-bottom: 5px;
+		padding-top: 0px;
+	}
+	.left {
+		color: #bbb;
+	}
+	.right {
+		font-size: 40px;
+	}
+	.tableUnit {
+		font-size: 30px;
+	}
+</style>
+</head>
+<body>
+	<div>
+		<label for="countDown">カウントダウン:</label>
+		<input type="number" id="countDown" placeholder="必須" min="0">
+		<button onclick="sound();">再生する</button>
+	</div>
+	<div style="font-weight: bold; font-size: 250px; margin-top: 100px; margin-bottom: 100px;">
+		<span id="numberL" style="color: #bbb">00</span><span id="number">0</span>
+	</div>
+	<p id="times" style="font-size: 25px; margin-top: -40px; margin-bottom: 40px;">0/8</p>
+	<div style="font-size: 60px; margin-top: -150px;">
+		<span id="restL" style="color: #bbb">| </span><span id="rest"> ▶ ▶ ▶ ▶ ▶ ▶ ▶ ▶ </span><span id="restR"> |</span>
+	</div>
+	<table style="margin-top: 30px;">
+		<tr>
+			<td>
+				<div class="tableLabel">Level</div>
+				<span id="level">---</span>
+			</td>
+			<td>
+				<div class="tableLabel">Time</div>
+				<span id="timeL" style="color: #bbb">0:00:</span><span id="time">00.</span><span id="timeR" class="right">00</span>
+			</td>
+			<td>
+				<div class="tableLabel">Shuttle Time Left</div> <!-- STL = Shuttle Time Left -->
+				<span id="STL">---</span><span id="STLR" class="right"></span>
+			</td>
+			<td>
+				<div class="tableLabel">Level Time Left</div> <!-- LTL = Level Time Left -->
+				<span id="LTLL" class="left"></span><span id="LTL">---</span><span id="LTLR" class="right"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="tableLabel">To Next Level</div> <!-- TNL = To Next Level -->
+				<span id="TNLL" class="left"></span><span id="TNL">---</span><span class="tableUnit" id="TNLRR"> Shuttles Left</span>
+			</td>
+			<td>
+				<div class="tableLabel">Shuttles Of Level</div> <!-- SOL = Shuttles Of Level -->
+				<span id="SOLL" class="left"></span><span id="SOL">---</span><span class="tableUnit" id="SOLR"> Shuttles</span>
+			</td>
+			<td>
+				<div class="tableLabel">Speed</div>
+				<span id="speedL" class="left">0</span><span id="speed">0.</span><span id="speedR" class="right">0</span><span class="tableUnit">km/h</span>
+			</td>
+			<td>
+				<div class="tableLabel">Mileage</div>
+				<span id="mileageL" class="left">0,00</span><span id="mileage">0</span><span id="mileageR" class="right">.0</span><span class="tableUnit">m</span>
+			</td>
+		</tr>
+		</table>
+		<audio src="music/Shuttlelun_1.mp3" id="music
+		"></audio>
+<script>
+	var
+		speed = 8,//単位はkm/h table要素のSpeedと同じです
+		time = 0,//時間がtime 進んだ目盛り(三角)の数がtimes
+		times = 0,
+		shuttle = 0,
+		mileage = 0,
+		starting = "left",
+		level = 0,
+		interval = null,
+		levelShuttles = 0;//このレベルのシャトル数
+		LSleft = 0;//このレベルの残りのシャトル数
+	function el(id) {return document.getElementById(id)};
+	function insert(before,string,number) {
+		if(number < 0) {
+			return String(before).slice(0,number+1) + string + String(before).slice(number+1);
+		} else {
+			return String(before).slice(0,number+1) + string + String(before).slice(-number);
+		};
+	};
+	function sound() {
+		//初期化
+		level++;
+		levelShuttles = Math.ceil(60/(72/speed));
+		LSleft = levelShuttles-1;
+		el("TNL").innerHTML = LSleft;
+		el("SOL").innerHTML = Math.ceil(60/(72/speed))
+		-LSleft;
+		el("TNLRR").innerHTML = "Shuttles left"
+		el("speed").innerHTML = Math.floor(speed)+".";
+		el("speedL").innerHTML = String(Math.floor(speed)).length == 1 ? 0 : "";
+		el("speedR").innerHTML = speed === Math.floor(speed) ? 0 : 5;
+		el("level").innerHTML = level;
+		el("SOLR").innerHTML = `/${levelShuttles} Shuttles`;
+		//setTimeoutを作るのをシャトル*9回繰り返す
+		for(var j=0;j<(LSleft+1);j++) {
+			for(var i=0;i<9;i++) {
+				//1目盛りごとの作業
+				setTimeout(() => {
+					if(starting === "left") {
+						el("rest").innerHTML = " " + "▶ ".repeat(8-times);
+						el("restL").innerHTML = "| " + "▶ ".repeat(times);
+						el("restR").innerHTML = "|";
+					} else {
+						el("rest").innerHTML = " ◀".repeat(8-times) + " ";
+						el("restR").innerHTML = " ◀".repeat(times) + " |";
+						el("restL").innerHTML = "|";
+					};
+					times++;
+					el("times").innerHTML = (times-1) + "/8"
+				}, (8000/speed)*(i)+(72000/speed)*j);
+			};
+			//目盛りをリセットし、シャトルを増やす作業
+			setTimeout(() => {
+				shuttle++;
+				el("number").innerHTML = shuttle;
+				if(!(shuttle >= 1000)) {
+					el("numberL").innerHTML = "0".repeat(3-String	(shuttle).length);
+				};
+				if(starting === "left") {
+					starting = "right";
+					el("rest").innerHTML = " ◀ ◀ ◀ ◀ ◀ ◀ ◀ ◀ ";
+					el("restL").style.color = "#000";
+					el("restR").style.color = "#bbb";
+				} else {
+					starting = "left";
+					el("rest").innerHTML = " ▶ ▶ ▶ ▶ ▶ ▶ ▶ ▶ ";
+					el("restR").style.color = "#000";
+					el("restL").style.color = "#bbb";
+				};
+				el("restR").innerHTML = "|";
+				el("restL").innerHTML = "|";
+				mileage = shuttle * 20;
+				times = 0;
+				LSleft--;
+				if(LSleft == 0) {
+					el("TNLRR").innerHTML = "Shuttle";
+					el("TNL").innerHTML = "Last";
+				} else {
+					el("TNL").innerHTML = LSleft;
+				};
+				el("SOL").innerHTML = Math.ceil(60/(72/speed))-LSleft;
+				el("SOLL").innerHTML = levelShuttles>=10 && el("SOL").innerHTML.length==1 ? 0 : "";
+				el("TNLL").innerHTML = levelShuttles>=10 && el("TNL").innerHTML.length==1 ? 0 : "";
+				el("mileage").innerHTML = Math.round(mileage);
+			}, 72000/speed+(72000/speed)*j)
+		};
+		//距離を増やす作業
+		interval = setInterval(() => {
+					mileage = Math.round(mileage*10 + 1)/10;
+					el("mileage").innerHTML = (mileage>=1000 ? insert(String(Math.floor(mileage)),",",-4) : Math.floor(mileage)) + "." ;
+					el("mileageR").innerHTML = String(mileage).slice(-1);
+					el("mileageL").innerHTML = (el("mileage").innerHTML.length < 5) ? "0,"+"0".repeat(4-(el("mileage").innerHTML.length)) : "";
+				}, 360/speed);
+		//時間を計測する作業(長くて見づらいけど変数の長さに応じて灰色の文字の長さを変えているプログラムです)
+		if(time <= 0) {
+			setInterval(() => {
+				time += 0.05;
+				time = Math.round(time * 100) / 100;
+				if(String(time).includes(".")) {
+					el("time").innerHTML = (time >= 3600 ? String(Math.floor(time/3600))+":" : "") + (time >= 60 ? String(Math.floor((time/60)%60)).padStart(2,"0")+":" : "") + String(Math.floor(time % 60)).slice(0,String(time).indexOf(".")+1).padStart(2,"0") + ".";
+					el("timeR").innerHTML = String(time).slice(String(time).indexOf(".")+1).padEnd(2,"0");
+				} else {
+					el("time").innerHTML = (time >= 3600 ? String(Math.floor(time/3600))+":" : "") + (time >= 60 ? String(Math.floor((time/60)%60)).padStart(2,"0")+":" : "") + (Math.floor(time%60) + ".").padStart(3,"0");
+					el("timeR").innerHTML = "00";
+				};
+				el("timeL").innerHTML = (time <= 3600 ? "0:" : "") +(time <= 60 ? "00:" : "");
+			}, 50)
+		};
+		//レベルが終わる時に速度を速くしてまた繰り返す作業
+		setTimeout(
+			() => {
+				if(speed === 8) {
+					speed++;
+				} else {
+					speed += 0.5;
+				};
+				interval = null;
+				sound();
+			}
+		,(72000*(LSleft+1))/speed);
+	};
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+{
+	"settings.json": {
+		/*
+			keybindings.json(ショートカットのJSONファイル)のコピーも忘れずに
+			拡張機能
+				CodeSwing
+				Color Highlight
+				indent-rainbow
+		*/
+		"editor.tabSize": 2,
+		"editor.detectIndentation": false,
+		"editor.insertSpaces": false,
+		"workbench.colorCustomizations": {
+			"editorBracketHighlight.foreground1": "#cc2",
+			"editorBracketHighlight.foreground2": "#2c2",
+			"editorBracketHighlight.foreground3": "#2cc",
+			"editorBracketHighlight.foreground4": "#22c",
+			"editorBracketHighlight.foreground5": "#c2c",
+			"editorBracketHighlight.foreground6": "#c22"
+		},
+		"indentRainbow.colors": [
+			"#f001",
+			"#ff01",
+			"#0f01",
+			"#0ff1",
+			"#00f1",
+			"#f0f1"
+		],
+
+		"editor.guides.bracketPairs": "active",
+		"editor.tokenColorCustomizations": {
+			"numbers": "#cbfacf",        //数字
+			"keywords": "#4c87db",       //function,ifなど
+			"functions": "#f0e9a2",      //関数またはメソッド
+			"strings": "#d2b4d1",        //"文字列"
+			"variables": "#b3e8ee",      //変数の色（$〜〜）
+			"types": "#e4bc95",          //型の色とスタイル(String,BigIntなど)
+			"comments": "#457128",       //コメントの色
+			"textMateRules": [
+				{
+					"scope": "entity.name.tag", // HTMLのタグ名
+					"settings": {"foreground": "#7483f9"}
+				},
+				{
+					"scope": [
+						"entity.name.tag.css",
+						"entity.other.attribute-name.class.css"
+					], // CSSのタグ名(.classとかbuttonとか)
+					"settings": {"foreground": "#e4bc95"}
+				},
+				{
+					"scope": "meta.property-value.css", // 無効なプロパティ(全てのプロパティ-有効なプロパティ)
+					"settings": {"foreground": "#ff3c3c"}
+				},
+				{
+					"scope": "keyword.other.unit", // 単位(5pxのpxとか)
+					"settings": {"foreground": "#a7faae"}
+				},
+				{
+					"scope": "support.constant.property-value", // CSSの値(数字以外)の色
+					"settings": {"foreground": "#c9ff9a"}
+				},
+				{
+					"scope": "support.type.property-name", // プロパティのキー
+					"settings": {"foreground": "#c0f6fc"}
+				},
+				{
+					"scope": "constant.character.escape", // 文字列のエスケープシーケンス
+					"settings": {"foreground": "#f29eb2"}
+				},
+				{
+					"scope": "support.variable.property", // プロパティ
+					"settings": {"foreground": "#c0c3fc"}
+				},
+				{
+					"scope": "entity.name.function.member", // メソッド
+					"settings": {"foreground": "#f0e9a2"}
+				}
+			]
+		},
+		"codeswing.autoSave": true,
+		"window.menuBarVisibility": "compact",
+		"files.autoSaveDelay": 1,
+		"editor.stickyScroll.enabled": false,
+		"editor.wordWrapColumn": 1073721822,
+		"editor.bracketPairColorization.enabled": true,
+		"editor.tabCompletion": "on",
+		"editor.acceptSuggestionOnEnter": "off",
+		"editor.defaultFoldingRangeProvider": "ms-vscode.anycode",
+		"editor.defaultFormatter": "ms-vscode.anycode",
+		"color-highlight.markRuler": false,
+		"color-highlight.matchHslWithNoFunction": true,
+		"color-highlight.matchRgbWithNoFunction": true,
+		"color-highlight.matchWords": true,
+		"editor.colorDecorators": false
+	},
+	"html.json": {
+		"inputLabel": {
+			"prefix": ["inputLabel","labelInput"],
+			"body": [
+				"<label>$1",
+				"\t<input type=\"$2\">",
+				"</label>"
+			],
+			"description": "It's useful to enter input element in label element"
+		},
+		"tableSnippet": {
+			"prefix": ["tableSnippet","snippetTable"],
+			"body": [
+				"<table>",
+				"\t<tbody>",
+				"\t\t<tr>",
+				"\t\t\t<${1|th,td|}>$2</${1|th,td|}>",
+				"\t\t\t$3",
+				"\t\t</tr>",
+				"\t</tbody>",
+				"</table>"
+			],
+			"description": "It's useful to enter table element"
+		}
+	},
+	"css.json": {
+		"border snippet": {
+			"prefix": ["borderSnippet","snippetBorder"],
+			"body": "border: ${1:width} ${2|style,none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset|} ${3:color};",
+			"description": "It's useful to enter border property."
+		},
+		"2 Values property": {
+			"prefix": "2Values",
+			"body": "${1:top,bottom} ${2:left,right}",
+			"description": "It's useful to enter 2 value property."
+		},
+		"3 Values property": {
+			"prefix": "3Values",
+			"body": "${1:top} ${2:left,right} ${3:bottom}",
+			"description": "It's useful to enter 3 value property."
+		},
+		"4 Values property": {
+			"prefix": "4Values",
+			"body": "${1:top} ${2:right} ${3:bottom} ${4:left}",
+			"description": "It's useful to enter 4 value property."
+		},
+		"2 values corner property": {
+			"prefix": ["2ValuesCorner", "2CornerValues"],
+			"body": "${1:left-top,right-bottom} ${2:right-top,left-bottom}",
+			"description": "It's useful to enter 2 value corner property."
+		},
+		"3 values corner property": {
+			"prefix": ["3ValuesCorner", "3CornerValues"],
+			"body": "${1:left-top} ${2:right-top,left-bottom} ${3:right-bottom}",
+			"description": "It's useful to enter 3 value corner property."
+		},
+		"4 values corner property": {
+			"prefix": ["4ValuesCorner", "4CornerValues"],
+			"body": "${1:left-top} ${2:right-top} ${3:left-bottom} ${4:right-bottom}",
+			"description": "It's useful to enter 4 value corner property."
+		}
+	},
+	"javascript.json": {
+		"catchErrorName": {
+			"prefix": "catchErrorName",
+			"body": "catch(error) {alert(`${error.name}\\n${error.stack}`)}",
+			"description": "It's useful to catch error in JS"
+		}
+	}
+}

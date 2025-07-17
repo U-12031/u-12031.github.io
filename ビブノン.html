@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ビブノンくん</title>
+	<style>
+		@font-face {
+			font-family: "original";
+			src: url("font/kazesawa-Regular.ttf");
+		}
+		@font-face {
+			font-family: "bold";
+			src: url("font/kazesawa-Bold.ttf");
+		}
+		@font-face {
+			font-family: "num";
+			src: url("font/kosugiMaru.ttf");
+		}
+
+		* {
+			text-align: center;
+			font-family: "original";
+		}
+
+		h1 {font-family: "bold";}
+
+		.br {height: 5px;}
+
+		input:not([type="range"]) {
+			background-color: #4cf3;
+			height: 1.2em;
+			width: 50px;
+			padding: auto;
+			font-size: .95em;
+			translate: 0 -1px;
+			border: 1px solid #aaa;
+			border-radius: 2px;
+			text-align: left;
+		}
+
+		input:not([type="range"]):focus {
+			background-color: #4fc6;
+		}
+
+		#displayRange {
+			position: relative;
+			margin: auto;
+			width: 80%;
+			height: 300px;
+			background-color: #f8e3fc;
+		}
+
+		#displayRange * {
+			position: absolute;
+			font-family: "num";
+		}
+
+		#displayRange>div {
+			top: 0;
+			left: -20px;
+			height: 300px;
+			width: 50px;
+		}
+
+		#displayRange>div>div:nth-of-type(1) {
+			z-index: 1;
+			width: 50px;
+			height: 50px;
+			border-radius: 100%;
+			background-color: #252733;
+			color: white;
+			font-size: 35px;
+		}
+
+		#displayRange>div>div:nth-of-type(1)>div {
+			margin: 7.5px;
+		}
+
+		#displayRange>div>div:nth-of-type(2) {
+			left: 20px;
+			bottom: 0;
+			width: 10px;
+			height: 275px;
+			background-color: #252733;
+		}
+	</style>
+</head>
+<body>
+	<!-- やりたいこと
+		棒をクリックしたら音がなるようにしたい
+		最大値と最小値を作りたい
+		最大値と最小値が変わるたびにスライダーのmax,min属性を変えられるようにしたい(valueが>max,<minのときはmax,minの値にする)
+		位置の右に数値として入力する場所を作り、そこに入力するたびにスライダーの値も変化させたい
+		ある数値を変数化して使えるようにしたい(変数とその値は右下に表示させる)
+	-->
+	<h1>ビブノンくん<span style="font-size: 25px;">(仮)</span></h1>
+	<label>基準(1)の高さ
+		<input type="number" id="standardFrequency" step="any" value="261.62" style="width: 70px;">Hz
+	</label>
+	<div class="br"></div>
+	<label style="margin-right: 5%;">最小
+		<input type="number" id="min" step="any" min="0" value="1">
+	</label>
+	<label>最大
+		<input type="number" id="max" step="any" min="0" value="4">
+	</label>
+	<div class="br"></div>
+	<label>位置
+		<input type="number" id="markPositionNum" min="1" max="4" step="0.001" value="2.5" style="width: 60px;">
+		<input type="range" id="markPosition" min="0" max="100" step="0.1" value="50" style="width: 25%;">
+	</label>
+	<div id="displayRange">
+		<div id="mark1">
+			<div>
+				<div id="line1Label">２</div>
+			</div>
+			<div id="line1Line"></div>
+		</div>
+	</div>
+	<button onclick="playSound(Number(el('standardFrequency').value))">はじめる</button>
+	<button onclick="stopSound()">おわる</button>
+	<script>
+		let
+			cursorMenuPosition = {},
+			audioContext = null,
+			audioPlayer = null,
+			min = 1,
+			max = 4;
+		function el(id) {return document.getElementById(id)};
+		function elVal(id) {return el(id).value};
+		function createEl(elementName, placeId, info) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+		function playSound(frequency) {
+			try {
+			if(!audioContext) {
+				audioContext = new (window.AudioContext || window.webkitAudioContext)();
+			};
+			audioPlayer = audioContext.createOscillator();
+			audioPlayer.type = 'triangle';
+			audioPlayer.frequency.setValueAtTime(frequency, audioContext.currentTime);
+			audioPlayer.connect(audioContext.destination);
+			audioPlayer.start();
+		}catch(error) {alert(`${error.name}\n${error.stack}`)}
+		};
+		function stopSound() {
+			if(audioPlayer) {
+				audioPlayer.stop();
+				audioPlayer.disconnect();
+				audioPlayer = null;
+			};
+		};
+		function textScale() {
+			el("output").style.scale = "1";
+			el("output").style.scale = `${100.5 / el("output").offsetWidth} 1`;
+		};
+		el("input").addEventListener("input",() => {
+			el("outputSpan").innerHTML = el("input").value;
+			textScale();
+		});
+		el("max").addEventListener("change",() => { // 最大値が変わったら変数とか位置の値も変えるやつ
+			alert(el("markPosition").value)
+			max = el("max").value;
+			alert(el("markPositionNum").value)
+			el("marPosition").value = el("markPositionNum").value;
+			el("markPosition").max = max;
+			void el("markPosition").offsetWidth // el("markPosition")を採用見込みさせる offsettWidthに意味はない
+			alert(el("markPosition").value)
+		});
+		el("markPosition").addEventListener("input",() => { // 位置のやつが変わったら数値も変わるようにするやつ
+			el("markPositionNum").value = Math.round(((el("markPosition").value/100 * (max-min)) + min) * 10000) / 10000;
+			el("mark1").style.left = `calc(${elVal("markPosition")}% - ${25 + 10*(elVal("markPosition")/100 - 0.5)}px)`; // マークの位置を変える
+		});
+	</script>
+</body>
+</html>

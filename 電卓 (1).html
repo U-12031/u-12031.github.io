@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>電卓</title>
+<style>
+	* {
+		text-align: center;
+	}
+	@font-face {
+		font-family: "originalFont";
+		src: url("font/7seg.ttf");
+	}
+	button {
+		color: black;
+		background-color: #eee;
+	}
+	.button {
+		cursor: pointer;
+		height: 50px;
+		width: 65px;
+		border-radius: 3px 3px 15px 15px;
+		font-size: 30px;
+	}
+</style>
+</head>
+<body>
+	<div style="margin: auto; background-color: #eee; border: #222 solid 10px; height: 550px; width: 500px;">
+		<button id="display" style="font-family: 'originalFont'; text-align: right; border: #444 solid 2px; margin-top: 20px; margin-bottom: 20px;width: 450px; height: 70px; font-size: 50px;" disabled></button>
+		<br>
+		<button class="button" style="margin-right: 25px;"onclick="
+		if(display.innerHTML != '') {
+			change(display.innerHTML.slice(0,-1));
+		} else {
+			change('');
+		};
+		">→</button>
+		<button class="button" style="margin-right: 25px;" onclick="display.innerHTML = '自分で考えろ'">MU</button>
+		<button class="button" style="margin-right: 25px;" onclick="display.innerHTML = '自分で考えろ'">%</button>
+		<button class="button" style="margin-right: 25px;" onclick="display.innerHTML = '自分で考えろ'">√￣</button>
+		<button class="button" style="margin-bottom: 40px;" onclick="change('');">÷</button>
+		<br>
+		<button class="button" style="margin-right: 25px;"onclick="
+		if(display.innerHTML.slice(0,1) != '-') {
+			change('-' + display.innerHTML);
+		} else {
+			change(display.innerHTML.slice(1));
+		};
+		">+/-</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','7');">7</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','8');">8</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','9');">9</button>
+		<button class="button" style="margin-bottom: 40px;" onclick="change('');">×</button>
+		<br>
+		<button class="button" style="margin-right: 25px;"onclick="change('');">C</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','4');">4</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','5');">5</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','6');">6</button>
+		<button class="button" style="margin-bottom: 40px;" onclick="change('');">-</button>
+		<br>
+		<button class="button" style="margin-right: 25px;"onclick="change('');">AC</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','1');">1</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','2');">2</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','3');">3</button>
+		<button class="button" style="margin-bottom: 40px;" onclick="change('');">+</button>
+		<br>
+		<button class="button" style="margin-right: 25px;"onclick="
+			if(display.innerHTML != 0) {
+				change('add','0');
+			};
+			">0</button>
+		<button class="button" style="margin-right: 25px;" onclick="
+			if(display.innerHTML != 0) {
+				change('add','00');
+			};
+		">00</button>
+		<button class="button" style="margin-right: 25px;" onclick="change('add','.');">.</button>
+		<button class="button" style="width:155px; background-color: #edd;" onclick="display.innerHTML = '自分で考えろ'">=</button>
+	</div>
+<script>
+	var display = document.getElementById("display");
+	function change(string,add) {
+		if(string !== "add"){
+			display.innerHTML = string;
+		} else {
+			display.innerHTML += add;
+		};
+	};
+</script>
+</body>
+</html>

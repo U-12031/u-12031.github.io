@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link rel="icon" href="img/Coin.svg">
+		<style>
+			body {
+				animation:backgroundGradation 5s linear infinite;
+			}
+			@keyframes backgroundGradation {
+				0% {background-color:#41fde3;}
+				50% {background-color:#00e4ff;}
+				100% {background-color:#41fde3;}
+			}
+			.inlineDiv {
+				display:inline-block;
+			}
+			.centered {
+				display:flex;
+				align-items:center;
+			}
+			.mainConnect {
+				display:grid;
+				grid-template-columns:auto 1fr;
+				grid-gap:5px;
+				align-items:center;
+				margin-bottom:-20px;
+			}
+			.subConnect {
+				display:grid;
+				grid-template-columns:auto 1fr;
+				align-items:center;
+			}
+			.mainButton {
+				background-color:#4287f5;
+				font-size:60px;
+				border:5px solid #009;
+				border-radius:100px;
+				cursor:pointer;
+			}
+			.mainButton:hover {
+				background-color:#3277e5;
+			}
+			.mainButton:active {
+				background-color:#2267d5;
+				border:5px solid #008;
+			}
+			.buyButton {
+				font-size:20px;
+				border-radius:20px;
+				cursor:pointer;
+			}
+			.yellowGradation {
+				animation:yellow 10s linear infinite;
+			}
+			@keyframes yellow {
+				0% {color:#ffe700;}
+				50% {color:#f90;}
+				100% {color:#ffe700;}
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--タイトル(一番上のやつ)-->
+		<h1 id="title" style="margin-top:5px;margin-bottom:0px;cursor:pointer;" onclick="
+			var promptResult = prompt('Title here',title);
+			if(promptResult!==null && promptResult!=='') {
+				if(promptResult=='random' || promptResult=='Random') {
+					title=randomTitle();
+				}else{
+					title=promptResult;
+				};
+			document.getElementById('title').innerHTML=title + ' tea factory';
+			}else{
+				title=title;
+			};
+		"></h1>
+		<!--開発者用ツール-->
+		<button onclick="
+			var developer = prompt('This is for developers.\nYou can use it to run any program you want.');
+			try {
+			eval(developer);
+			} catch(error) {
+				document.getElementById('developer').innerHTML='Error'
+				developer = 'Error';
+				var errorType = error.name;
+			} finally {
+				if(developer == 'Error') {
+					document.getElementById('developer').innerHTML=errorType;
+				}else{
+					if(developer !== '' && developer !== null) {
+						document.getElementById('developer').innerHTML='Executed!';
+					};
+				};
+			};
+		">Developer Tool</button>
+		<span id=developer></span>
+
+		<br>
+
+		<div class="mainConnect"><!--最初のCoin表示-->
+				<img src="img/Coin.svg" alt="Coin:" height="40px" width="40px">
+				<span id="coins" class="yellowGradation" style="font-size:40px;font-weight:bold;cursor:default;"></span>
+		</div>
+		<div class="subConnect" style="margin-top:20px;"><!--Cursor表示-->
+			<img src="img/Cursor.svg" alt="Click power:" height="30px" width="30px">
+			<span id="clPower" style="font-size:25px;cursor:default;"></span>
+		</div>
+		<div class="subConnect" style="margin-top:10px;"><!--CPS表示-->
+			<img src="img/CPS.svg" alt="CPS:" height="30px" width="30px">
+			<span id="cps" style="font-size:25px;margin-left:5px;cursor:default;"></span>
+		</div>
+		<!--"Click!"のボタン-->
+		<p><button id="click" class="mainButton" onclick="{
+			coinsLoad(clPower);
+		}" style="width:200px;height:200px;">Click!</button></p>
+
+		<p style="font-size:30px;font-weight:bold;margin-top:-5px;cursor:default;">Shop Corner</p>
+
+		<!--Buyボタンとか(×6)-->
+		<!-- 1 -->
+		<div class="centered">
+			<div class="centered">
+			<button id="button1" class="buyButton" style="width:125px;height:75px;" disabled="true" onclick="buyFn(1);">Buy</button>
+			<span id="buy1_quantity" style="margin-right:10px;margin-left:10px;font-size:40px;font-weight:bold;"></span>
+			</div>
+			<div class="inlineDiv">
+				<div style="margin-bottom:-30px;">
+					<img src="img/Cursor.svg" alt="Click Power:" height="15px" width="15px">
+					<span id="buy1_clPower" style="font-size:20px;"></span>
+				</div>
+				<br>
+				<div style="margin-bottom:-30px;">
+					<img src="img/CPS.svg" alt="CPS:" height="15px" width="15px">
+					<span id="buy1_cps" style="font-size:20px;margin-bottom:-37.5px;"></span>
+				</div>
+				<br>
+				<img src="img/Coin.svg" alt="Price:" height="26px" width="26px" style="margin-bottom:-3px;">
+				<span id="buy1_price" style="font-size:26px;"></span>
+			</div>
+		</div>
+
+		<!-- 2 -->
+		<div class="centered">
+			<div class="centered">
+			<button id="button2" class="buyButton" style="width:125px;height:75px;" disabled="true" onclick="buyFn(2);">Buy</button>
+			<span id="buy2_quantity" style="margin-right:10px;margin-left:10px;font-size:40px;font-weight:bold;"></span>
+			</div>
+			<div class="inlineDiv">
+				<div style="margin-bottom:-30px;">
+					<img src="img/Cursor.svg" alt="Click Power:" height="15px" width="15px">
+					<span id="buy2_clPower" style="font-size:20px;"></span>
+				</div>
+				<br>
+				<div style="margin-bottom:-30px;">
+					<img src="img/CPS.svg" alt="CPS:" height="15px" width="15px">
+					<span id="buy2_cps" style="font-size:20px;margin-bottom:-37.5px;"></span>
+				</div>
+				<br>
+				<img src="img/Coin.svg" alt="Price:" height="26px" width="26px" style="margin-bottom:-3px;">
+				<span id="buy2_price" style="font-size:26px;"></span>
+			</div>
+		</div>
+
+		<!-- 3 -->
+		<div class="centered">
+			<div class="centered">
+			<button id="button3" class="buyButton" style="width:125px;height:75px;" disabled="true" onclick="buyFn(3);">Buy</button>
+			<span id="buy3_quantity" style="margin-right:10px;margin-left:10px;font-size:40px;font-weight:bold;"></span>
+			</div>
+			<div class="inlineDiv">
+				<div style="margin-bottom:-30px;">
+					<img src="img/Cursor.svg" alt="Click Power:" height="15px" width="15px">
+					<span id="buy3_clPower" style="font-size:20px;"></span>
+				</div>
+				<br>
+				<div style="margin-bottom:-30px;">
+					<img src="img/CPS.svg" alt="CPS:" height="15px" width="15px">
+					<span id="buy3_cps" style="font-size:20px;margin-bottom:-37.5px;"></span>
+				</div>
+				<br>
+				<img src="img/Coin.svg" alt="Price:" height="26px" width="26px" style="margin-bottom:-3px;">
+				<span id="buy3_price" style="font-size:26px;"></span>
+			</div>
+		</div>
+
+		<!-- 4 -->
+		<div class="centered">
+			<div class="centered">
+			<button id="button4" class="buyButton" style="width:125px;height:75px;" disabled="true" onclick="buyFn(4);">Buy</button>
+			<span id="buy4_quantity" style="margin-right:10px;margin-left:10px;font-size:40px;font-weight:bold;"></span>
+			</div>
+			<div class="inlineDiv">
+				<div style="margin-bottom:-30px;">
+					<img src="img/Cursor.svg" alt="Click Power:" height="15px" width="15px">
+					<span id="buy4_clPower" style="font-size:20px;"></span>
+				</div>
+				<br>
+				<div style="margin-bottom:-30px;">
+					<img src="img/CPS.svg" alt="CPS:" height="15px" width="15px">
+					<span id="buy4_cps" style="font-size:20px;margin-bottom:-37.5px;"></span>
+				</div>
+				<br>
+				<img src="img/Coin.svg" alt="Price:" height="26px" width="26px" style="margin-bottom:-3px;">
+				<span id="buy4_price" style="font-size:26px;"></span>
+			</div>
+		</div>
+
+		<!-- 5 -->
+		<div class="centered">
+			<div class="centered">
+			<button id="button5" class="buyButton" style="width:125px;height:75px;" disabled="true" onclick="buyFn(5);">Buy</button>
+			<span id="buy5_quantity" style="margin-right:10px;margin-left:10px;font-size:40px;font-weight:bold;"></span>
+			</div>
+			<div class="inlineDiv">
+				<div style="margin-bottom:-30px;">
+					<img src="img/Cursor.svg" alt="Click Power:" height="15px" width="15px">
+					<span id="buy5_clPower" style="font-size:20px;"></span>
+				</div>
+				<br>
+				<div style="margin-bottom:-30px;">
+					<img src="img/CPS.svg" alt="CPS:" height="15px" width="15px">
+					<span id="buy5_cps" style="font-size:20px;margin-bottom:-37.5px;"></span>
+				</div>
+				<br>
+				<img src="img/Coin.svg" alt="Price:" height="26px" width="26px" style="margin-bottom:-3px;">
+				<span id="buy5_price" style="font-size:26px;"></span>
+			</div>
+		</div>
+
+		<!-- 6 -->
+		<div class="centered">
+			<div class="centered">
+			<button id="button6" class="buyButton" style="width:125px;height:75px;" disabled="true" onclick="buyFn(6);">Buy</button>
+			<span id="buy6_quantity" style="margin-right:10px;margin-left:10px;font-size:40px;font-weight:bold;"></span>
+			</div>
+			<div class="inlineDiv">
+				<div style="margin-bottom:-30px;">
+					<img src="img/Cursor.svg" alt="Click Power:" height="15px" width="15px">
+					<span id="buy6_clPower" style="font-size:20px;"></span>
+				</div>
+				<br>
+				<div style="margin-bottom:-30px;">
+					<img src="img/CPS.svg" alt="CPS:" height="15px" width="15px">
+					<span id="buy6_cps" style="font-size:20px;margin-bottom:-37.5px;"></span>
+				</div>
+				<br>
+				<img src="img/Coin.svg" alt="Price:" height="26px" width="26px" style="margin-bottom:-3px;">
+				<span id="buy6_price" style="font-size:26px;"></span>
+			</div>
+		</div>
+
+		<script>
+			var
+				titleDecide = {
+					random1:[
+						"\*\*\*\*","horse","computer","rabbit","frog","pig","star","cow","John","Alex","Steve","Liam","Noah","Mason","Ethan","Logan","Lucas","Jackson","Aiden","Oliver","Jacob","Emma","Olivia","Ava","Sophia","Isabella","Mia","Charlotte","Amelia","Emily","Madison"
+				],
+					random2:[
+					"secret","cheerful","convivial","withdrawn","optimistic","easy-going","harsh","kind","warmhearted","chatty","silent","obedient","twisted","independent","dependent","sincere","careful","careless","studious","lazy","brave","sociable","responsible","decisive","indecisive","precise",""
+				]
+			},
+			coins = 0n,
+			clPower = 1n,
+			cps = 0n,
+			title = randomTitle(),
+			buy = [
+			//[数,買ったら増えるclPower,買ったら増えるcps,値段,状態]
+			//[[1]]と[[2]]は特にBigIntにする意味はないのですが、Buyで加算するときに型変換がめんどくさいのでBigIntにしています
+				[0,1n,0n,20n,""],
+				[0,3n,1n,500n,""],
+				[0,10n,5n,10000n,""],
+				[0,25n,20n,200000n,""],
+				[0,300n,150n,5000000n,""],
+				[0,5000n,1000n,100000000n,""]
+			];
+			const
+				buyButtonInfo = [
+				//[background-color[通常,hover,active,disabled,disabled+hover],border[通常,active,disabled]]
+					[["#faa","#e99","#d88","#c77","#b66"],["#f55","#e44","#d33"],"#600"],//赤系
+					[["#ffa","#ee9","#dd8","#cc7","#bb6"],["#ff5","#ee4","#dd3"],"#330"],//黄系
+					[["#afa","#9e9","#8d8","#7c7","#6b6"],["#5f5","#4e4","#3d3"],"#060"],//緑系
+					[["#aff","#9ee","#8dd","#7cc","#6bb"],["#5ff","#4ee","#3dd"],"#033"],//水系
+					[["#aaf","#99e","#88d","#77c","#66b"],["#55f","#44e","#33d"],"#006"],//青系
+					[["#eee","#ddd","#ccc","#bbb","#aaa"],["#555","#444","#333"],"#222"] //白系
+				],
+				valName = ["quantity","clPower","cps","price"],
+				firstName = ["","+","+",""];
+			function valLoad(val,name) {
+				if(name == undefined) {
+					document.getElementById(val).innerHTML=window[val];
+				} else {
+					document.getElementById(name).innerHTML = val;
+				};
+			};
+			function coinsLoad(addCoins=0n) {
+				coins += addCoins;
+					valLoad("coins")
+				document.title = coins + " Coins";
+				try{
+					for(let i=1;i<buy.length+1;i++) {
+						if(buy[i-1][3] <= coins) {
+							document.getElementById("button" + i).disabled=false;
+							document.getElementById("button" + i).style.backgroundColor=buyButtonInfo[i-1][0][0];
+							document.getElementById("button" + i).style.border="3px solid " + buyButtonInfo[i-1][1][0];
+						}else{
+							document.getElementById("button" + i).disabled=true;
+							document.getElementById("button" + i).style.backgroundColor=buyButtonInfo[i-1][0][3];
+							document.getElementById("button" + i).style.border="3px solid " + buyButtonInfo[i-1][1][2];
+						};
+					};
+				}catch{};
+			};
+			function buyFn(number) {
+				coins -= buy[number-1][3];
+				buy[number-1][3] = BigInt(Math.ceil(Number(buy[number-1][3]) * 1.15));
+				clPower += buy[number-1][1];
+				cps += buy[number-1][2];
+				buy[number-1][0]++;
+				coinsLoad();
+				valLoad("clPower");
+				valLoad("cps");
+				shopLoad(number);
+			};
+			function randomTitle() {
+				return "The " + titleDecide.random1[Math.trunc(Math.random()*(titleDecide.random1.length))] + "'s " + titleDecide.random2[Math.trunc(Math.random()*(titleDecide.random2.length))];
+			};
+			function shopLoad(first,last) {
+				if(first == undefined){
+					for(let i=0;i<24;i++) {
+						valLoad(firstName[i%4]+buy[Math.floor(i/4)][i%4] , "buy"+(Math.trunc(i/4)+1)+"_"+valName[i%4])
+					};
+				} else {if(last == undefined){
+					for(let i=(first-1)*4;i<first*4;i++) {
+						valLoad(firstName[i%4]+buy[Math.floor(i/4)][i%4] , "buy"+(Math.trunc(i/4)+1)+"_"+valName[i%4])
+					};
+				} else {
+					for(let i=(first-1)*4;i<last*4;i++) {
+						valLoad(firstName[i%4]+buy[Math.floor(i/4)][i%4] , "buy"+(Math.trunc(i/4)+1)+"_"+valName[i%4])
+					};
+				};
+				};
+			};
+			function power(number=10) {
+				coinsLoad(10n**BigInt(number));
+			};
+			coinsLoad();
+			valLoad(title + " coin factory","title");
+			valLoad("clPower");
+			valLoad("cps");
+			shopLoad();
+			for(let i=1;i<buy.length+1;i++) {
+				document.getElementById("button" + i).style.color=buyButtonInfo[i-1][2];
+			};
+			for(let i=1;i<=6;i++) {
+				let button = document.getElementById("button" + i);
+				if(button) {
+					button.addEventListener("mouseenter",() => {
+						if(!button.disabled) {
+							button.style.backgroundColor = buyButtonInfo[i-1][0][1];
+						};
+					});
+					button.addEventListener("mouseleave",() => {
+						if(!button.disabled) {
+							button.style.backgroundColor = buyButtonInfo[i-1][0][0];
+						};
+					});
+				};
+			};
+			setInterval(() => {
+				coinsLoad(cps/40n);
+			},25);
+		</script>
+	</body>
+</html>

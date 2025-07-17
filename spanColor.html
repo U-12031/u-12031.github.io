@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>数字によって文字色が変わるプログラム</title>
+	<style>
+		input:not(#val,#onclick) {
+			width: 100px;
+		}
+	</style>
+</head>
+<body>
+	<span id="span" style="font-size: 50px; font-weight: bold;" title="色が変わるよ">0</span>
+	<span id="span2"></span>
+	<br>
+	<input id="val" type="number" step="1">
+	<button onclick="el('val').value=Number(el('val').value)*2;colorFn()">*2</button>
+	<button onclick="el('val').value=Number(el('val').value)**2;colorFn()">^2</button>
+	<br>
+	Step:<input id="step" type="number" step="1">
+	<br>
+	setInterval(color(),<input id="interval" type="number" step="10" min="0"value="100">)
+	<button onclick="setInterval(() => {el('val').value=Number(el('val').value)*2;colorFn()},el('interval').value)">play</button>
+	<button onclick="var result = prompt(); try {eval(`alert(${result});`)} catch(error) {alert(error.name)}">Developer tool</button>
+	<br>
+	<button id="execute">Execute</button>
+	<br>
+	onclick="<input id="onclick">"
+	<script>
+		var
+			color = [[0,0,255],[0,128,255],[0,255,255],[0,255,128],[0,255,0],[128,255,0],[255,255,0],[255,128,0],[255,0,0],[255,0,128],[255,0,255],[128,0,255]],
+			nowColor = [0,0,0],
+			val = 0n;
+		function el(id) {return document.getElementById(id)};
+		function colorFn() {
+			val = BigInt(el("val").value);
+			el("span").innerHTML = val;
+			for(let i=0;i<3;i++) {
+				nowColor[i] = (color[String(val).length%color.length][i] - color[(String(val).length-1)%color.length][i]) * Number(val)/(10**(String(val).length)) + color[(String(val).length-1)%color.length][i];
+			};
+			el("span").style.color = `rgb(${nowColor[0]},${nowColor[1]},${nowColor[2]})`
+		};
+		colorFn();
+		el("val").addEventListener("input",() => {
+			colorFn();
+		});
+		el("step").addEventListener("input",() => {
+			el("val").step = el("step").value;
+		});
+		el("onclick").addEventListener("input",() => {
+			el("execute").onclick = el("onclick").value
+		});
+	</script>
+</body>
+</html>

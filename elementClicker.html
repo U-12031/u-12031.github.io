@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>放置ゲー</title>
+	<style>
+		body {
+			height: 100%;
+		}
+
+		@font-face {
+			font-family: "numFont";
+			src: url("font/simpleFont3-regular.ttf");
+		}
+
+		.anotherNum {font-family: "numFont";}
+
+		@font-face {
+			font-family: "japaneseFont";
+			src: url("font/japaneseFont-Bold.ttf");
+		}
+
+		* {font-family: "japaneseFont";}
+
+		#japaneseSpan {
+			position: absolute;
+			left: 50vw;
+			translate: -50%;
+			margin-top: 50px;
+			font-size: 30px;
+		}
+
+		#mainBt {
+			position: absolute;
+			top: calc(40vh - 100px);
+			left: calc(50vw - 100px);
+			height: 200px;
+			width: 200px;
+			border-radius: 100%;
+			border: 5px solid black;
+			font-size: 90px;
+			line-height: 200px;
+		}
+
+		#mainBtElName {
+			position: absolute;
+			left: 0;
+			translate: calc((200px - 100%) / 2);
+			z-index: 1;
+		}
+
+		#mainBt>div:not(#mainBtElName) {
+			position: absolute;
+			top: 0;
+			left: 0;
+			translate: calc((200px - 100%) / 2) calc((200px - 100%) / 2);
+			border-radius: 100%;
+			border: 1px solid #ccca;
+		}
+
+		#mainBt>div:not(#mainBtElName)>div {
+			position: absolute;
+			left: 20px;
+			width: 8px;
+			height: 8px;
+			border-radius: 100%;
+			border: 0;
+			background-color: #49c;
+		}
+
+		#title {
+			position: fixed;
+			top: 0;
+			left: 0;
+			padding: 5px 10px 10px 5px;
+			border-bottom-right-radius: 30px;
+		}
+
+		#window {
+			position: absolute;
+			top: 70vh;
+		}
+
+		#tabMenu {
+			width: calc(100vw - 10px);
+			background-color: #e8edf1;
+			margin-top: 10px;
+			border: 0;
+			border-bottom: 2px solid #aaa;
+			border-radius: 15px 15px 0 0;
+			text-align: left;
+			padding: 5px;
+			padding-bottom: 0;
+			margin: 0;
+		}
+
+		#tabMenu>button {
+			width: 10%;
+			min-height: 30px;
+			border-radius: 10px 20px 0 2px;
+			border-width: 2px;
+			border-bottom-width: 0;
+			text-align: start;
+			font-size: 17px;
+		}
+
+		#tabMenu>button:active {filter: brightness(95%);}
+
+		#menuParent {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: stretch;/*横幅いっぱい*/
+			height: 100px;
+			background-color: #adf;
+			margin: 0;
+			padding-top: 10px;
+			overflow-y: auto;
+		}
+
+		#menuParent>div {
+			margin: 0;
+			width: stretch;
+			height: stretch;
+		}
+
+		.cursorMenu {
+			display: none;/*初期値として*/
+			position: absolute;
+			pointer-events: none;
+			padding: 3px;
+			background-color: #111c;
+			border-radius: 10px;
+			width: 400px
+		}
+
+		.cursorMenu,.cursorMenu * {
+			font-size: 12.5px;/*初期値として*/
+			letter-spacing: 1.25px;/*初期値として*/
+			color: #ccc;
+			word-break: break-all;
+		}
+	</style>
+	<script>
+		const
+			menuColor = {
+				noSelected : ["#bed","#ace","#ccc"],
+				selected : ["#dfe","#def","#eee"]
+			},
+			symbol = [
+				"H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"
+			],
+			japanese = [
+				"水素","ヘリウム","リチウム","ベリリウム","ホウ素","炭素","窒素","酸素","フッ素","ネオン","ナトリウム","マグネシウム","アルミニウム","ケイ素","リン","硫黄","塩素","アルゴン","カリウム","カルシウム","スカンジウム","チタン","バナジウム","クロム","マンガン","鉄","コバルト","ニッケル","銅","亜鉛","ガリウム","ゲルマニウム","ヒ素","セレン","臭素","クリプトン","ルビジウム","ストロンチウム","イットリウム","ジルコニウム","ニオブ","モリブデン","テクネチウム","ルテニウム","ロジウム","パラジウム","銀","カドミウム","インジウム","スズ","アンチモン","テルル","ヨウ素","キセノン","セシウム","バリウム","ランタン","セリウム","プラセオジム","ネオジム","プロメチウム","サマリウム","ユウロピウム","ガドリニウム","テルビウム","ジスプロシウム","ホルミウム","エルビウム","ツリウム","イッテルビウム","ルテチウム","ハフニウム","タンタル","タングステン","レニウム","オスミウム","イリジウム","白金","金","水銀","タリウム","鉛","ビスマス","ポロニウム","アスタチン","ラドン","フランシウム","ラジウム","アクチニウム","トリウム","プロトアクチニウム","ウラン","ネプツニウム","プルトニウム","アメリシウム","キュリウム","バークリウム","カリホルニウム","アインスタイニウム","フェルミウム","メンデレビウム","ノーベリウム","ローレンシウム","ラザホージウム","ドブニウム","シーボーギウム","ボーリウム","ハッシウム","マイトネリウム","ダームスタチウム","レントゲニウム","コペルニシウム","ニホニウム","フレロビウム","モスコビウム","リバモリウム","テネシン","オガネソン"
+			],
+			english = [
+				"Hydrogen","Helium","Lithium","Beryllium","Boron","Carbon","Nitrogen","Oxygen","Fluorine","Neon","Sodium","Magnesium","Aluminum","Silicon","Phosphorus","Sulfur","Chlorine","Argon","Potassium","Calcium","Scandium","Titanium","Vanadium","Chromium","Manganese","Iron","Cobalt","Nickel","Copper","Zinc","Gallium","Germanium","Arsenic","Selenium","Bromine","Krypton","Rubidium","Strontium","Yttrium","Zirconium","Niobium","Molybdenum","Technetium","Ruthenium","Rhodium","Palladium","Silver","Cadmium","Indium","Tin","Antimony","Tellurium","Iodine","Xenon","Cesium","Barium","Lanthanum","Cerium","Praseodymium","Neodymium","Promethium","Samarium","Europium","Gadolinium","Terbium","Dysprosium","Holmium","Erbium","Thulium","Ytterbium","Lutetium","Hafnium","Tantalum","Tungsten","Rhenium","Osmium","Iridium","Platinum","Gold","Mercury","Thallium","Lead","Bismuth","Polonium","Astatine","Radon","Francium","Radium","Actinium","Thorium","Protactinium","Uranium","Neptunium","Plutonium","Americium","Curium","Berkelium","Californium","Einsteinium","Fermium","Mendelevium","Nobelium","Lawrencium","Rutherfordium","Dubnium","Seaborgium","Bohrium","Hassium","Meitnerium","Darmstadtium","Roentgenium","Copernicium","Nihonium","Flerovium","Moscovium","Livermorium","Tennessine","Oganesson"
+			],
+			color = [//それぞれの元素のカラー値　rgb値だけで管理すると透明度を追加できたりするから便利
+				"246,246,246","217,255,255","204,128,255","194,255,0","255,181,181","102,102,102","12,12,255","255,12,12","128,179,255","179,227,245","171,92,243","138,255,0","191,166,166","128,153,153","255,128,0","179,179,0","30,240,30","128,209,227","143,64,212","61,255,0","230,230,230","191,194,199","166,166,171","138,153,199","156,122,199","225,102,51","240,143,161","79,209,79","199,128,51","125,128,176","194,143,143","102,143,143","189,128,227","255,161,0","166,40,40","92,184,209","112,46,176","0,255,0","148,255,255","148,225,225","115,194,202","84,181,181","58,158,158","35,143,143","10,125,140","0,104,133","225,225,255","255,217,143","166,117,115","102,128,128","158,99,181","212,122,0","148,0,148","66,158,176","87,23,143","0,202,0","112,212,255","255,255,199","217,255,199","199,255,199","163,255,199","143,255,199","97,255,199","69,255,199","48,255,199","30,255,199","0,255,156","0,230,117","0,212,81","0,191,56","0,171,35","76,194,255","76,166,255","33,148,215","38,125,171","38,102,151","23,84,135","245,238,209","204,209,30","181,181,194","166,84,76","87,89,97","158,79,181","171,92,0","117,79,69","66,130,151","66,0,102","0,125,0","112,171,250","0,186,255","0,161,255","0,143,255","0,128,255","0,107,255","84,92,243","120,92,227","138,79,227","161,53,212","179,30,212","179,30,186","179,12,166","189,12,135","199,0,102","204,0,89","209,0,79","217,0,69","225,0,56","230,0,46","235,0,38","238,0,35","240,0,33","243,0,30","245,0,28","253,0,20","250,0,23","253,0,20","253,0,20","253,0,20"
+			],
+			elctConf = {
+				max : [2,8,18,32,32,18,8],
+				exception : { // 一つの例として
+					no1 : [1,2]
+				}
+			},
+			englishNum = [
+				["","K","M","B","T","q","Q","s","S","O","N",""],//0
+				["","U","D","T","q","Q","s","S","O","N",""],//1
+				["","D","V","TR","QU","QI","SX","SP","OC","NO",""],//2
+				["","CE","Du","Te","Qr","Qn","Ss","St","Ot","Nn",""],//3
+				"Mi",//4
+			],
+			/* 順番
+				[2がないなら0,あるなら1][2][3]
+				[4]はラスト(それしかつけない)
+				[0] 1=10^0 ~ 1N=10^30
+				[1] 1D = 10^33 ~ 1ND=10^60
+				[2] 1D = 10^33 ~ 1NO = 273
+				[3] 1CE = 10^303 ~ 1Nn = 10^2703
+				[4] 1Mi = 10^3003
+			*/
+			japaneseNum = [
+				["","万","億","兆","京","垓","𥝱","穣","溝","澗","正","載","極","恒河沙","阿僧祇","那由他","不可思議","無量大数"],
+				"洛叉",
+				["倶胝","阿庾多","那由他","頻波羅","矜羯羅","阿伽羅","最勝","摩婆羅","阿婆羅","多婆羅","界分","普摩","禰摩","阿婆鈐","弥伽婆","毘攞伽","毘伽婆","僧羯邏摩","毘薩羅","毘贍婆","毘盛伽","毘素陀","毘婆訶","毘薄底","毘佉擔","称量","一持","異路","顛倒","三末耶","毘睹羅","奚婆羅","伺察","周広","高出","最妙","泥羅婆","訶理婆","一動","訶理蒲","訶理三","奚魯伽","達攞歩陀","訶魯那","摩魯陀","懺慕陀","瑿攞陀","摩魯摩","調伏","離憍慢","不動","極量","阿麼怛羅","勃麼怛羅","伽麼怛羅","那麼怛羅","奚麼怛羅","鞞麼怛羅","鉢羅麼怛羅","尸婆麼怛羅","翳羅","薜羅","諦羅","偈羅","窣歩羅","泥羅","計羅","細羅","睥羅","謎羅","娑攞荼","訶羅荼","嚩羅荼","室羅荼","一羅荼","須婆羅","阿婆羅","奚婆羅","毘婆羅","極羅","阿伽羅","摩伽羅","須陀羅","阿蘇羅","婆蘇羅","婆訶羅","阿訶羅","婆蘇訶羅","阿蘇訶羅","摩訶訶羅","須摩訶羅","波摩訶羅","摩訶摩訶羅","須摩訶摩訶羅","波摩訶摩訶羅","阿僧祇","那由他","頻波羅","恒河沙","阿僧祇恒河沙","不可説","不可説転","不可説不可説","不可説不可説転"]
+			];
+			/*
+				[2][0]=10^5
+				[2][1]=10^7
+				[2][1+n]=10^(7*2^n)
+			*/
+		let
+			cursorMenuPosition = {},
+			volume = Array.from({length:118},()=>0n),
+			clLv = Array.from({length:118},()=>0n),
+			needCl = Array.from({length:118},()=>20n),
+			eps = Array.from({length:118},()=>0n),//eps = Element Par Second
+			nowEl = 0;
+		function el(id) {return document.getElementById(id)};
+		function createEl(elementName,placeId,info) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+		function creCursorMenu(origId,option={}) {
+			/*引数の入れ方
+				origId:元の要素のID
+				option:カーソルメニューの属性*/
+			let newId = origId + "CursorMenu";
+			cursorMenuPosition[origId] = [0,0];
+			el(origId).style.position = "relative";
+			createEl("div","body",Object.assign({id:newId,},option));
+			el(newId).classList.add("cursorMenu");
+			el(origId).addEventListener("mousemove",(event)=>{
+				if(cursorMenuPosition[origId][0] < el(newId).clientWidth) {cursorMenuPosition[origId][0] = el(newId).clientWidth;};
+				if(cursorMenuPosition[origId][1] < el(newId).clientHeight) {cursorMenuPosition[origId][1] = el(newId).clientHeight};
+				el(newId).style.display = "flex";
+				if(event.pageX <= window.innerWidth - cursorMenuPosition[origId][0]) {//もしカーソルのX座標が(ウィンドウの横幅-要素の横幅)以下なら
+					el(newId).style.left = event.pageX + "px";
+				} else {
+					el(newId).style.left = (window.innerWidth - el(newId).clientWidth) + "px";
+				};
+				if(event.pageY <= window.innerHeight - cursorMenuPosition[origId][1]) {//上のやつをYにしてやってる
+					el(newId).style.top = event.pageY + "px";
+				} else {
+					el(newId).style.top = (window.innerHeight - el(newId).clientHeight) + "px";
+				};
+			});
+			el(origId).addEventListener("mouseleave",() => {
+				el(newId).style.display = "none";
+			});
+		};
+		function changeEl(dest,add=false) {
+			if(add) {
+				nowEl += Number(dest);
+				if(nowEl <= 0) {nowEl = 118;};
+				if(nowEl >= 119) {nowEl = 1;};
+			} else {
+				nowEl = Number(dest);
+				if(nowEl <= 0) {nowEl = 1;};
+				if(nowEl >= 119) {nowEl = 118;};
+			};
+			el("mainBtElName").innerHTML =	symbol[nowEl-1];
+			el("elNum").innerHTML = "No. " + nowEl;
+			el("title").style.backgroundColor = `rgba(${color[nowEl-1]},0.4)`;
+			el("japaneseSpan").innerHTML = japanese[nowEl-1];
+			el("mainBt").style.backgroundColor = `rgb(${color[nowEl-1]})`;
+			if(Number(color[nowEl-1].slice(0,1))+Number(`0x${color[nowEl-1].slice(3,4)}`)+Number(`0x${color[nowEl-1].slice(5,6)}`) < 382) {
+				el("mainBt").style.color = "#fff";
+			} else {
+				el("mainBt").style.color = "#000";
+			};
+		};
+		function changeMenu(num) {
+			const parentNum = el("tabMenu").children.length;
+			for(let i=0;i<parentNum;i++) {
+				if(num == i+1) {
+					el(`tab${i+1}`).style.backgroundColor = menuColor.selected[i];
+					el(`tab${i+1}`).style.color = "#000";
+					el(`menu${i+1}`).style.display = "initial";
+				} else {
+					el(`tab${i+1}`).style.backgroundColor = menuColor.noSelected[i];
+					el(`tab${i+1}`).style.color = "#555"
+					el(`menu${i+1}`).style.display = "none";
+				};
+			};
+			el("menuParent").style.backgroundColor = menuColor.selected[num-1]
+		};
+		function saveData(key,data) {
+			localStorage.setItem(String(key),String(data));
+			return data;
+		};
+		function data(key) {
+			return localStorage.getItem(String(key));
+		};
+		function conversion(num,output,mode) {
+			let
+				value = String(num),
+				length = value.length;
+			if(mode === "english") {
+				el("output").innerHTML = englishConv(value,length);
+			} else {
+				if(mode === "japanese") {
+					el("output").innerHTML = japaneseConv(value,length);
+				} else {
+					el("output").innerHTML = powerConv(value,length);
+				};
+			};
+		};
+		function englishConv(value,length) {
+			if(length >= 3004) {
+				if(length <= 3006) {
+					return `${value.slice(0,length%3003)}.${value.slice(length%3003,(length%3003+3))}${englishNum[4]}`;//4
+				} else {
+					return `≧1000${englishNum[4]}`;
+				};
+			} else {
+				if(length <= 3) {return value;} else {
+					return ((length <= 3) ?
+						value :
+						`${value.slice(0,(length-1)%3+1)}.${value.slice((length-1)%3+1,(length-1)%3+4)}`) +
+						(englishNum[length >= 34 ? 1 : 0][Math.trunc(
+							((length >= 34) ? 
+								(((length-7)%30)+3)/3 :
+								((length >= 34) ?
+									((length <=36) ?
+										0 :
+										((((length-7)%30)+3)/3)) :
+									(((length-4)%30)+3)/3)))]) +//0,1のやつ
+						(englishNum[2][Math.trunc((((length-7)%300)+3)/30)]) +//2
+						(englishNum[3][Math.trunc((((length-7)%3000)+3)/300)]);//3
+				}
+			};
+		};
+		function japaneseConv(value,length) {
+			if(length <= 4) {return value;} else {
+				if(length <= 72) {
+					return `${value.slice(0,(length-1)%4+1)}.${value.slice((length-1)%4+1,(length-1)%4+4)}` + (japaneseNum[0][Math.trunc((length-1)/4)]);
+				} else {
+					let
+						temporany = "",
+						binary = Math.trunc((length-1)/7).toString(2);
+					for(let i=0;i<binary.length;i++) {
+						if(Number(binary.slice(-(i+1)))) {
+							temporany += japaneseNum[2][i];
+						};
+					};
+					return (((length-1)%7+1 <= 5) ?
+						(`${value.slice(0,(length-1)%7+1)}.${value.slice((length-1)%7+1,(length-1)%7+4)}`) :
+						(`${value.slice(0,(length-1)%7-4)}.${value.slice((length-1)%7-4,(length-1)%7-1)}${japaneseNum[1]}`)) +
+						temporany;
+				};
+			};
+		};
+		function powerConv(value,length) {
+			if(length == 1) {
+				return value + " × 10^0"
+			} else {
+				return `${value[0]}.${value.slice(1,4)} × 10^${length-1}`;
+			};
+		};
+	</script>
+</head>
+<body id="body" style="text-align: center;margin: 0;">
+	<div>
+		<div id="title">
+			<span style="text-align: left; font-size: 35px; font-weight: bold;">Element Clicker</span>
+		</div>
+		<div style="position: absolute; top: 10px; right: 10px;">
+			<button onclick="changeEl(-1,true)">◀</button>
+			<span id="elNum"></span>
+			<button onclick="changeEl(+1,true)">▶</button>
+			<input type="number" id="jumpNum" style="width: 40px;" min="1" max="118">
+			<button id="jumpBt" onclick="changeEl(Number(el('jumpNum').value));">番にジャンプ</button>
+		</div>
+	</div>
+	<p id="japaneseSpan" class="japanese"></p>
+	<div id="mainBt">
+		<div id="mainBtElName" class="anotherNum"></div>
+		<div id="elctCell1" style="width: 90px; height: 90px;">
+			<div id="electronic1-1"></div>
+			<div id="electronic1-2"></div>
+		</div>
+		<div id="elctCell2" style="width: 105px; height: 105px;"></div>
+		<div id="elctCell3" style="width: 120px; height: 120px;"></div>
+		<div id="elctCell4" style="width: 135px; height: 135px;"></div>
+		<div id="elctCell5" style="width: 150px; height: 150px;"></div>
+		<div id="elctCell6" style="width: 165px; height: 165px;"></div>
+		<div id="elctCell7" style="width: 180px; height: 180px;"></div>
+	</div>
+	<!-- 円のやつ、棒グラフみたいなやつがほしい　mainBtが一番下に横長にあって、そこからそれぞれの棒が生えてる感じ -->
+	<!-- newerアイデア そのボタンの内側の外側でその元素の数に応じた電子が回ってるやつが欲しい -->
+	<br>
+	<div id="window">
+		<div id="tabMenu">
+			<button id="tab1" onclick="changeMenu(1)">ショップ</button>
+			<!-- アイデア　買ったやつのプルダウン(見た目 + と - が良いかも)にアップグレードを表示して買えるようにする　(元素名)用"あなた"　特殊なタグを利用して説明を追加する　AIの追加(オンオフ可) 最初は-200~100くらいの乱数でゲットするが、いろいろなものを買うことでその乱数の数を上げたり、乱数をつくる間隔を短くしたりできるようにする -->
+			<button id="tab2" onclick="changeMenu(2)">粒子加速器</button>
+			<!-- アイデア　成功する確率を上げるshop　自動で挑戦するbotのshop(オンオフ変えれる、時間を上げる) -->
+			<button id="tab3" onclick="changeMenu(3)">設定</button>
+		</div>
+		<div id="menuParent">
+			<div id="menu1">あ</div>
+			<div id="menu2">い</div>
+			<div id="menu3">う</div>
+		</div>
+	</div>
+	<div id="bigDiv"></div>
+	<script>
+		try {
+		changeEl(1);
+		}catch(error) {alert(`${error.name}\n${error.stack}`)}
+		changeMenu(1);
+		creCursorMenu("menuParent",{innerHTML:"<span>これはすごく長い文章、いわば長文です。<br>この文章は、このHTMLファイルを作成するにあたってのテストとして活用されています。<br>このテキストを作ることで、しっかりと思い通りにプログラムが動いているのか確かめることができます！"});
+	</script>
+	</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ボボボ</title>
+	<style>
+		#timeOut {
+			width: 50px;
+		}
+		:not(#span) {
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	間隔<input id="timeOut" type="number" value="10"></input>ms
+	<button id="start" onclick="
+		for(var i=0;i<contents.length;i++) {
+			window['fn'+(i+1)] = fn(i);
+		};
+		el('timeOut').disabled = 'true';
+		el('start').disabled = 'true';
+		el('answer').disabled = 'true';
+		fn1();
+	">スタート</button>
+	<span style="margin-left: 50px;">完成した回数:</span>
+	<span id="times"></span>
+	<br>
+	完成した文章<input id="answer" value="ボボボーボ・ボーボボ">
+	<br>
+	<div id="outside"></div>
+	<script>
+		var
+			howMany = 1,
+			contents = [
+				["ボ",[1,2,3],[0.5,0.17,0.33]],
+				["・",[1],[1]],
+				["ー",[1],[1]],
+			],
+			spans = [[document.createElement("span")],[]];
+		spans[0][0].id="span1";
+		el("outside").appendChild(spans[0][0]);
+		el("times").innerHTML = 0;
+		function el(id) {return document.getElementById(id)};
+		function spanEl() {return el("span"+howMany)};
+		function answer() {return el("answer").value};
+		function fn(n) {return () => {input(contents[n][0],contents[n][1],contents[n][2])}};
+		function input(character,nextFn,prob) {
+			//完成した文章の色付け
+			if(spanEl().innerHTML.length >= Number(answer().length)){
+				if(spanEl().innerHTML.slice(-(answer().length)) == answer()) {
+					spanEl().innerHTML = spanEl().innerHTML.slice(0,-(answer().length));
+					spans[1][howMany-1] = document.createElement("span");
+					spans[1][howMany-1].innerHTML = answer();
+					spans[1][howMany-1].style.color = "#f00";
+					spans[1][howMany-1].style.backgroundColor = "#fea"
+					spans[0][howMany] = document.createElement("span");
+					spans[0][howMany].id = "span"+(howMany+1);
+					el("outside").appendChild(spans[1][howMany-1]);
+					el("outside").appendChild(spans[0][howMany]);
+					el("times").innerHTML = howMany
+					howMany++;
+				};
+			};
+			//文章の追加,次の関数への引き渡し
+			el("span"+howMany).innerHTML += character;
+			setTimeout(() => {
+				if(prob == [1]) {
+					eval(`fn${nextFn[0]}()`)
+				} else {
+					var random = Math.random();
+					console.log(el("timeOut").value)
+					loop: for(let i=0;i<prob.length;i++) {
+						if(random < prob[i]) {
+							eval(`fn${nextFn[i]}()`)
+							break loop;
+						} else {
+							random -= prob[i];
+						};
+					};
+				};
+			},Number(el("timeOut").value));
+		};
+	</script>
+</body>
+</html>

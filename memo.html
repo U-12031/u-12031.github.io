@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Memo</title>
+	<style>
+		@font-face {
+			font-family: "original";
+			src: url("font/simpleFont3-regular.ttf");
+		}
+
+		* {font-family: "original";}
+
+		body {margin: 0;}
+
+		body>div:has(#title) {
+			background-color: #f0d6d1;
+		}
+		
+		#title {
+			padding: 0 10px;
+			width: 290px;
+			height: 45px;
+			background-color: #ffe3dd;
+			border-bottom-right-radius: 30px;
+			font-size: 30px;
+		}
+
+		#tabMenu {
+			display: flex;
+			position: absolute;
+			top: 10px;
+			right: 0;
+			margin: 0;
+			background-color: #e1ede1;
+			flex-wrap: nowrap;
+			overflow-x: auto;
+			height: 35px;
+			width: calc(100vw - 310px);
+			border-radius: 10px 30px 0 0;
+		}
+
+		#tabMenu>button {
+			margin-top: 5px;
+			padding-left: 3px;
+			border-radius: 10px 20px 0 2px;
+			border-width: 2px;
+			border-bottom-width: 0;
+			width: 180px;
+			white-space: nowrap;
+			overflow-x: scroll;
+			overflow-y: hidden;
+			height: 30px;
+			font-size: 20px;
+			text-align: start;
+		}
+
+		#tabMenu>button:active {
+			filter: brightness(95%);
+		}
+
+		h1 {margin-bottom: 0;}
+
+		h2 {
+			margin-top: 15px;
+			margin-left: 5px;
+		}
+		h3 {margin-left: 15px;}
+
+		table {
+			margin-left: 20px;
+			border-collapse: collapse;
+			border: 2.5px solid black;
+		}
+
+		tr,td,th {
+			border: 1px solid black;
+			padding: 3px;
+			text-align: center;
+		}
+
+		code {
+			font-weight: normal;
+			font-size: 15px;
+			margin: 0 5px;
+			padding: 0 3px;
+			padding-top: 4px;
+			background-color: #e8e8e8;
+			border-radius: 3px;
+		}
+
+		code,pre,pre * {
+			font-family: "monospace";
+			letter-spacing: 0.5px;
+		}
+
+		pre {
+			color: #f8f8f2;
+			overflow: scroll;
+			font-size: 15px;
+			text-align: left;
+			tab-size: 2;
+			width: 50vw;
+			padding: 10px 10px;
+			background-color: #222;
+			border-radius: 10px;
+			margin-left: 20px;
+			white-space: pre-line;
+		}
+
+		table pre {
+			width: 350px;
+			margin: 5px;
+
+		}
+
+		#visited,#link {height: auto !important;}
+
+		#window3 td>*:not(code,.noStyle) {
+			display: flex;
+			width: 100px;
+			height: 2rem;
+			margin: 5px auto;
+			font-size: 10px;
+			border: 0;
+			background-color: #1cf;
+			overflow: scroll;
+		}
+
+		#window3 table tr td>.canNotMake {
+			background-color: #aaa;
+			line-height: 1em;
+		}
+
+		#window3 td>* * {
+			display: flex;
+			width: 1.5em;
+			height: 1.5em;
+			margin: auto;
+			border: 0;
+			border-radius: 0.75em;
+			background-color: #fc1;
+		}
+
+		#window3 td>input {
+			width: 100px;
+			font-size: 10px;
+		}
+
+		dialog button {
+			background-color: #1cf;
+			border: 0;
+			border-radius: 5px;
+		}
+
+		#window3 #active:active {background-color: #f60;}
+
+		#window3 #hover:hover {background-color: #f60;}
+
+		#window3 #focus:focus {background-color: #f60;}
+
+		#window3 #focusVisible:focus-visible {background-color: #f60;}
+
+		#window3 #focusWithin:focus-within {background-color: #f60}
+
+		#window3 #fullscreen:fullscreen {
+			font-size: 70px;
+			background-color: #f60;
+		}
+
+		#window3 #pictureInPicture:picture-in-picture {background-color: #f60;}
+		
+		:modal {background-color: #f60;}
+
+		#window3 #link:link {background-color: #f60;}
+
+		#window3 #visited:visited {background-color: #f60;}
+
+		#window3 #anyLink:any-link {background-color: #f60;}
+
+		#window3 #target:target {background-color: #f60;}
+
+		#window3 #targetWithin:target-within {background-color: #f60;}
+
+		#localLink:local-link {background-color: #f60;}
+
+		/*:scope {
+			background-color: #f60;
+		}*/
+		.w {/*white*/ color: #f8f8f2;}
+
+		.p {/*purple*/ color: #ae81ff;}
+
+		.r {/*red*/ color: #f92672;}
+
+		.y {/*yellow*/ color: #e6db74;}
+
+		.c {/*cyan*/ color: #66d9ef;}
+
+		.o {/*orange*/ color: #fd971f;}
+
+		.com {/*comment*/ color: #75715e;}
+
+		.g {/*green*/ color: #a6e22e;}
+
+		.er {/*error*/ text-decoration: underline #f44747 wavy 1.5px;}
+
+		.in {/*info*/ text-decoration: underline #6796e6 wavy 1.5px;	}
+
+		li {
+			font-size: 22.5px;
+			margin-left: -5px;
+		}
+
+		.miniFont {
+			font-size: 90%;
+		}
+	</style>
+	<style id="style"></style>
+</head>
+<body id="body">
+	<div>
+		<div id="title">Programming Memo</div>
+		<div id="tabMenu">
+			<button id="tab1" onclick="changeWindow(1)">Mathオブジェクト</button>
+			<button id="tab2" onclick="changeWindow(2)">プロパティ･メソッドの違い</button>
+			<button id="tab3" onclick="changeWindow(3)">擬似クラス･疑似要素</button>
+			<button id="tab4" onclick="changeWindow(4)">使えるCSS</button>
+			<button id="tab5" onclick="changeWindow(5)">Emmet記法</button>
+		</div>
+	</div>
+	<div id="windows">
+		<div id="window1">
+			<h1>Mathオブジェクト</h1>
+			<h2>切り捨て･切り上げ系</h2>
+			<table><!--<tbody>は省略-->
+				<tr>
+					<td style="width: 150px;"><code>Math.round()</code></td>
+					<td style="width: 250px;">四捨五入</td>
+				</tr>
+				<tr>
+					<td><code>Math.ceil()</code></td>
+					<td>切り上げ</td>
+				</tr>
+				<tr>
+					<td><code>Math.floor()</code></td>
+					<td>切り捨て</td>
+				</tr>
+				<tr>
+					<td><code>Math.trunc()</code></td>
+					<td>小数点以下を切り取る</td>
+				</tr>
+			</table>
+			<h3><code>Math.floor()</code>と<code>Math.trunc()</code>の違い</h3>
+			<pre>
+				<span class="g">console</span>.<span class="g">log</span>(<span class="g">Math</span>.<span class="g">floor</span>(<span class="p">-1.234</span>)) <span class="com">//切り捨て = 数値以下の最大の整数を返す
+				> -2</span>
+				<span class="g">console</span>.<span class="g">log</span>(<span class="g">Math</span>.<span class="g">trunc</span>(<span class="p">-1.234</span>)) <span class="com">//単純に小数点以下をなくす
+				> -1</span>
+			</pre>
+			<h2>その他のMathオブジェクトのメソッド</h2>
+			<table><!--<tbody>は省略-->
+				<tr>
+					<td style="width: 150px;"><code>Math.abs()</code></td>
+					<td style="width: 250px;">絶対値</td>
+				</tr>
+				<tr>
+					<td><code>Math.sqrt()</code></td>
+					<td>平方根(√)</td>
+				</tr>
+				<tr>
+					<td><code>Math.cbrt()</code></td>
+					<td>立方根(3乗根、<sup>3</sup>√)</td>
+				</tr>
+				<tr>
+					<td><code>Math.exp()</code></td>
+					<td>e(ネイピア数)の累乗</td>
+				</tr>
+				<tr>
+					<td><code>Math.log()</code></td>
+					<td>自然対数(log<sub>e</sub>)</td>
+				</tr>
+				<tr>
+					<td><code>Math.log2()</code></td>
+					<td>底を2とした対数(log<sub>2</sub>)</td>
+				</tr>
+				<tr>
+					<td><code>Math.log10()</code></td>
+					<td>底を10とした対数(log<sub>10</sub>)</td>
+				</tr>
+				<tr>
+					<td><code>Math.max()</code></td>
+					<td>入力された値の最大値を返す</td>
+				</tr>
+				<tr>
+					<td><code>Math.min()</code></td>
+					<td>入力された値の最小値を返す</td>
+				</tr>
+				<tr>
+					<td><code>Math.pow()</code></td>
+					<td>べき乗、つまりa<sup>b</sup></td>
+				</tr>
+				<tr>
+					<td><code>Math.random()</code></td>
+					<td>0以上1未満の乱数を返す</td>
+				</tr>
+				<tr>
+					<td><code>Math.sign()</code></td>
+					<td>入力された値の符号を返す</td>
+				</tr>
+			</table>
+		</div>
+		<div id="window2">
+			<h1>プロパティとメソッドの違い</h1>
+			<ul>
+				<li>プロパティ<br>↳そのオブジェクトの持つ情報、変数</li>
+				<li>メソッド<br>↳オブジェクト内の関数、実行プログラム</li>
+			</ul>
+			<h2>例</h2>
+			<pre>
+				<span class="r">let</span> <span class="o">object</span> = {
+				&emsp;<span class="com">//プロパティ = オブジェクトの情報、変数など</span>
+				&emsp;<span class="g">property1</span> = <span class="y">"dataData"</span>,
+				&emsp;<span class="g">property2</span> = <span class="p">1234567890</span><span class="r">n</span>,
+				&emsp;<span class="com">//メソッド = 実行するプログラム</span>
+				&emsp;<span class="g">method1</span> = () <span class="c">=></span> {<span class="g">document</span>.<span class="g">getElementById</span>(<span class="y">"input"</span>).<span class="g">value</span> = <span class="p">20</span>},
+				&emsp;<span class="g">method2</span> = <span class="o">val</span> <span class="c">=></span> {<span class="g">localStorage</span>.<span class="g">setItem</span>(<span class="y">"data"</span>,<span class="g">val</span>)}
+				};
+			</pre>
+		</div>
+		<div id="window3">
+			<h1>疑似クラス･疑似要素</h1>
+			<h2>疑似クラス</h2>
+			<table><!--<tbody>は省略-->
+				<tr><th colspan="3">ユーザー操作系</th></tr>
+				<tr>
+					<td style="width: 150px;"><code>:active</code></td>
+					<td style="width: 250px;">アクティブ化したとき(クリックなど)</td>
+					<td style="width: 120px;"><button id="active"></button></td>
+				</tr>
+				<tr>
+					<tr>
+						<td><code>:hover</code></td>
+						<td>カーソルが触れたときなど</td>
+						<td><button id="hover"></button></td>
+					</tr>
+					<td><code>:focus</code></td>
+					<td>フォーカスができる要素を<br>Tabキーなどで選択したとき</td>
+					<td><button id="focus"></button></td>
+				</tr>
+				<tr>
+					<td><code>:focus-visible</code></td>
+					<td>フォーカスがあり、かつフォーカスを<br>可視化したほうがいいと判断したとき</td>
+					<td><button id="focusVisible"></button></td>
+				</tr>
+				<tr>
+					<td><code>:focus-within</code></td>
+					<td><code>:focus</code>と同じだが、子孫要素がフォーカスされたときも適用される。</td>
+					<td><div id="focusWithin"><button></button></div></td>
+				</tr>
+				<tr><th colspan="3">表示状態系</th></tr>
+				<tr>
+					<td><code>:fullscreen</code></td>
+					<td>全画面のとき</td>
+					<td><button id="fullscreen" onclick="toggleFS()" style="padding: auto;">フルスクリーンを<br>開始する</button></td>
+				</tr>
+				<tr>
+					<td><code>:picture-in-picture</code></td>
+					<td>ピクチャーインピクチャーのとき</td>
+					<td><button id="pictureInPicture">ピクチャーインピク<br>チャーは動画専用</button></td>
+				</tr>
+				<tr>
+					<td><code>:modal</code></td>
+					<td>JavaScriptで指定するmodalが<br>表示されたときのstyleを設定する</td>
+					<td><button id="modal">modalをオンにする</button></td>
+				</tr>
+				<tr><th colspan="3">リンク系</th></tr>
+				<tr>
+					<td><code>:link</code></td>
+					<td>まだ訪問していないリンク</td>
+					<td><input id="linkInput" class="noStyle" placeholder="リンクを入力…" value="https://yahoo.jp"><a id="link" href="https://yahoo.jp">https://yahoo.jp</a></td>
+				</tr>
+				<tr>
+					<td><code>:visited</code></td>
+					<td>もう訪問したことのあるリンク</td>
+					<td><input id="visitedInput" class="noStyle" placeholder="リンクを入力…" value="https://google.com"><a id="visited" href="https://google.com">https://google.com</a></td>
+				</tr>
+				<tr>
+					<td><code>:any-link</code></td>
+					<td>何かのリンク</td>
+					<td><a id="anyLink" href="https://google.com">https://google.com</a></td>
+				</tr>
+				<tr>
+					<td><code>:target</code></td>
+					<td>フラグメントされた要素に適用されるもの</td>
+					<td><a id="target" href="#target">この要素を<br>フラグメント化する</a></td>
+				</tr>
+				<tr>
+					<td><code>:target-within</code></td>
+					<td><code>:target</code>と同じだが、その要素の親要素にも適用される。</td>
+					<td><button id="targetWithin" class="canNotMake">どのブラウザにも<br>対応していないため実現不可</button></td>
+				</tr>
+				<tr>
+					<td><code>:local-link</code></td>
+					<td>リンク先が自分のドメインと同じ時に適用される。</td>
+					<td><button id="localLink" class="canNotMake">どのブラウザにも<br>対応していないため<br>実現不可</td>button></td>
+				</tr>
+				<tr>
+					<td><code>:scope</code></td>
+					<td><code>&lt;style&gt;</code>内で使用すると、<code>:root</code>と同じ効果になる。</td>
+					<td><button id="scope" onclick="scope()">適用させる</button></td>
+				</tr>
+				<!--
+				<tr>
+					<td><code>:focus</code></td>
+					<td></td>
+					<td><button id=""></button></td>
+				</tr>
+				-->
+			</table>
+		</div>
+		<div id="window4">
+			<h1>使えるCSS集</h1>
+			<div style="height: 30px;"></div>
+			<table>
+				<tr>
+					<th><code>width</code></th>
+					<td>横幅</td>
+				</tr>
+				<tr>
+					<th><code>height</code></th>
+					<td>縦</td>
+				</tr>
+				<tr>
+					<th><code>text-align</code></th>
+					<td>ブロック要素内のインライン要素・<br>テキストをどう揃えるか</td>
+				</tr>
+				<tr>
+					<th><code>line-height</code></th>
+					<td>行間</td>
+				</tr>
+				<tr>
+					<th><code>display</code></th>
+					<td>表示の仕方</td>
+				</tr>
+				<tr>
+					<th><code>position</code></th>
+					<td>要素の位置の決め方</td>
+				</tr>
+				<tr>
+					<th><code>margin</code></th>
+					<td>要素の周りの余白</td>
+				</tr>
+				<tr>
+					<th><code>padding</code></th>
+					<td>内側の余白(中身と<code>border</code>の間)</td>
+				</tr>
+				<tr>
+					<th><code>border</code></th>
+					<td>周りの枠線</td>
+				</tr>
+				<tr>
+					<th><code>border-radius</code></th>
+					<td>要素の角の丸さ</td>
+				</tr>
+				<tr>
+					<th><code>font-size</code></th>
+					<td>文字の大きさ</td>
+				</tr>
+				<tr>
+					<th><code>font-weight</code></th>
+					<td>文字の太さ</td>
+				</tr>
+				<tr>
+					<th><code>color</code></th>
+					<td>文字色</td>
+				</tr>
+				<tr>
+					<th><code>background-color</code></th>
+					<td>背景の色</td>
+				</tr>
+				<tr>
+					<th><code>vertical-align</code></th>
+					<td>インライン要素の縦方向をどう揃えるか</td>
+				</tr>
+				<tr>
+					<th><code>translate</code></th>
+					<td>当たり判定は変えずに動かす</td>
+				</tr>
+				<tr>
+					<th><code>transform</code></th>
+					<td><code>translate</code>,<code>scale</code>などをまとめる</td>
+				</tr>
+				<tr>
+					<th><code>cursor</code></th>
+					<td>カーソルの表示される種類</td>
+				</tr>
+				<tr>
+					<th><code>overflow</code></th>
+					<td>要素から中身がはみ出たときに<br>どうするか</td>
+				</tr>
+				<tr>
+					<th><code>font-family</code></th>
+					<td>フォントの種類</td>
+				</tr>
+				<tr>
+					<th><code>letter-spacing</code></th>
+					<td>文字と文字の間</td>
+				</tr>
+				<tr>
+					<th><code>align-items</code></th>
+					<td>しらん</td>
+				</tr>
+				<tr>
+					<th><code>opacity</code></th>
+					<td>不透明度(<code>0</code>で透明)</td>
+				</tr>
+				<tr>
+					<th><code>filter</code></th>
+					<td>暗さとか</td>
+				</tr>
+				<tr>
+					<th><code>overflow-wrap</code><br>(<code>word-wrap</code>)</th>
+					<td>改行するかどうか</td>
+				</tr>
+				<tr>
+					<th><code>pointer-events</code></th>
+					<td>マウスを反応させるかどうか</td>
+				</tr>
+				<tr>
+					<th><code>border-collapse</code></th>
+					<td>(<code>table</code>内のみ)<br>セル同士がborderを共有するか</td>
+				</tr>
+				<tr>
+					<th><code>z-index</code></th>
+					<td>z軸の位置</td>
+				</tr>
+				<tr>
+					<th><code>box-sizing</code></th>
+					<td>要素のどこまでを要素の大きさとするか</td>
+				</tr>
+				<tr>
+					<th><code>clip-path</code></th>
+					<td>図形の形に切り取る</td>
+				</tr>
+				<tr>
+					<th><code>white-space</code></th>
+					<td>ホワイトスペース(空白、改行など)の形<br><code>white-space:pre-line</code>で<br><code>&lt;pre&gt;</code>のインデントをなくせる</td>
+				</tr>
+			</table>
+						<h1>CSSのグローバル値</h1>
+			<table>
+				<tr>
+					<th><code>initial</code></th>
+					<td>そのプロパティの既定値・初期値</td>
+				</tr>
+				<tr>
+					<th><code>inherit</code></th>
+					<td>親から値を継承する</td>
+				</tr>
+				<tr>
+					<th><code>unset</code></th>
+					<td>親から継承されるときは継承し、<br>それ以外は既定値・初期値</td>
+				</tr>
+				<tr>
+					<th><code>revert</code></th>
+					<td>ユーザーの設定した既定値・初期値</td>
+				</tr>
+				<tr>
+					<th><code>stretch</code></th>
+					<td>使用可能なスペースを最大限<br>使うように大きくする</td>
+				</tr>
+			</table>
+		</div>
+		<div id="window5">
+			<h1>Emmet記法</h1>
+			ちなみに<code>Emmet</code>はエメットと読むらしい
+			<div style="height: 20px;"></div>
+			<table>
+				<thead>
+					<tr>
+						<th>書き方</th>
+						<th>説明</th>
+						<th>例</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th><code>タグ名</code></th>
+						<td>タグを挿入する</td>
+						<td><pre>
+							<span class="com">> div</span>
+
+							&lt;<span class="r">div</span>&gt;&lt;/<span class="r">div</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>+</code></th>
+						<td>兄弟要素にする</td>
+						<td><pre>
+							<span class="com">> input+button</span>
+
+							&lt;<span class="r">input</span> <span class="g">type</span>=<span class="y">"<span class="in">text</span>"</span>&gt;&lt;<span class="r">button</span>&gt;&lt;/<span class="r">button</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>></code></th>
+						<td>ネストした要素</td>
+						<td><pre>
+							<span class="com">> label>input</span>
+
+							&lt;<span class="r">label</span>&gt;&lt;<span class="r">input</span> <span class="g">type</span>=<span class="y">"<span class="in">text</span>"</span>&gt;&lt;/<span class="r">input</span>&gt;&lt;/<span class="r">label</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>*</code></th>
+						<td>同じ要素を繰り返す</td>
+						<td><pre>
+							<span class="com">> ul>li*3</span>
+
+							&lt;<span class="r">ul</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&lt;/<span class="r">ul</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>^</code></th>
+						<td>上の階層へ戻る</td>
+						<td><pre>
+							<span class="com">> tr>th^tr>td</span>
+
+							&lt;<span class="r">tr</span>&gt;
+							&emsp;&lt;<span class="r">th</span>&gt;&lt;/<span class="r">th</span>&gt;
+							&lt;/<span class="r">tr</span>&gt;
+							&lt;<span class="r">tr</span>&gt;
+							&emsp;&lt;<span class="r">td</span>&gt;&lt;/<span class="r">td</span>&gt;
+							&lt;/<span class="r">tr</span>&gt;
+							</tr>
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>(</code><code>)</code></th>
+						<td>グループ化</td>
+						<td><pre>
+							<span class="com">> div>(ul>li*3)*2</span>
+
+							&lt;<span class="r">div</span>&gt;
+							&emsp;&lt;<span class="r">ul</span>&gt;
+							&emsp;&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;/<span class="r">ul</span>&gt;
+							&emsp;&lt;<span class="r">ul</span>&gt;
+							&emsp;&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&emsp;&lt;<span class="r">li</span>&gt;&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;/<span class="r">ul</span>&gt;
+							&lt;/<span class="r">div</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>.</code></th>
+						<td>クラスを付ける</td>
+						<td><pre>
+							<span class="com">> button.confirm</span>
+
+							&lt;<span class="r">button</span> <span class="g">style</span>=<span class="y">"confirm"</span>&gt;&lt;/<span class="r">button</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>#</code></th>
+						<td>IDを付ける</td>
+						<td><pre>
+							<span class="com">> input#value</span>
+
+							&lt;<span class="r">input</span> <span class="g">type</span>=<span class="y">"<span class="in">text</span>" <span class="g">id</span>=<span class="y">"value"</span></span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>[</code><code>]</code></th>
+						<td>属性をつける</td>
+						<td><pre>
+							<span class="com">> button[onclick="fn()"]</span>
+
+							&lt;<span class="r">button</span> <span class="g">onclick</span>=<span class="y">"<span class="g">fn</span><span class="w">()</span>"</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>{</code><code>}</code></th>
+						<td>テキストを入れる</td>
+						<td><pre>
+							<span class="com">> span.blue{青色}</span>
+
+							&lt;<span class="r">span</span> <span class="g">class</span>=<span class="y">"blue"</span>&gt;青色&lt;/<span class="r">span</span>&gt;
+						</pre></td>
+					</tr>
+					<tr>
+						<th><code>$</code></th>
+						<td>連番を付ける</td>
+						<td><pre>
+							<span class="com">> ul>li{list$}*2^div#div$$*2+ul>li{list$@3}*3</span>
+
+							&lt;<span class="r">ul</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;list1&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;list2&lt;/<span class="r">li</span>&gt;
+							&lt;/<span class="r">ul</span>&gt;
+							&lt;<span class="r">div</span> <span class="g">id</span>=<span class="y">"div01"</span>&gt;&lt;/<span class="r">div</span>&gt;
+							&lt;<span class="r">div</span> <span class="g">id</span>=<span class="y">"div02"</span>&gt;&lt;/<span class="r">div</span>&gt;
+							&lt;<span class="r">ul</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;list3&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;list4&lt;/<span class="r">li</span>&gt;
+							&emsp;&lt;<span class="r">li</span>&gt;list5&lt;/<span class="r">li</span>&gt;
+							&lt;/<span class="r">ul</span>&gt;
+						</pre></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<dialog id="dialog">
+		このように出てきます<br>
+		<button id="modalClose">modalをオフにする</button>
+	</dialog>
+	<script>
+		var windowNum = null;
+		function el(id) {return document.getElementById(id)};
+		function saveData(key,data) {
+			localStorage.setItem(String(key),String(data));
+		};
+		function data(key) {
+			return localStorage.getItem(String(key));
+		};
+		function changeWindow(num) {
+			windowNum = num;
+			saveData("windowNum",windowNum);
+			for(let i=0;i<el("windows").children.length;i++) {
+				if(i+1 == num) {
+					el(`window${i+1}`).style.display = "inline";
+					el(`tab${i+1}`).style.backgroundColor = "#e4f2e4";
+				} else {
+					el(`window${i+1}`).style.display = "none";
+					el(`tab${i+1}`).style.backgroundColor = "#c4f2c4";
+				};
+			};
+		};
+		if(data("windowNum") === null) {
+			changeWindow(1);
+		} else {
+			changeWindow(data("windowNum"))
+		};
+		el("modal").addEventListener("click",()=> {
+			el("dialog").showModal();
+		});
+		el("modalClose").addEventListener("click",()=> {
+			el("dialog").close()
+		});
+		el("fullscreen").addEventListener("click",()=> {
+			if(el("fullscreen").requestFullscreen) {
+				el("fullscreen").requestFullscreen();
+			} else if(el("fullscreen").mozRequestFullScreen) { // Firefox用
+				el("fullscreen").mozRequestFullScreen();
+			} else if(el("fullscreen").webkitRequestFullscreen) { // Chrome, Safari, Opera用
+				el("fullscreen").webkitRequestFullscreen();
+			} else if(el("fullscreen").msRequestFullscreen) { // IE/Edge用
+				el("fullscreen").msRequestFullscreen();
+			};
+		});
+		document.addEventListener("fullscreenchange",()=> {
+			if(document.fullscreenElement) {
+				el("fullscreen").innerHTML = "フルスクリーン状態です。<br>エスケープキーを押すと終了します"
+			} else {
+				el("fullscreen").innerHTML = "フルスクリーンを<br>開始する";
+			};
+		});
+		el("linkInput").addEventListener("input",(e)=>{
+			const thisValue = e.currentTarget.value;
+			el("link").href = thisValue;
+			el("link").innerHTML = thisValue;
+		});
+		el("visitedInput").addEventListener("input",(e)=>{
+			const thisValue = e.currentTarget.value;
+			el("visited").href = thisValue;
+			el("visited").innerHTML = thisValue;
+		});
+		function scope() {
+			if(el("scope").innerHTML === "適用させる") {
+				el("scope").innerHTML = "適用を解除する";
+				el("style").innerHTML = ":scope {background-color:#f60;}";
+			} else {
+				el("scope").innerHTML = "適用させる";
+				el("style").innerHTML = "";
+			};
+		};
+	</script>
+</body>
+</html>

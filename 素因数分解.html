@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>素因数分解を練習しよう</title>
+	<style>
+		body {
+			animation:bodyGradation 15s linear infinite;
+		}
+		@keyframes bodyGradation {
+ 	 		0%	 {background-color:#fdd;}
+			16%	{background-color:#ffd;}
+			33%	{background-color:#dfd;}
+			50%	{background-color:#dff;}
+			67%	{background-color:#ddf;}
+			83%	{background-color:#fdf;}
+	 	 	100% {background-color:#fdd;}
+		}
+		button {
+			border-radius:15px;
+			background-image: linear-gradient(180deg, #e5e5e5 50%, #d5d5d5 50%, #e5e5e5 70%);
+		}
+		button:disabled {
+			background-image: linear-gradient(180deg, #f5f5f5 50%, #e5e5e5 50%, #f5f5f5 70%);
+		}
+		input:disabled {
+			color:#000;
+			background-color:#fff0;
+			border:0px;
+			font-size:20px;
+		}
+		::placeholder {
+			color:#f55;
+			font-weight:bold;
+		};
+	</style>
+</head>
+<body>
+	<span style="margin-bottom:-10px;font-weight:bold;font-size:40px;">素因数分解を練習しよう</span>
+	<br>
+	<span>最小</span>
+	<input type="number" id="min" min="2" style="width:50px;" placeholder="必須">
+	<span>最大</span>
+	<input type="number" id="max" min="2" style="width:50px;" placeholder="必須">
+	<span>問題数</span>
+	<input type="number" id="times" min="1" max="1000" style="width:50px;" placeholder="必須">
+	<button id="valReset" disabled onclick="
+		valJS.min.value = '';
+		valJS.max.value = '';
+		valJS.times.value = '';
+		valJS.start.disabled = true;
+		valJS.valReset.disabled = true;
+	">リセット</button>
+	<p style="margin-top:5px;margin-bottom:-35px;">※最小は2以上に、問題数は1000以下にしてください</p>
+	<br>
+	<button id="start" disabled style="margin-top:20px;width:80px;height:30px;font-size:20px;" onclick="
+		valJS.start.disabled = true;
+		valJS.stop.disabled = false;
+		valJS.min.disabled = true;
+		valJS.max.disabled = true;
+		valJS.times.disabled = true;
+		valJS.valReset.disabled = true;
+		valJS.keyReset.disabled = true;
+		started = true;
+		question();
+		">Start</button>
+	<button id="stop" disabled style="margin-top:20px;width:80px;height:30px;font-size:20px;" onclick="
+		valJS.start.disabled = false;
+		valJS.stop.disabled = true;
+		valJS.min.disabled = false;
+		valJS.max.disabled = false;
+		valJS.times.disabled = false;
+		valJS.valReset.disabled = false;
+		valJS.keyReset.disabled = false;
+		started = false;
+		time = 0;
+		valJS.time.innerHTML = 'Time:';
+		valJS.type.innerHTML = '入力:';
+		valJS.Q.innerHTML = '';
+	">Quit</button>
+	<span id="howMany" style="font-size:20px;"></span>
+	<br>
+	<span id="Q" style="font-size:50px;">---</span>
+	<br>
+	<span id="type" style="font-size:20px;">入力:</span>
+	<p id="time" style="font-size:25px;">Time:</p>
+	<p style="font-size:20px;margin-bottom:-5px;">キー設定</p>
+	<table>
+		<tr onclick="
+			valJS.timesKey.innerHTML = 'Type Any Key';
+		">
+			<td>"×"</td>
+			<td> → </td>
+			<td id="timesKey">:</td>
+		</tr>
+		<tr onclick="
+			valJS.powerKey.innerHTML = 'Type Any Key';
+		">
+			<td>"^"</td>
+			<td> → </td>
+			<td id="powerKey">^</td>
+		</tr>
+	</table>
+	<span style="font-size:13px;">クリックしてから変更後のキーを押すと変更できます。"^"は累乗の記号のことです。</span>
+	<br>
+	<button id="keyReset" disabled style="margin-top:5px;" onclick="
+		valJS.timesKey.innerHTML = ':';
+		valJS.powerKey.innerHTML = '^';
+		valJS.keyReset.disabled = true;
+	">初期値にリセット</button>
+<script>
+	var
+		time = 0,
+		started = false,
+		howQ = 0,
+		ready = {
+			min:	 false,
+			max:	 false,
+			times: false
+		},
+		valJS = {
+			start:		document.getElementById("start"),
+			stop:		 document.getElementById("stop"),
+			min:			document.getElementById("min"),
+			max:			document.getElementById("max"),
+			times:		document.getElementById("times"),
+			Q:				document.getElementById("Q"),
+			type:		 document.getElementById("type"),
+			time:		 document.getElementById("time"),
+			valReset: document.getElementById("valReset"),
+			keyReset: document.getElementById("keyReset"),
+			timesKey: document.getElementById("timesKey"),
+			powerKey: document.getElementById("powerKey"),
+			howMany:	document.getElementById("howMany")
+		};
+	function disabled() {
+		if(ready.min && ready.max && ready.times && Number(valJS.min.value) <= Number(valJS.max.value) && Number(valJS.min.value) >= 2 && Number(valJS.times.value) >= 1 && Number(valJS.times.value) <= 1000) {
+			valJS.start.disabled = false;
+		} else {
+			valJS.start.disabled = true;
+		};
+		if(!(valJS.min.value == "" && valJS.max.value == "" && valJS.times.value == "")) {
+			valJS.valReset.disabled = false;
+		} else {
+			valJS.valReset.disabled = true;
+		};
+	};
+	function keyResetFn() {
+		if(!(valJS.timesKey.innerHTML === ":" && valJS.powerKey.innerHTML === "^")) {
+			valJS.keyReset.disabled = false;
+		} else {
+			valJS.keyReset.disabled = true;
+		};
+	};
+	function question() {
+		valJS.Q.innerHTML = Math.round(Math.random() * (Number(valJS.max.value) - Number(valJS.min.value) + 1)) + Number(valJS.min.value);
+		howQ++;
+		valJS.howMany.innerHTML = `${howQ}/${valJS.times.value}問目`;
+	};
+	valJS.min.addEventListener("input",() => {
+		if(valJS.min.value == "") {
+			ready.min = false;
+		} else {
+			ready.min = true;
+		};
+		disabled();
+	});
+	valJS.max.addEventListener("input",() => {
+		if(valJS.max.value == "") {
+			ready.max = false;
+		} else {
+			ready.max = true;
+		};
+		disabled();
+	});
+	valJS.times.addEventListener("input",() => {
+		if(valJS.times.value == "") {
+			ready.times = false;
+		} else {
+			ready.times = true;
+		};
+		disabled();
+	});
+	document.body.addEventListener("keydown",event => {//Too Long!
+		if(!(!started ||event.ctrlKey || event.shiftKey || event.altKey || event.metaKey || event.key === "Enter" || event.key === "Backspace" || event.key === valJS.timesKey.innerHTML || event.key === valJS.powerKey.innerHTML)) {
+			valJS.type.innerHTML +=	event.key;
+		} else {
+			if(event.key === "Backspace") {
+				if(type.innerHTML.length > 3) {
+				valJS.type.innerHTML = type.innerHTML.slice(0,-1);
+				};
+			} else {
+				if(event.key === valJS.timesKey.innerHTML) {
+					if(valJS.type.innerHTML.slice(-1) !== "×") {
+						valJS.type.innerHTML += "×";
+					};
+				} else {
+					if(event.key === valJS.powerKey.innerHTML) {
+						if(valJS.type.innerHTML.slice(-1) !== "^") {
+							valJS.type.innerHTML += "^"
+						};
+					} else {
+						if(event.key === "Enter") {
+								if(valJS.type.innerHTML !== "入力:") {
+								var enter = valJS.type.innerHTML.split("");
+								for(let i=0;i<enter.length;i++) {
+									if(enter[i] === "^") {
+										enter[i] = "**";
+									} else {
+										if(enter[i] === "×") {
+											enter[i] = "*";
+										};
+									};
+								};
+								if(howQ !== valJS.times.value) {
+									if(valJS.Q.innerHTML == eval(enter.join(""))) {
+										valJS.type.innerHTML = '入力:';
+										question();
+									};
+								} else {
+										valJS.start.disabled = false;
+										valJS.stop.disabled = true;
+										valJS.min.disabled = false;
+										valJS.max.disabled = false;
+										valJS.times.disabled = false;
+										valJS.valReset.disabled = false;
+										valJS.keyReset.disabled = false;
+										started = false;
+										time = 0;
+										valJS.time.innerHTML = 'Time:';
+										valJS.type.innerHTML = '入力:';
+										valJS.Q.innerHTML = '';								
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+		if(valJS.timesKey.innerHTML === "Type Any Key") {
+			valJS.timesKey.innerHTML = event.key;
+			keyResetFn();
+		};
+		if(valJS.powerKey.innerHTML === "Type Any Key") {
+			valJS.powerKey.innerHTML = event.key;
+			keyResetFn();
+		};
+	});
+</script>
+<script>
+	setInterval(() => {
+		if(started) {
+			time += .01
+			valJS.time.innerHTML = "Time:" + Math.ceil(time*100)/100
+		};
+	},10);
+</script>
+</body>
+</html>

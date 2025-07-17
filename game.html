@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ショットガン・ゲーム</title>
+<style>
+	* {
+		font-family: "originalFont";
+	}
+	@font-face {
+		font-family: "originalFont";
+		src: url("font/dotFont.ttf");
+	}
+	body {
+		animation: color 15s linear infinite;
+	}
+	button {
+		cursor: pointer;
+	}
+	@keyframes color {
+		0%	 {background-color:#524a47;}
+		25%	{background-color:#404238;}
+		50%	{background-color:#3b3434;}
+		75%	{background-color:#2a282e;}
+		100% {background-color:#524a47;}
+	}
+	.titleAnimation {
+		animation: deg 20s ease infinite;
+	}
+	@keyframes deg {
+		0%	 {transform:rotateZ(2deg);}
+		25%	{transform:rotateZ(-2deg);}
+		50%	{transform:rotateZ(2deg);}
+		75%	{transform:rotateZ(-2deg);}
+		100% {transform:rotateZ(2deg);}
+	}
+	@keyframes fadein {
+		0%	 {opacity: 0;}
+		100% {opacity: 1;}
+	}
+	@keyframes fadeout {
+		0%	 {opacity: 1;}
+		100% {opacity: 0;}
+	}
+	@keyframes btFadein {
+		0%	 {opacity: 0;}
+		50%	 {opacity: 0;}
+		100% {opacity: 1;}
+	}
+	@keyframes playButtonA {
+		0%	 {background-color: #fff;}
+		25%	{transform: translateY(0);}
+		80%	{background-color:#524a47;}
+		100% {transform: translateY(400px)}
+	}
+	@keyframes playButtonB {
+		0%	 {background-color: #fff; transform: translateY(400px);}
+		25%	{opacity: 1; transform: translateY(400px);}
+		80%	{background-color: #524a47;}
+		100% {opacity: 0; transform: translateY(0);}
+	}
+	@keyframes titlePlayButtonA {
+		0%	 {color: #fff;}
+		100% {color: #000;}
+	}
+	@keyframes titlePlayButtonB {
+		0%	 {color: #fff}
+		25%	{opacity: 1;}
+		100% {color: #000; opacity: 0;}
+	}
+</style>
+</head>
+<body>
+	<div style="text-align: center; cursor: default;">
+		<div id="title">
+		<h1 class="titleAnimation" style="font-size: 50px;">ゲーム・ゲームゲーム</h1>
+		<h3 class="titleAnimation" style="margin-top:-40px; font-size:25px; font-weight: normal;">Title is 適当</h3>
+		<button id="playButton" style="animation: btFadein 4s linear	1 forwards; background-color: #484141;" onclick="
+			if(!title) {
+				title = true;
+				el('title').style.animation = 'titlePlayButtonA 2s ease 1';
+				el('playButton').style.animation = 'playButtonA 3s ease 1 forwards';
+				el('radio').style.animation = 'fadein 2s 2s ease 1 forwards';
+			} else {
+				el('title').style.animation = 'none';
+				el('playButton').style.animation = 'none';
+				el('radio').style.animation = 'none';
+				void el('title').offsetWidth;
+				void el('playButton').offsetWidth;
+				void el('radio').offsetWidth;
+				el('title').style.animation = 'titlePlayButtonB 2s ease 1 forwards';
+				el('playButton').style.animation = 'playButtonB 3s ease 1 forwards';
+				el('radio').style.animation = 'fadeout 2s ease 1 forwards';
+			};
+		">Play</button>
+		<div id="radio" style="opacity: 0;">
+			<h3 style="font-weight: normal;">弾の数</h3>
+			<span id="label1-1" style="color: #5d9ed4;" onclick="radioFn(1,1);">ランダム</span><br>
+			<span id="label1-2" onclick="radioFn(1,2);">4発</span><br>
+			<span id="label1-3" onclick="radioFn(1,3);">5発</span><br>
+			<span id="label1-4" onclick="radioFn(1,4);">6発</span><br>
+			<span id="label1-5" onclick="radioFn(1,5);">7発</span><br>
+			<span id="label1-6" onclick="radioFn(1,6);">8発</span>
+			<br><br>
+			<h3 style="font-weight: normal;">残機の数</h3>
+			<span id="label2-1" style="color: #5d9ed4;" onclick="radioFn(2,1)">ランダム</span><br>
+			<span id="label2-2" onclick="radioFn(2,2);">2</span><br>
+			<span id="label2-3" onclick="radioFn(2,3);">3</span><br>
+			<span id="label2-4" onclick="radioFn(2,4);">4</span><br>
+			<span id="label2-5" onclick="radioFn(2,5);">1P:3 2P:4</span><br>
+			<span id="label2-6" onclick="radioFn(2,6)">1P:2 2P:4</span>
+	</div>
+<script>
+	var
+		i = 0;
+		title = false,
+		radioResult = ["ランダム","ランダム"];
+	function el(id) {return document.getElementById(id)};
+	function radioFn(No,idNumber) {String
+		radioResult[No-1] = el(`label${No}-${idNumber}`).innerHTML;
+		for(i=0;i<6;i++) {
+				if(i+1 == idNumber) {
+					el(`label${No}-${idNumber}`).style.color = "#5d9ed4";
+				} else {
+					el(`label${No}-${i+1}`).style.color = "#000";
+				};
+		};
+	};
+</script>
+</body>
+</html>

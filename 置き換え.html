@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>色々ツール</title>
+	<style>
+		@font-face {
+			font-family: "originalFont";
+			src: url(font/japaneseFont-Regular.ttf);
+		}
+		* {
+			text-align: center;
+			font-family: "originalfont";
+		}
+		@keyframes forRed {
+			0%	 {background-color: #2cf;}
+			50%	{transform: rotateY(90deg);}
+			50.1%{transform: rotateY(-90deg);}
+			100% {background-color: #f72; transform: rotateY(0);}
+		}
+		.redAnimation {
+			animation: forRed 0.25s linear 1 forwards;
+		}
+		@keyframes forBlue {
+			0%	 {background-color: #f72;}
+			50%	{transform: rotateY(90deg);}
+			50.1%{transform: rotateY(-90deg);}
+			100% {background-color: #2cf; transform: rotateY(0);}
+		}
+		.blueAnimation {
+			animation: forBlue 0.25s linear 1 forwards;
+		}
+		@keyframes forRedBG {
+			0%	 {background-color: #dff;}
+			100% {background-color: #fed;}
+		}
+		.redBGAni {
+			animation: forRedBG 0.25s linear 1 forwards;
+		}
+		@keyframes forBlueBG {
+			0%	 {background-color: #fed;}
+			100% {background-color: #dff;}
+		}
+		.blueBGAni {
+			animation: forBlueBG 0.25s linear 1 forwards;
+		}
+		@keyframes fadeIn {
+			0%	 {opacity: 0;}
+			100% {opacity: 1;}
+		}
+		.toggleFadeIn {
+			animation: fadeIn 0.125s linear 1;
+		}
+		@keyframes fadeOut {
+			0%	 {opacity: 1;}
+			100% {opacity: 0;}
+		}
+		.toggleFadeOut {
+			animation: fadeOut 0.125s linear 1;
+		}
+		button {
+			cursor: pointer;
+		}
+		#background {
+			background-color: #dff;
+			height: 750px;
+			width: 100%;
+			margin: auto;
+		}
+		#typeSelect {
+			background-color: #eee;
+			height: 70px;
+			width: 170px;
+			margin: auto;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			border-radius: 10px;
+			transform: translateY(5px);
+		}
+		#select {
+			margin: auto;
+			border-radius: 5px;
+			background-color: #2cf;
+			font-size: 16px;
+			width: 140px;
+			height: 30px;
+			border: 0;
+			align-items: flex-end;
+		}
+		.radioSpan {
+			margin-top: 30px;
+			margin-right: 20px;
+		}
+		input[type="radio"] {
+			transform: translateY(1px);
+		}
+		input:not([type="radio"]) {
+			transform: translateY(-2px);
+		}
+		input[type="radio"], input[type="range"], label {
+			cursor: pointer;
+		}
+		.settingInput {
+			font-family: 'Courier New', Courier, monospace;
+			height: 18px;
+			width: 30%;
+			font-size: 16px;
+			margin: 4px auto;
+			margin-right: 30px;
+			margin-left: 10px;
+			text-align: left;
+		}
+		.afterInput {
+			font-family: 'Courier New', Courier, monospace;
+			height: 18px;
+			width: 60%;
+			font-size: 16px;
+			margin: 4px auto;
+			margin-right: 30px;
+			margin-left: 10px;
+			text-align: left;
+		}
+		textarea {
+			font-family: 'Courier New', Courier, monospace;
+			font-size: 20px;
+			height: 400px;
+			width: 40%;
+			margin: 5px;
+			text-align: left;
+			resize: none;
+		}
+		#copyBt {
+			background-color: #2cf;
+			height: 23px;
+			border: 0;
+			border-radius: 5px;
+			transform: translateY(1px);
+			width: 80px;
+		}
+		.inputLabel {
+			width: 60px;
+		}
+		#labelDiv {
+			justify-content: space-between;
+			display: flex;
+			width: calc(20px + 80%);
+			margin: auto;
+			margin-bottom: -20px;
+		}
+		#exeBt {
+			background-color: #2cf;
+			font-size: 18px;
+			height: 25px;
+			width: 10%;
+			border: 0;
+			border-radius: 5px;
+			margin-top: 5px;
+			margin-bottom: 15px;
+		}
+	</style>
+</head>
+<body>
+	<h1 style="margin: 20px auto;">色々ツール</h1>
+	<div id="background">
+		<div id="typeSelect">
+			<div style="margin: auto;">
+				<span>モード切り替え</span>
+				<button id="select" onclick='toggle()'>文字列を置き換え</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		var
+			selectValue = "replace",
+			copyed = null,
+			fontSizeData = 20,
+			replaceData = {
+				beforeRadio: [true,false],
+				afterRadio: [true,false],
+				beforeInput: "",
+				afterInput: "",
+				before: "",
+				after: ""
+			},
+			loopData = {
+				before: "",
+				times: "",
+				after: ""
+			};
+		const elContent = {
+			beforeInput: "beforeInput",
+			afterInput: "afterInput",
+			before: "before",
+			after: "after"
+		};
+		function el(id) {return document.getElementById(id)};
+		function createEl(elementName,placeId,info) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+		function createBr(placeId) {
+			createEl("br",placeId);
+		};
+		function createCSS(className,...contents) {
+			let create = document.createElement("style");
+			document.head.appendChild(create);
+		};
+		function toggle() {
+			el("parentDiv").classList.remove("toggleFadeIn","toggleFadeOut");
+			el("select").classList.remove("redAnimation","blueAnimation");
+			el("parentDiv").classList.add("toggleFadeOut");
+			fontSizeData = el("fontSize").value;
+			if(selectValue === "replace") {
+				replaceData.beforeRadio[0] = el("before1").checked;
+				replaceData.beforeRadio[1] = el("before2").checked;
+				replaceData.afterRadio[0] = el("after1").checked;
+				replaceData.afterRadio[1] = el("after2").checked;
+				for(const name in replaceData) {
+					if(Array.isArray(replaceData[name])) {
+						continue;
+					} else {
+						replaceData[name] = el(name).value
+					};
+				};
+				el("select").classList.add("redAnimation");
+				el("background").classList.add("redBGAni");
+				selectValue = "loop";
+				setTimeout(() => {
+					el("select").innerHTML = "文字列を繰り返す";
+					el("parentDiv").remove();
+					loopSet();
+					el("exeBt").style.backgroundColor = "#f72";
+					el("copyBt").style.backgroundColor = "#f72";
+				},125);
+				setTimeout(() => {
+					el("select").classList.remove("redAnimation");
+					el("select").style.backgroundColor = "#f72";
+					el("background").classList.remove("redBGAni");
+					el("background").style.backgroundColor = "#fed"
+				},250);
+			} else {
+				for(const name in loopData) {
+					loopData[name] = el(name).value
+				};
+				el("select").classList.add("blueAnimation");
+				el("background").classList.add("blueBGAni");
+				selectValue = "replace"
+				setTimeout(() => {
+					el("select").innerHTML = "文字列を置き換え";
+					el("parentDiv").remove();
+					replaceSet();
+					el("exeBt").style.backgroundColor = "#2cf";
+					el("copyBt").style.backgroundColor = "#2cf";
+				},125)
+				setTimeout(() => {
+					el("select").classList.remove("blueAnimation");
+					el("select").style.backgroundColor = "#2cf";
+					el("background").classList.remove("blueBGAni");
+					el("background").style.backgroundColor = "#dff";
+				},250);
+			};
+		};
+		function replaceSet() {
+			createEl("div","background",{id:"parentDiv",style:"text-align:center;", class:"toggleFadeIn"});//親要素
+			//ラジオボタン一列目
+			createEl("span","parentDiv",{innerHTML:"変換前", class: "radioSpan"});
+			createEl("input","parentDiv",{type:"radio", id:"before1", name:"before", value:"specified", checked:replaceData.beforeRadio[0]});
+			createEl("label","parentDiv",{id:"before1Label", htmlFor:"before1", innerHTML:"特定の文字列"});
+			createEl("input","before1Label",{id:"beforeInput", value:replaceData.beforeInput, class:"settingInput"});
+			createEl("input","parentDiv",{type:"radio", id:"before2", name:"before", value:"lineBreak", checked:replaceData.beforeRadio[1]});
+			createEl("label","parentDiv",{id:"before2Label", htmlFor:"before2", innerHTML:"改行"});
+			createBr("parentDiv");
+			//ラジオボタン二列目
+			createEl("span","parentDiv",{innerHTML:"変換後", class:"radioSpan"});
+			createEl("input","parentDiv",{type:"radio", id:"after1", name:"after", value:"specified", checked:replaceData.afterRadio[0]});
+			createEl("label","parentDiv",{id:"after1Label", htmlFor:"after1", innerHTML:"特定の文字列"});
+			createEl("input","after1Label",{id:"afterInput", value:replaceData.afterInput, class:"settingInput"});
+			createEl("input","parentDiv",{type:"radio", id:"after2", name: "after", value:"lineBreak", checked:replaceData.afterRadio[1]});
+			createEl("label","parentDiv",{id:"after2Label", htmlFor:"after2", innerHTML:"改行"});
+			createBr("parentDiv");
+			//入力エリア
+			createEl("button","parentDiv",{id:"exeBt", innerHTML:"実行", onclick:()=>replace()});
+			createBr("parentDiv");
+			createEl("label","parentDiv",{htmlFor:"fontSize", innerHTML:"文字のサイズ", 
+			e:"margin-right:10px; display:inline-block; transform: translateY(-5px);"});
+			createEl("input","parentDiv",{type:"range",	id:"fontSize", min:6, max:40,step:0.01,	value:fontSizeData, style:"width:30%;"});
+			createEl("label","parentDiv",{id:"fontSizeLabel", htmlFor:"fontSize", innerHTML:`${Math.floor(fontSizeData)}px`, style:"margin-left:10px; display:inline-block; transform: translateY(-5px);"});
+			createEl("div","parentDiv",{id:"labelDiv"});
+			createEl("label","labelDiv",{htmlFor:"before", innerHTML:"変換前", class:"inputLabel"});
+			createEl("label","labelDiv",{htmlFor:"after", id:"afterLabel", innerHTML:"変換後", class:"inputLabel", style:"transform: translateX(46px);"});
+			createEl("button","labelDiv",{id:"copyBt", innerHTML:"コピーする", onclick:() => {copy();}});//コピーするボタン
+			createBr("parentDiv");
+			createEl("textarea","parentDiv",{id:"before", value:replaceData.before});
+			createEl("textarea","parentDiv",{id:"after", value:replaceData.after, readOnly:true});
+			document.querySelectorAll("button").forEach(button => {
+				button.addEventListener("mouseenter",() => {
+					button.style.backgroundColor = "#1be";
+				});
+				button.addEventListener("mouseleave",() => {
+					button.style.backgroundColor = "#2cf";
+				});
+			});
+			document.querySelectorAll("input, textarea").forEach (input => {
+				input.style.backgroundColor = "#f5ffff";
+				input.style.border = "0.2px solid #777";
+				input.style.borderRadius = "1.5px";
+			});
+			el("fontSize").addEventListener("input",() => {
+				el("fontSizeLabel").innerHTML = Math.floor(el("fontSize").value.padStart(2,"0")) + "px";
+				el("before").style.fontSize = Number(el("fontSize").value) + "px";
+				el("after").style.fontSize = Number(el("fontSize").value) + "px";
+			});
+		};
+		function loopSet() {
+			createEl("div","background",{id:"parentDiv", style:"text-align:center;", class:"toggleFadeIn"});//親要素
+			//文字列
+			createEl("label","parentDiv",{htmlFor:"before", innerHTML:"繰り返す文字列"});
+			createEl("input","parentDiv",{id:"before", value:loopData.before, class:"afterInput"});
+			createBr("parentDiv");
+			createEl("label","parentDiv",{htmlFor:"times", innerHTML:"繰り返す回数"});
+			createEl("input","parentDiv",{id:"times", type:"number", value:loopData.times, class:"settingInput"});
+			createBr("parentDiv");
+			//入力エリア
+			createEl("button","parentDiv",{id:"exeBt", innerHTML:"実行", onclick:()=>el("after").value = el("before").value.repeat(Number(el("times").value))});
+			createBr("parentDiv");
+			createEl("label","parentDiv",{htmlFor:"fontSize", innerHTML:"文字のサイズ", style:"margin-right:10px; display:inline-block; transform: translateY(-5px);"});
+			createEl("input","parentDiv",{type:"range",	id:"fontSize", min:6, max:40, step:0.01, value:fontSizeData, style:"width:30%;"});
+			createEl("label","parentDiv",{id:"fontSizeLabel", htmlFor:"fontSize", innerHTML:`${Math.floor(fontSizeData)}px`, style:"margin-left:10px; display:inline-block; transform: translateY(-5px);"});
+			createEl("div","parentDiv",{id:"labelDiv", style:"width:70%;"});
+			createEl("label","labelDiv",{htmlFor:"after", id:"afterLabel", innerHTML:"結果", class:"inputLabel"});
+			createEl("button","labelDiv",{id:"copyBt", innerHTML:"コピーする", onclick:() => {copy();}});//コピーするボタン
+			createBr("parentDiv");
+			createEl("textarea","parentDiv",{id:"after", value:loopData.after, readOnly:true, style:"width:70%;"});
+			document.querySelectorAll("button").forEach(button => {
+				button.addEventListener("mouseenter",() => {
+					button.style.backgroundColor = "#e61";
+				});
+				button.addEventListener("mouseleave",() => {
+					button.style.backgroundColor = "#f72";
+				});
+			});
+			document.querySelectorAll("input, textarea").forEach (input => {
+				input.style.backgroundColor = "#fff8f0";
+				input.style.border = "0.2px solid #777";
+				input.style.borderRadius = "1.5px";
+			});
+			el("fontSize").addEventListener("input",() => {
+				el("fontSizeLabel").innerHTML = Math.floor(el("fontSize").value.padStart(2,"0")) + "px";
+				el("after").style.fontSize = Number(el("fontSize").value) + "px";
+			});
+		};
+		function replace() {
+			el("after").value = el("before").value.replaceAll(el("before1").checked ? (el("beforeInput").value) : "\n",el("after1").checked ? (el("afterInput").value) : "\n");
+		};
+		function copy() {
+			navigator.clipboard.writeText(el("after").value);
+			alert("コピーしました！");
+		};
+		replaceSet();
+	</script>
+</body>
+</html>
