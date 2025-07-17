@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Time Manager</title>
+	<style>
+		@font-face {
+			font-family: "original";
+			src: url("font/font.ttf");
+		}
+
+		* {
+			font-family: "original";
+		}
+
+		@keyframes open {
+			from {
+				translate: 0;
+			}
+
+			to {
+				translate: 0 245px;
+			}
+		}
+
+		@keyframes fadeInOut {
+			from {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		body {
+			overflow: hidden;
+		}
+
+		button {
+			cursor: pointer;
+			text-align: center;
+		}
+
+		input {
+			cursor: initial;
+			/* 初期の値 */
+		}
+
+		* {
+			cursor: default;
+		}
+
+		#title {
+			display: flex;
+			position: fixed;
+			top: 0;
+			left: 0;
+			margin: 0;
+			padding: 0 5px;
+			padding-right: 15px;
+			background-color: #def;
+			border-bottom-right-radius: 30px;
+			font-size: 30px;
+		}
+
+		#tabs {
+			display: flex;
+			position: fixed;
+			top: 0;
+			left: 60%;
+		}
+
+		#tabs button {
+			margin: 0 5px;
+			width: 130px;
+			height: 2em;
+			border: 0;
+			border-bottom: 4px solid #3ae;
+			background-color: #fff;
+			font-size: 15px;
+		}
+
+		#main1,
+		#main2,
+		#main3 {
+			display: flex;
+			text-align: center;
+			line-height: 0.95em;
+		}
+
+		#main2 *,
+		#main3 * {
+			position: absolute;
+		}
+
+		#main2Text {
+			top: calc(42vh - 2em);
+			left: 10vw;
+			width: 500px;
+			overflow: visible;
+			line-height: 1.1em;
+		}
+
+		#main2Clock,
+		#main3Clock {
+			background-image: radial-gradient(closest-side, #333 87%, transparent 87% 97%, #333 97%), conic-gradient(#777 1deg, #333 1deg 29deg, #777 29deg 31deg, #333 31deg 59deg, #777 59deg 61deg, #333 61deg 89deg, #777 89deg 91deg, #333 91deg 119deg, #777 119deg 121deg, #333 121deg 149deg, #777 149deg 151deg, #333 151deg 179deg, #777 179deg 181deg, #333 181deg 209deg, #777 209deg 211deg, #333 211deg 239deg, #777 239deg 241deg, #333 241deg 269deg, #777 269deg 271deg, #333 271deg 299deg, #777 299deg 301deg, #333 301deg 329deg, #777 329deg 331deg, #333 331deg 359deg, #777 359deg);
+			width: 400px;
+			height: 400px;
+			border-radius: 100%;
+			border: 10px solid #000;
+		}
+
+		#main2Clock>div:not(#main2ClockCenter),
+		#main3Clock>div:not(#main3ClockCenter) {
+			top: 0;
+			height: 400px;
+		}
+
+		#main2HourStick,
+		#main3HourStick {
+			left: 197px;
+			width: 6px;
+			background-image: linear-gradient(transparent 20%, #aaa 20% 50%, transparent 50%);
+		}
+
+		#main2MinStick,
+		#main3MinStick {
+			left: 197.5px;
+			width: 5px;
+			background-image: linear-gradient(transparent 5%, #eb3 5% 50%, transparent 50%);
+		}
+
+		#main2SecStick,
+		#main3SecStick {
+			left: 199px;
+			width: 2px;
+			background-image: linear-gradient(transparent 3%, #d00 3% 50%, transparent 50%);
+		}
+
+		#main2ClockCenter,
+		#main3ClockCenter {
+			top: 195px;
+			left: 195px;
+			width: 10px;
+			height: 10px;
+			background-color: #777;
+			border-radius: 100%;
+		}
+
+		#aram {
+			position: fixed;
+			bottom: 5px;
+			left: 50%;
+			translate: -50% 0;
+			align-items: center;
+			width: 100%;
+			height: auto;
+		}
+
+		#aram>span {
+			display: flex;
+			justify-content: center;
+		}
+
+		#settingsSwitch {
+			position: fixed;
+			bottom: 245px;
+			left: 0;
+			border: 0;
+			height: 30px;
+			width: 90px;
+			background-color: #af06;
+			border-radius: 15px 15px 0 0;
+			text-align: center;
+			color: white;
+			font-size: 25px;
+		}
+
+		#settingsDiv {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			display: inline-block;
+			height: 245px;
+			padding-right: 5px;
+			background-color: #aaa;
+			border-top-right-radius: 20px;
+			border: 0;
+		}
+
+		#windowChange {
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			border-top-left-radius: 20px;
+			background-color: #dfa;
+			border: 5px solid #ad7;
+			border-width: 5px 0 0 5px;
+			color: #5a0;
+			font-weight: bolder;
+			font-size: 35px;
+		}
+
+		#windowChange:hover {
+			filter: brightness(95%);
+		}
+
+		#setAram {
+			display: none;
+			position: fixed;
+			top: 10vh;
+			left: 50vw;
+			translate: -50% 0;
+			height: 90vh;
+			overflow-y: scroll;
+		}
+
+		#setAram>div {
+			margin: 15px;
+		}
+
+		#setAram>div>span {
+			font-size: 30px;
+		}
+
+		#setAram>div>button {
+			background-color: #edf;
+			border-radius: 100px;
+			border: 1.5px solid black;
+			translate: 0 -5px;
+		}
+
+		#setAram table {
+			border: 3px solid white;
+			border-collapse: collapse;
+			margin: 10px;
+		}
+
+		#setAram table~button {
+			display: flex;
+			margin: auto;
+			font-size: 15px;
+		}
+
+		#setAram td,
+		#setAram th {
+			border: 2px solid black;
+			text-align: center;
+		}
+
+		#setAram td input {
+			margin: 5px;
+		}
+
+		#setAram tr>td:nth-child(1)>input {
+			width: 30px;
+		}
+
+		#setAram tr>td:nth-child(2)>input {
+			width: 100px;
+		}
+
+		.firstAram {
+			color: #f30;
+		}
+
+		.secondAram {
+			color: #4b0;
+		}
+
+		.thirdAram {
+			color: #17f;
+		}
+
+		.miniFont {
+			font-size: 80px;
+		}
+
+		.miniFont2 {
+			font-size: 70px;
+			transform: translateY(6px);
+		}
+	</style>
+</head>
+
+<body id="body" style="background-color: #fafdff;position: relative;margin: 0;">
+	<div id="title">Time Manager</div>
+	<div id="main">
+		<div id="tabs">
+			<span style="margin-right: 5px; margin-top: 0.25em;">モード選択</span>
+			<button id="tab1" onclick="modeChange(1)">数字のみ</button>
+			<button id="tab2" onclick="modeChange(2)">縦の数字+時計</button>
+			<button id="tab3" onclick="modeChange(3)">時計のみ</button>
+		</div>
+		<div id="main1" style="font-weight: bold;margin: calc(50vh - 0.5em) auto 0 auto;"></div>
+		<div id="main2" style="position: relative;font-size: 100px;font-weight: bold;">
+			<div id="main2Text"></div>
+			<div id="main2Clock" style="top:calc(42vh - 200px);left:calc(50vw + 100px);">
+				<div id="main2MinStick"></div>
+				<div id="main2HourStick"></div>
+				<div id="main2SecStick"></div>
+				<div id="main2ClockCenter"></div>
+			</div>
+		</div>
+		<div id="main3" style="position: relative;">
+			<div id="main3Clock" style="top:calc(50vh - 200px);left:calc(50vw - 200px);">
+				<div id="main3MinStick"></div>
+				<div id="main3HourStick"></div>
+				<div id="main3SecStick"></div>
+				<div id="main3ClockCenter"></div>
+			</div>
+		</div>
+		<div id="aram"><!--ここのfont-sizeはJavaScriptのところで制御してる-->
+			<span id="aram1" class="firstAram">あいうえお:1234567890</span>
+			<span id="aram2" class="secondAram">あいうえお:1234567890</span>
+			<span id="aram3" class="thirdAram">あいうえお:1234567890</span>
+		</div>
+		<button id="settingsSwitch">▼</button>
+		<div id="settingsDiv" onclick="setUpdateInterval()">
+			<span style="font-size: 20px;margin-bottom: -3px;">設定</span><br>
+			更新の頻度<br>
+			<label><input type="radio" name="updateInterval" value="1" id="interval1">0.001秒(1ミリ秒)</label>
+			<br>
+			<label><input type="radio" name="updateInterval" value="10" id="interval10" checked>0.01秒(10ミリ秒)</label>
+			<br>
+			<label><input type="radio" name="updateInterval" value="100" id="interval100">0.1秒(100ミリ秒)</label>
+			<br>
+			<label><input type="radio" name="updateInterval" value="1000" id="interval1000">1秒(おすすめしません)</label>
+			<br>
+			<label id="japaneseLabel"><input type="checkbox" id="japanese">日本語表記にする</label>
+			<br>
+			<label id="toMiniLabel"><input type="checkbox" id="toMini" disabled>単位の文字を小さめにする</label>
+			<br>
+			<label id="twoLinesLabel"><input type="checkbox" id="twoLines">2行にする</label>
+			<br>
+			<label id="bigTextLabel"><input type="checkbox" id="bigText">大きめにする(全画面用)</label>
+		</div>
+	</div>
+	<button id="windowChange">切り替え</button>
+	<div id="setAram">
+		<div id="setAram1">
+			<span class="firstAram">1つ目のaram</span>
+			<button onclick="updateAram(1);">更新</button>
+			<table id="setAramTable1">
+				<tr>
+					<th>表示</th>
+					<th>名前</th>
+					<th>時刻</th>
+				</tr>
+				<tr>
+					<td><input type="radio" name="aramSet1" value="1"></td>
+					<td><input id="aram1-1Name"></td>
+					<td><input type="datetime-local" id="aram1-1Time" step="1"></td>
+				</tr>
+				<tr>
+					<td><input type="radio" name="aramSet1" value="2"></td>
+					<td><input id="aram1-2Name"></td>
+					<td><input type="datetime-local" id="aram1-2Time" step="1"></td>
+				</tr>
+			</table>
+			<button onclick="addAramTr(1)">追加する</button>
+		</div>
+		<div id="setAram2">
+			<span class="secondAram">2つ目のaram</span>
+		</div>
+		<div id="setAram3">
+			<span class="thirdAram">3つ目のaram</span>
+		</div>
+	</div>
+	<script>
+		const
+			nameInterval = document.getElementsByName('updateInterval'),
+			aramSetEl = [document.getElementsByName("aramSet1"), document.getElementsByName("aramSet2"), document.getElementsByName("aramSet3")];
+		var
+			mode = 1,
+			updateInterval = null,
+			time = null,
+			now = null,
+			nowvalues = null,
+			timeUpdate = [null, null, [null, null, null]], // [nowの更新用,表示の更新用,アラームの更新用]
+			isElClose = {settings: false, aram: true},
+			numOfSetAram = [1, 1, 1],
+			enabledAram = [null, null, null];
+		function el(id) {return document.getElementById(id)};
+		function saveData(...data) {
+			for(let i=0;i<data.length;i++) {
+				localStorage.setItem(String(data[i][0]), String(data[i][1]));
+			};
+		};
+		function data(key) {
+			return localStorage.getItem(String(key));
+		};
+		function createEl(elementName, placeId, info) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+		function timeConv(input) {
+			let result = input.split("T");// 年月日と時分秒に分かれる
+			result[0] = result[0].split("-"); // 年、月、日に分かれる
+			result[1] = result[1].split(":"); // 時、分、秒に分かれる
+			result = result[0].concat(result[1], [0]); // ミリ秒用のやつも含めて合体
+			if(!result[6]) {
+				result[6] = 0;
+			}
+			return result;
+		};
+		function modeChange(modeNum) {
+			mode = modeNum;
+			for(let i = 1; i < 4;i++) {
+				if(i === mode) {
+					el("main" + i).style.display = "block";
+				} else {
+					el("main" + i).style.display = "none";
+				};
+			};
+			setUpdateInterval();
+		};
+		function setUpdateInterval() {
+			clearInterval(timeUpdate[0]);
+			clearInterval(timeUpdate[1]);
+			let
+				interval = Number(nameInterval[Object.keys(nameInterval).find(el => nameInterval[el].checked == true)].value),
+				result = "";
+			isElClose.settings = false;
+			el("settingsSwitch").innerHTML = "▼";
+			time = new Date(),
+				now = {Y: time.getFullYear(), Mo: time.getMonth(), D: time.getDate(), H: time.getHours(), Mi: time.getMinutes(), S: time.getSeconds(), MS: time.getMilliseconds()};
+			nowvalues = Object.values(now);
+			nowvalues[1]++;
+			timeUpdate[0] = setInterval(() => {
+				time = new Date(),
+					now = {Y: time.getFullYear(), Mo: time.getMonth(), D: time.getDate(), H: time.getHours(), Mi: time.getMinutes(), S: time.getSeconds(), MS: time.getMilliseconds()};
+				nowvalues = Object.values(now);
+				nowvalues[1]++;
+			}, interval);
+			for(let i=0;i<Object.keys(el(`main`).querySelectorAll("*")).length;i++) {
+				el(`main`).querySelectorAll("*")[i].style.animation = "none";
+			};
+			saveData(["mode", mode], ["interval", interval]);
+			switch (mode) {
+				case 1:
+					el("japanese").disabled = false;
+					el("twoLines").disabled = false;
+					//1段階づつ作っていく
+					if(el("japanese").checked) {
+						el("toMini").disabled = false;
+						if(el("toMini").checked) {
+							result += "`${String(now.Y)}<span fontSize>年</span>${String(now.Mo+1).padStart(2,\"0\")}<span fontSize>月</span>${String(now.D).padStart(2,\"0\")}<span fontSize>日</span>` + ";
+						} else {
+							result += "`${String(now.Y)}年${String(now.Mo+1).padStart(2,\"0\")}月${String(now.D).padStart(2,\"0\")}日` + ";
+						};
+					} else {
+						el("toMini").disabled = true;
+						result += "`${String(now.Y)}/${String(now.Mo+1).padStart(2,\"0\")}/${String(now.D).padStart(2,\"0\")}/` + ";
+					};
+					if(el("twoLines").checked) {
+						el("bigText").disabled = false;
+						el("main1").style.marginTop = "calc(50vh - 1em)";
+						result += "`<br>` + ";
+					} else {
+						el("bigText").disabled = true;
+						el("main1").style.marginTop = "calc(50vh - 0.5em)";
+					};
+					if(el("japanese").checked) {
+						if(el("toMini").checked) {
+							result += "`${String(now.H).padStart(2,\"0\")}<span fontSize>時</span>${String(now.Mi).padStart(2,\"0\")}<span fontSize>分</span>${String(now.S).padStart(2,\"0\")}<span fontSize>秒<span>` + ";
+						} else {
+							result += "`${String(now.H).padStart(2,\"0\")}時${String(now.Mi).padStart(2,\"0\")}分${String(now.S).padStart(2,\"0\")}秒` + ";
+						};
+					} else {
+						result += "`${String(now.H).padStart(2,\"0\")}:${String(now.Mi).padStart(2,\"0\")}:${String(now.S).padStart(2,\"0\")}` + ";
+						if(interval != 1000) {
+							result += "\".\" + "
+						}
+					};
+					result += `\`<span fontSize>\${String(now.MS).padStart(3,"0").slice(0,${3 - Math.log10(interval)})}</span>\``;
+					if(el("bigText").checked) {
+						if(el("twoLines").checked) {
+							el("main1").style.fontSize = "150px";
+							result = result.replaceAll("fontSize", "style=\"font-size:120px\"");
+						} else {
+							el("main1").style.fontSize = "100px";
+							result = result.replaceAll("fontSize", "style=\"font-size:80px\"");
+						};
+					} else {
+						el("main1").style.fontSize = "100px";
+						result = result.replaceAll("fontSize", "style=\"font-size:80px\"");
+					};
+					el("main1").innerHTML = eval(result);
+					//定期的に更新するプログラム
+					timeUpdate[1] = setInterval(() => {
+						el("main1").innerHTML = eval(result);
+					}, interval);
+					break;
+				case 2:
+					el("japanese").disabled = true;
+					el("toMini").disabled = true;
+					el("twoLines").disabled = true;
+					el("bigText").disabled = false;
+					//自分でも何書いてるかわからん
+					result += `\`<span style="fontSize translate: translateX 10px;" >\${String(now.Y)}/</span><br>\${String(now.Mo+1).padStart(2,\"0\")}/\${String(now.D).padStart(2,\"0\")}/<br>\${String(now.H).padStart(2,\"0\")}:\${String(now.Mi).padStart(2,\"0\")}:<br>\${String(now.S).padStart(2,\"0\")}${interval == 1000 ? "" : "."}<span style="fontSize">\${String(now.MS).padStart(3,"0").slice(0,${3 - Math.log10(interval)})}</span>\``;
+					if(el("bigText").checked) {
+						el("main2Clock").style.scale = 1.1;
+						el("main2Text").style.fontSize = "120px";
+						result = result.replaceAll("fontSize", "font-size:96px;");
+						result = result.replaceAll("translateX", "-200px")
+					} else {
+						el("main2Clock").style.scale = 1;
+						el("main2Text").style.fontSize = "100px";
+						result = result.replaceAll("fontSize", "font-size:80px;");
+						result = result.replaceAll("translateX", "-170px")
+					};
+					el("main2Text").innerHTML = eval(result);
+					el("main2SecStick").style.rotate = `${(now.S + (interval == 1000 ? 0 : now.MS / 1000)) * 6}deg`;
+					el("main2MinStick").style.rotate = `${(now.Mi + now.S / 60 + now.MS / 60000) * 6}deg`;
+					el("main2HourStick").style.rotate = `${(now.H % 12 + now.Mi / 60 + now.S / 3600) * 30}deg`;
+					//定期的に更新するプログラム
+					timeUpdate[1] = setInterval(() => {
+						el("main2Text").innerHTML = eval(result);
+						el("main2SecStick").style.rotate = `${(now.S + (interval == 1000 ? 0 : now.MS / 1000)) * 6}deg`;
+						el("main2MinStick").style.rotate = `${(now.Mi + now.S / 60 + now.MS / 60000) * 6}deg`;
+						el("main2HourStick").style.rotate = `${(now.H % 12 + now.Mi / 60 + now.S / 3600 + now.MS / 3600000) * 30}deg`;
+					}, interval);
+					break;
+				case 3:
+					el("japanese").disabled = true;
+					el("toMini").disabled = true;
+					el("twoLines").disabled = true;
+					el("bigText").disabled = false;
+					let value = 0;
+					el("main3SecStick").style.rotate = `${(now.S + (interval == 1000 ? 0 : now.MS / 1000)) * 6}deg`;
+					el("main3MinStick").style.rotate = `${(now.Mi + now.S / 60 + now.MS / 60000) * 6}deg`;
+					el("main3HourStick").style.rotate = `${(now.H % 12 + now.Mi / 60 + now.S / 3600 + now.MS / 3600000) * 30}deg`;
+					if(el("bigText").checked) {
+						el("main3Clock").style.scale = 1.15;
+					} else {
+						el("main3Clock").style.scale = 1;
+					};
+					timeUpdate[1] = setInterval(() => {
+						el("main3SecStick").style.rotate = `${(now.S + (interval == 1000 ? 0 : now.MS / 1000)) * 6}deg`;
+						el("main3MinStick").style.rotate = `${(now.Mi + now.S / 60 + now.MS / 60000) * 6}deg`;
+						el("main3HourStick").style.rotate = `${(now.H % 12 + now.Mi / 60 + now.S / 3600 + now.MS / 3600000) * 30}deg`;
+					}, interval);
+					break;
+			};
+			el("japaneseLabel").style.color = el("japanese").disabled ? "#666" : "#000";
+			el("toMiniLabel").style.color = el("toMini").disabled ? "#666" : "#000";
+			el("twoLinesLabel").style.color = el("twoLines").disabled ? "#666" : "#000";
+			el("bigTextLabel").style.color = el("bigText").disabled ? "#666" : "#000";
+			if(el("bigText").checked && !el("bigText").disabled) {
+				el("aram1").style.fontSize = "40px";
+				el("aram2").style.fontSize = "35px";
+				el("aram3").style.fontSize = "30px";
+			} else {
+				el("aram1").style.fontSize = "30px";
+				el("aram2").style.fontSize = "25px";
+				el("aram3").style.fontSize = "20px";
+			};
+		};
+		function addAramTr(order) {
+			numOfSetAram[order - 1]++;
+			createEl("tr", `setAramTable${order}`, {
+				innerHTML: `
+				<td><input type="radio" name="aramSet${order}" id="${numOfSetAram[order - 1]}"></td>\n
+				<td><input id="aram${order}-${numOfSetAram[order - 1]}"></td>\n
+				<td><input type="datetime-local" id="aram${order}-${numOfSetAram[order - 1]}" step="1"></td>\n
+			`});
+		};
+		function updateAram(order) {
+			/*
+				やりたいこと
+				特定の時間ごとに今とアラームの時刻の差を出して、それを月とかを日変換して表示する
+				あと最後にtry...catchを消す
+			*/
+			const orderM1 = order - 1;
+			enabledAram[orderM1] = Number(aramSetEl[orderM1][Object.keys(aramSetEl[orderM1]).find(el => aramSetEl[orderM1][el].checked == true)].value) // 選択されているラジオボタンのvalueを代入する
+			clearInterval(timeUpdate[2][orderM1]);
+			timeUpdate[2] = setInterval(() => {
+				try {
+					let
+						aramTime = timeConv(el(`aram${order}-${enabledAram[orderM1]}Time`).value),
+						result = [];
+					for(let i=0;i<7;i++) {
+						result[i] = aramTime[i] - nowvalues[i];
+					};
+					for(let j=0;j<6;j++) {
+						for(let i = 1; i < 7;i++) {// iが1から始まるのに注意
+							if(result[i] < 0) {
+								switch (i) {
+									case 1: // 月なら
+										result[i] += 12;
+										break;
+									// 日はまた下でやる
+									case 3: // 時なら
+										result[i] += 24;
+										break;
+									case 4:
+									case 5: // 分か秒なら
+										result[i] += 60;
+										break;
+									case 6: // ミリ秒なら
+										result[i] += 1000;
+										break;
+									default: break;
+								};
+								result[i - 1]--;
+							};
+						};
+					};
+					for(let i=0;i<result[0];i++) { // 年を日に変換
+						result[2] += 365;
+						if((aramTime[0] - 1) % 4 === 0) {
+							result[2]++;
+						};
+					};
+					result[2] = 0;
+					for(let i=0;i<result[1];i++) { // 月を日に変換
+						switch ((nowvalues[1] + i) % 12) {
+							case 1: // 長蛇のcase
+							case 3:
+							case 5:
+							case 7:
+							case 8:
+							case 10:
+							case 12:
+								result[2] += 31;
+								break;
+							case 4:
+							case 6:
+							case 9:
+							case 11:
+								result[2] += 30;
+								break;
+							case 2:
+								if((aramTime - result[0]) % 4 == 0) { // うるう年かどうか
+									result[2] += 29;
+								} else {
+									result[2] += 28;
+								};
+						};
+					};
+					el(`aram${order}`).innerHTML = `${el(`aram${order}-${enabledAram[orderM1]}Name`).value}:${result[0]}/${String(result[1]).padStart(2, "0")}/${String(result[2]).padStart(2, "0")}/${String(result[3]).padStart(2, "0")}:${String(result[4]).padStart(2, "0")}:${String(result[5]).padStart(2, "0")}.${String(result[6]).padStart(3, "0")}`;
+				} catch (error) {/*alert(error.name+"\n"+error.stack)*/}
+			}, 100);
+		};
+		el("settingsSwitch").addEventListener("click", () => {
+			if(isElClose.settings) {
+				isElClose.settings = false;
+				el("settingsDiv").style.animation = "none";
+				void el("settingsDiv").offsetWidth;
+				el("settingsDiv").style.animation = "open 0.4s cubic-bezier(.6,0,1,.85) 1 forwards reverse";
+				el("settingsSwitch").style.animation = "none";
+				void el("settingsSwitch").offsetWidth;
+				el("settingsSwitch").style.animation = "open 0.4s cubic-bezier(.6,0,1,.85) 1 forwards reverse";
+				el("settingsSwitch").innerHTML = "▼";
+			} else {
+				isElClose.settings = true;
+				el("settingsDiv").style.animation = "none";
+				void el("settingsDiv").offsetWidth;
+				el("settingsDiv").style.animation = "open 0.4s cubic-bezier(0,.15,.4,1) 1 forwards";
+				el("settingsSwitch").style.animation = "none";
+				void el("settingsSwitch").offsetWidth;
+				el("settingsSwitch").style.animation = "open 0.4s cubic-bezier(0,.15,.4,1) 1 forwards";
+				el("settingsSwitch").innerHTML = "▲";
+			};
+		});
+		el("windowChange").addEventListener("click", () => {
+			if(isElClose.aram) {
+				isElClose.aram = false;
+				saveData(["aramClose", false])
+				el("setAram").style.display = "flex";
+				el("main").style.display = "none";
+			} else {
+				isElClose.aram = true;
+				saveData(["aramClose", true])
+				el("setAram").style.display = "none";
+				el("main").style.display = "flex";
+			};
+		});
+		if(data("aramClose") === undefined) {
+			saveData(["aramClose", false]);
+		};
+		if(data("aramClose") === "true") {
+			isElClose.aram = true;
+			el("setAram").style.display = "none";
+			el("main").style.display = "flex";
+		} else {
+			isElClose.aram = false;
+			el("setAram").style.display = "flex";
+			el("main").style.display = "none";
+		};
+		if(data("mode")) {
+			modeChange(Number(data("mode")));
+			el(`interval${data("interval")}`).checked = true;
+		} else {
+			modeChange(1);
+		};
+	</script>
+</body>
+
+</html>
