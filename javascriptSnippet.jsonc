@@ -1,0 +1,7 @@
+{
+	"catchErrorName": {
+		"prefix": "catchErrorName",
+		"body": "catch(error) {alert(`${error.name}\\n${error.stack}`)}",
+		"description": "It's useful to catch error in JS"
+	}
+}

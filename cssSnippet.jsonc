@@ -1,0 +1,37 @@
+{
+	"border snippet": {
+		"prefix": ["borderSnippet","snippetBorder"],
+		"body": "border: ${1:width} ${2|style,none,hidden,dotted,dashed,solid,double,groove,ridge,inset,outset|} ${3:color};",
+		"description": "It's useful to enter border property."
+	},
+	"2 Values property": {
+		"prefix": "2Values",
+		"body": "${1:top,bottom} ${2:left,right}",
+		"description": "It's useful to enter 2 value property."
+	},
+	"3 Values property": {
+		"prefix": "3Values",
+		"body": "${1:top} ${2:left,right} ${3:bottom}",
+		"description": "It's useful to enter 3 value property."
+	},
+	"4 Values property": {
+		"prefix": "4Values",
+		"body": "${1:top} ${2:right} ${3:bottom} ${4:left}",
+		"description": "It's useful to enter 4 value property."
+	},
+	"2 values corner property": {
+		"prefix": ["2ValuesCorner", "2CornerValues"],
+		"body": "${1:left-top,right-bottom} ${2:right-top,left-bottom}",
+		"description": "It's useful to enter 2 value corner property."
+	},
+	"3 values corner property": {
+		"prefix": ["3ValuesCorner", "3CornerValues"],
+		"body": "${1:left-top} ${2:right-top,left-bottom} ${3:right-bottom}",
+		"description": "It's useful to enter 3 value corner property."
+	},
+	"4 values corner property": {
+		"prefix": ["4ValuesCorner", "4CornerValues"],
+		"body": "${1:left-top} ${2:right-top} ${3:left-bottom} ${4:right-bottom}",
+		"description": "It's useful to enter 4 value corner property."
+	}
+}

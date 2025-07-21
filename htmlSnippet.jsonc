@@ -1,0 +1,25 @@
+{
+	"inputLabel": {
+		"prefix": ["inputLabel","labelInput"],
+		"body": [
+			"<label>$1",
+			"\t<input type=\"$2\">",
+			"</label>"
+		],
+		"description": "It's useful to enter input element in label element"
+	},
+	"tableSnippet": {
+		"prefix": ["tableSnippet","snippetTable"],
+		"body": [
+			"<table>",
+			"\t<tbody>",
+			"\t\t<tr>",
+			"\t\t\t<${1|th,td|}>$2</${1|th,td|}>",
+			"\t\t\t$3",
+			"\t\t</tr>",
+			"\t</tbody>",
+			"</table>"
+		],
+		"description": "It's useful to enter table element"
+	}
+}
