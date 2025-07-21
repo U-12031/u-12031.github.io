@@ -92,7 +92,8 @@
 		"color-highlight.matchHslWithNoFunction": true,
 		"color-highlight.matchRgbWithNoFunction": true,
 		"color-highlight.matchWords": true,
-		"editor.colorDecorators": false
+		"editor.colorDecorators": false,
+		"workbench.colorTheme": "Default Dark Modern"
 	},
 	"html.json": {
 		"inputLabel": {
