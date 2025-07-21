@@ -1,8 +1,7 @@
 {
 	"settings.json": {
 		/*
-			keybindings.json(ショートカットのJSONファイル)のコピーも忘れずに
-			拡張機能
+			拡張機能を入れるのも忘れずに
 				CodeSwing
 				Color Highlight
 				indent-rainbow
