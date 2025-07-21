@@ -1,0 +1,25 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+	{
+		"key": "ctrl+\\",
+		"command": "editor.action.outdentLines",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+[",
+		"command": "-editor.action.outdentLines",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+alt+right",
+		"command": "workbench.action.splitEditorRight"
+	},
+	{
+		"key": "ctrl+k ctrl+\\",
+		"command": "-workbench.action.splitEditorRight"
+	},
+	{
+		"key": "ctrl+shift+w",
+		"command": "editor.emmet.action.wrapWithAbbreviation"
+	}
+]
