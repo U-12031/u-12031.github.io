@@ -31,8 +31,7 @@
 			el(placeId).appendChild(create);
 		};
 		el("input").addEventListener("input",()=>{
-			// el("mainFormula").innerHTML = "\\[ax^2+bx+c=10\\]"
-			el("mainFormula").innerHTML = `\\[ax^2+bx+c=${el("input").value}\\]`;
+			el("mainFormula").innerHTML = `\\[m=t-${el("input").value}\\]`;
 			MathJax.typesetPromise([el("mainFormula")]);
 		});
 	</script>
