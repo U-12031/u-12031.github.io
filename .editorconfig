@@ -1,0 +1,6 @@
+# .editorconfig file for the project
+root = true
+
+[*]
+indent_style = tab
+indent_size = 2
