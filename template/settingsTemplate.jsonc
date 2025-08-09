@@ -4,6 +4,7 @@
 			CodeSwing
 			Color Highlight
 			indent-rainbow
+			GitHub Copilot
 	*/
 	"editor.tabSize": 2,
 	"editor.detectIndentation": false,
