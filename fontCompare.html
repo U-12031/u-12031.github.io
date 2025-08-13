@@ -11,7 +11,7 @@
 			}
 
 			@font-face {
-				font-family: "endlishFont";
+				font-family: "englishFont";
 				src: url(font/englishFont.ttf) format("truetype");
 			}
 
@@ -86,27 +86,27 @@
 			}
 
 			@font-face {
-				font-family: "LapisaL-Bold";
+				font-family: "LapisiaL-Bold";
 				src: url(font/lakasaFont/LapisiaL-Bold.ttf) format("truetype");
 			}
 
 			@font-face {
-				font-family: "LapisaL-Elegant";
+				font-family: "LapisiaL-Elegant";
 				src: url(font/lakasaFont/LapisiaL-Elegant.ttf);
 			}
 
 			@font-face {
-				font-family: "LapisaL-Light";
+				font-family: "LapisiaL-Light";
 				src: url(font/lakasaFont/LapisiaL-Light.ttf) format("truetype");
 			}
 
 			@font-face {
-				font-family: "LapisaL-Master";
+				font-family: "LapisiaL-Master";
 				src: url(font/lakasaFont/LapisiaL-Master.ttf) format("truetype");
 			}
 
 			@font-face {
-				font-family: "LapisaL-Regular";
+				font-family: "LapisiaL-Regular";
 				src: url(font/lakasaFont/LapisiaL-Regular.ttf) format("truetype");
 			}
 
@@ -115,9 +115,7 @@
 				src: url(font/lakasaFont/PitikaL-Regular.ttf) format("truetype");
 			}
 
-			* {
-				font-family: "simpleFont2-Regular";
-			}
+			* {font-family: "simpleFont3-Regular";}
 
 			fieldset {
 				border: 1px solid #222;
@@ -137,22 +135,116 @@
 	<br>
 	<label>Font Size: <input type="range" min="5" max="200" step="0.1" id="fontSizeInput" style="width: 40%;"><span id="fontSize">30<!-- 初期値として --></span>px</label>
 	<fieldset>
-		<legend>default</legend>
+		<legend>Default</legend>
 		<span id="default" class="textOutput"></span>
 	</fieldset>
+	<fieldset>
+		<legend>Default Serif</legend>
+		<span id="serif" class="textOutput"></span>
+	</fieldset>
+	<fieldset>
+		<legend>Default Sans-serif</legend>
+		<span id="sans-serif" class="textOutput"></span>
+	</fieldset>
+	<fieldset>
+		<legend>dotFont.ttf</legend>
+		<span id="dotFont" class="textOutput" style="font-family: dotFont;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>englishFont.ttf</legend>
+		<span id="englishFont" class="textOutput" style="font-family: englishFont;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>japaneseFont-Regular.ttf</legend>
+		<span id="japaneseFont-Regular" class="textOutput" style="font-family: japaneseFont-Regular;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>japaneseFont-Bold.ttf</legend>
+		<span id="japaneseFont-Bold" class="textOutput" style="font-family: japaneseFont-Bold;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>kakukaku.ttf</legend>
+		<span id="kakukaku" class="textOutput" style="font-family: kakukaku;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>kazesawa-Bold.ttf</legend>
+		<span id="kazesawa-Bold" class="textOutput" style="font-family: kazesawa-Bold;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>kazesawa-Light.ttf</legend>
+		<span id="kazesawa-Light" class="textOutput" style="font-family: kazesawa-Light;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>kazesawa-Regular.ttf</legend>
+		<span id="kazesawa-Regular" class="textOutput" style="font-family: kazesawa-Regular;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>keifont.ttf</legend>
+		<span id="keifont" class="textOutput" style="font-family: keifont;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>kogusiMaru.ttf</legend>
+		<span id="kogusiMaru" class="textOutput" style="font-family: kogusiMaru;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>simpleFont2-Bold.ttf</legend>
+		<span id="simpleFont2-Bold" class="textOutput" style="font-family: simpleFont2-Bold;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>simpleFont2-Regular.ttf</legend>
+		<span id="simpleFont2-Regular" class="textOutput" style="font-family: simpleFont2-Regular;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>simpleFont2-Light.ttf</legend>
+		<span id="simpleFont2-Light" class="textOutput" style="font-family: simpleFont2-Light;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>simpleFont2-SemiBold.ttf</legend>
+		<span id="simpleFont2-SemiBold" class="textOutput" style="font-family: simpleFont2-SemiBold;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>simpleFont3-medium.ttf</legend>
+		<span id="simpleFont3-medium" class="textOutput" style="font-family: simpleFont3-medium;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>simpleFont3-regular.ttf</legend>
+		<span id="simpleFont3-regular" class="textOutput" style="font-family: simpleFont3-regular;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>lakasaFont/LapisiaL-Bold.ttf</legend>
+		<span id="lapisaL-bold" class="textOutput" style="font-family: LapisiaL-Bold;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>lakasaFont/LapisiaL-Elegant.ttf</legend>
+		<span id="lapisaL-elegant" class="textOutput" style="font-family: LapisiaL-Elegant;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>lakasaFont/LapisiaL-Light.ttf</legend>
+		<span id="lapisaL-light" class="textOutput" style="font-family: LapisiaL-Light;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>lakasaFont/LapisiaL-Master.ttf</legend>
+		<span id="lapisaL-master" class="textOutput" style="font-family: LapisiaL-Master;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>lakasaFont/LapisiaL-Regular.ttf</legend>
+		<span id="lapisaL-regular" class="textOutput" style="font-family: LapisiaL-Regular;"></span>
+	</fieldset>
+	<fieldset>
+		<legend>lakasaFont/PitikaL-Regular.ttf</legend>
+		<span id="pitikaL-regular" class="textOutput" style="font-family: PitikaL-Regular;"></span>
+	</fieldset>
 	<script>
-		/**
-		 * この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています
+		/** この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています。
 		 * @param {string} id 取得したい要素のID
 		 * @return {HTMLElement} 指定されたIDを持つ要素
-		*/
+		 * */
 		function el(id) {return document.getElementById(id)};
-		/**
-		 * この関数は、指定されたIDを持つHTMLドキュメント内のすべての要素を取得します。
-		 * @param {string} id 取得したい要素のID
+		/** この関数は、指定されたIDを持つHTMLドキュメント内のすべての要素を取得します。これも基本的な要素の一つです。
+		 * @param {string} selector 取得したい要素のID
 		 * @return {NodeList} 指定されたIDを持つすべての要素
 		*/
-		function all(id) {return document.querySelectorAll(id)};
+		function all(selector) {return document.querySelectorAll(selector)};
 		el("inputText").addEventListener("input", function() {
 			if (el("alwaysUpdate").checked) {
 				all(".textOutput").forEach((font) => {
