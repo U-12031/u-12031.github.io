@@ -132,6 +132,24 @@
 		 * @return {HTMLElement} 指定されたIDを持つ要素
 		*/
 		function el(id) {return document.getElementById(id)};
+		/**
+		 * この関数は、指定されたIDを持つHTMLドキュメント内のすべての要素を取得します。
+		 * @param {string} id 取得したい要素のID
+		 * @return {NodeList} 指定されたIDを持つすべての要素
+		*/
+		function all(id) {return document.querySelectorAll(id)};
+		function updateText() {
+			const text = el("inputText").value;
+			const fonts = all(".textOutput");
+			fonts.forEach((font) => {
+				font.innerHTML = text;
+			});
+		};
+		el("inputText").addEventListener("input", function() {
+			if (el("alwaysUpdate").checked) {
+				updateText();
+			};
+		});
 	</script>
 </body>
 </html>
