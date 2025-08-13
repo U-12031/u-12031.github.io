@@ -251,12 +251,12 @@
 			if (inputText === "") {
 				all(".textOutput").forEach((font) => {
 					font.innerHTML = "add some text...";
-					font.style.color = "gray";
+					font.style.color = "#ccc";
 				});
 			} else {
 				all(".textOutput").forEach((font) => {
 					font.innerHTML = inputText;
-					font.style.color = "black";
+					font.style.color = "#000";
 				});
 			};
 		};
@@ -270,7 +270,7 @@
 				font.style.fontSize = value + "px";
 			});
 		};
-		el("inputText").addEventListener("input", function() {
+		el("inputText").addEventListener("input", () => {
 			if (el("alwaysUpdate").checked) {
 				updateText();
 			};
