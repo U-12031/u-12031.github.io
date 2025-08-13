@@ -114,13 +114,23 @@
 				font-family: "PikikaL-Regular";
 				src: url(font/lakasaFont/PitikaL-Regular.ttf) format("truetype");
 			}
+
+			fieldset {
+				border: 1px solid #222;
+				padding: 0 10px;
+				margin: 0 10px;
+			}
+
+			.textOutput {
+				font-size: 30px; /* 初期値として */
+			}
 		</style>
 </head>
 <body>
 	<input id="inputText" sryle="width: 35%">
 	<label><input type="checkbox" id="alwaysUpdate" checked>Always Update</label>
 	<br>
-	<label>Font Size: <input id="fontSize" style="width: max(50px, 5%);">px</label>
+	<label>Font Size: <input type="range" min="5" max="200" step="0.1" id="fontSizeInput" style="width: 40%;"><span id="fontSize"></span> px</label>
 	<fieldset>
 		<legend>default</legend>
 		<span id="default" class="textOutput"></span>
@@ -138,17 +148,19 @@
 		 * @return {NodeList} 指定されたIDを持つすべての要素
 		*/
 		function all(id) {return document.querySelectorAll(id)};
-		function updateText() {
-			const text = el("inputText").value;
-			const fonts = all(".textOutput");
-			fonts.forEach((font) => {
-				font.innerHTML = text;
-			});
-		};
 		el("inputText").addEventListener("input", function() {
 			if (el("alwaysUpdate").checked) {
-				updateText();
+				all(".textOutput").forEach((font) => {
+					font.innerHTML = el("inputText").value;
+				});
 			};
+		});
+		el("fontSizeInput").addEventListener("input", () => {
+			const fontSize = el("fontSizeInput").value;
+			el("fontSize").innerHTML = fontSize;
+			all(".textOutput").forEach((font) => {
+				font.style.fontSize = fontSize + "px";
+			});
 		});
 	</script>
 </body>
