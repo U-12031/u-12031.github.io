@@ -115,6 +115,10 @@
 				src: url(font/lakasaFont/PitikaL-Regular.ttf) format("truetype");
 			}
 
+			* {
+				font-family: "simpleFont2-Regular";
+			}
+
 			fieldset {
 				border: 1px solid #222;
 				padding: 0 10px;
@@ -127,10 +131,11 @@
 		</style>
 </head>
 <body>
+	<h1 style="font-weight: normal;">Font Compare</h1>
 	<input id="inputText" sryle="width: 35%">
 	<label><input type="checkbox" id="alwaysUpdate" checked>Always Update</label>
 	<br>
-	<label>Font Size: <input type="range" min="5" max="200" step="0.1" id="fontSizeInput" style="width: 40%;"><span id="fontSize"></span> px</label>
+	<label>Font Size: <input type="range" min="5" max="200" step="0.1" id="fontSizeInput" style="width: 40%;"><span id="fontSize">30<!-- 初期値として --></span>px</label>
 	<fieldset>
 		<legend>default</legend>
 		<span id="default" class="textOutput"></span>
