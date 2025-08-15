@@ -348,6 +348,9 @@
 		el("fontSizeInput").addEventListener("input", () => {
 			updateFontSize(el("fontSizeInput").value);
 		});
+		el("fontSize").addEventListener("input", () => {
+			updateFontSize(el("fontSize").value);
+		});
 		updateText();
 		updateFontSize(30);
 	</script>
