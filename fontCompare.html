@@ -170,11 +170,16 @@
 				width: 50px;
 				text-align: center;
 				border-radius: 7px;
+				color: white;
 			}
 
 			.en {background-color: #471;}
 
+			.en::before {content: "🇺🇸";}
+
 			.jp {background-color: #259;}
+
+			.jp::before {content: "🇯🇵";}
 		</style>
 </head>
 <body>
@@ -189,8 +194,8 @@
 	<button onclick="updateFontSize(30)">Reset</button>
 	<fieldset>
 		<legend>Default
-			<div class="en">🇺🇸en</div>
-			<div class="jp">🇯🇵jp</div>
+			<div class="en">en</div>
+			<div class="jp">jp</div>
 		</legend>
 		<span id="default" style="font-family: initial;"></span>
 	</fieldset>
