@@ -162,16 +162,19 @@
 			fieldset {
 				border: 1px solid #222;
 				padding: 0 10px;
-				margin: 0 10px;
+				margin: 10px;
 			}
 
-			.en, .jp {
+			.en, .jp, .hiragana {
 				display: inline-block;
 				width: 55px;
 				text-align: center;
 				border-radius: 7px;
 				color: white;
+				margin-left: 10px;
 			}
+
+			.hiragana {width: 120px;}
 
 			.en::before, .jp::before {margin-right: 3px;}
 
@@ -354,6 +357,7 @@
 	</fieldset>
 	<fieldset>
 		<legend>lakasaFont/PitikaL-Regular.ttf
+			<div class="en"></div>
 			<div class="hiragana"></div>
 		</legend>
 		<span id="pitikaL-regular" style="font-family: PitikaL-Regular;"></span>
