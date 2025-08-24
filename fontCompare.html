@@ -179,9 +179,17 @@
 
 			.en::before {content: "🇺🇸";}
 
+			.en::after {content: "en";}
+
 			.jp {background-color: #259;}
 
 			.jp::before {content: "🇯🇵";}
+
+			.jp::after {content: "jp";}
+
+			.hiragana {background-color: #811;}
+
+			.hiragana::after {content: "hiragana only";}
 		</style>
 </head>
 <body>
@@ -196,8 +204,6 @@
 	<button onclick="updateFontSize(30)">Reset</button>
 	<fieldset>
 		<legend>Default
-			<div class="en">en</div>
-			<div class="jp">jp</div>
 		</legend>
 		<span id="default" style="font-family: initial;"></span>
 	</fieldset>
@@ -210,123 +216,194 @@
 		<span id="sans-serif" style="font-family: 'sans-serif';"></span>
 	</fieldset>
 	<fieldset>
-		<legend>dotFont.ttf</legend>
+		<legend>dotFont.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="dotFont" style="font-family: dotFont;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>englishFont.ttf</legend>
+		<legend>englishFont.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="englishFont" style="font-family: englishFont;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>japaneseFont-Regular.ttf</legend>
+		<legend>japaneseFont-Regular.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="japaneseFont-Regular" style="font-family: japaneseFont-Regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>japaneseFont-Bold.ttf</legend>
+		<legend>japaneseFont-Bold.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="japaneseFont-Bold" style="font-family: japaneseFont-Bold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>kakukaku.ttf</legend>
+		<legend>kakukaku.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="kakukaku" style="font-family: kakukaku;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>kazesawa-Bold.ttf</legend>
+		<legend>kazesawa-Bold.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="kazesawa-Bold" style="font-family: kazesawa-Bold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>kazesawa-Light.ttf</legend>
+		<legend>kazesawa-Light.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="kazesawa-Light" style="font-family: kazesawa-Light;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>kazesawa-Regular.ttf</legend>
+		<legend>kazesawa-Regular.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="kazesawa-Regular" style="font-family: kazesawa-Regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>keifont.ttf</legend>
+		<legend>keifont.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="keifont" style="font-family: keifont;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>kogusiMaru.ttf</legend>
+		<legend>kogusiMaru.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="kogusiMaru" style="font-family: kogusiMaru;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>simpleFont2-Bold.ttf</legend>
+		<legend>simpleFont2-Bold.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="simpleFont2-Bold" style="font-family: simpleFont2-Bold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>simpleFont2-Regular.ttf</legend>
+		<legend>simpleFont2-Regular.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="simpleFont2-Regular" style="font-family: simpleFont2-Regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>simpleFont2-Light.ttf</legend>
+		<legend>simpleFont2-Light.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="simpleFont2-Light" style="font-family: simpleFont2-Light;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>simpleFont2-SemiBold.ttf</legend>
+		<legend>simpleFont2-SemiBold.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="simpleFont2-SemiBold" style="font-family: simpleFont2-SemiBold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>simpleFont3-medium.ttf</legend>
+		<legend>simpleFont3-medium.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="simpleFont3-medium" style="font-family: simpleFont3-medium;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>simpleFont3-regular.ttf</legend>
+		<legend>simpleFont3-regular.ttf
+			<div class="en"></div>
+			<div class="jp"></div>
+		</legend>
 		<span id="simpleFont3-regular" style="font-family: simpleFont3-regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>lakasaFont/LapisiaL-Bold.ttf</legend>
+		<legend>lakasaFont/LapisiaL-Bold.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="lapisaL-bold" style="font-family: LapisiaL-Bold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>lakasaFont/LapisiaL-Elegant.ttf</legend>
+		<legend>lakasaFont/LapisiaL-Elegant.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="lapisaL-elegant" style="font-family: LapisiaL-Elegant;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>lakasaFont/LapisiaL-Light.ttf</legend>
+		<legend>lakasaFont/LapisiaL-Light.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="lapisaL-light" style="font-family: LapisiaL-Light;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>lakasaFont/LapisiaL-Master.ttf</legend>
+		<legend>lakasaFont/LapisiaL-Master.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="lapisaL-master" style="font-family: LapisiaL-Master;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>lakasaFont/LapisiaL-Regular.ttf</legend>
+		<legend>lakasaFont/LapisiaL-Regular.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="lapisaL-regular" style="font-family: LapisiaL-Regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>lakasaFont/PitikaL-Regular.ttf</legend>
+		<legend>lakasaFont/PitikaL-Regular.ttf
+			<div class="hiragana"></div>
+		</legend>
 		<span id="pitikaL-regular" style="font-family: PitikaL-Regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG7ClassicMini-Bold" style="font-family: DSEG7ClassicMini-Bold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG7ClassicMini-BoldItalic.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG7ClassicMini-BoldItalic.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG7ClassicMini-BoldItalic" style="font-family: DSEG7ClassicMini-BoldItalic;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG7ClassicMini-Italic.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG7ClassicMini-Italic.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG7ClassicMini-Italic" style="font-family: DSEG7ClassicMini-Italic;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG7ClassicMini-Regular.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG7ClassicMini-Regular.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG7ClassicMini-Regular" style="font-family: DSEG7ClassicMini-Regular;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG14ClassicMini-Bold.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG14ClassicMini-Bold.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG14ClassicMini-Bold" style="font-family: DSEG14ClassicMini-Bold;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG14ClassicMini-BoldItalic.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG14ClassicMini-BoldItalic.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG14ClassicMini-BoldItalic" style="font-family: DSEG14ClassicMini-BoldItalic;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG14ClassicMini-Italic.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG14ClassicMini-Italic.ttf
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG14ClassicMini-Italic" style="font-family: DSEG14ClassicMini-Italic;"></span>
 	</fieldset>
 	<fieldset>
-		<legend>fonts-DSEG_v046/DSEG14ClassicMini-Regular.ttf</legend>
+		<legend>fonts-DSEG_v046/DSEG14ClassicMini-Regular.ttf<
+			<div class="en"></div>
+		</legend>
 		<span id="DSEG14ClassicMini-Regular" style="font-family: DSEG14ClassicMini-Regular;"></span>
 	</fieldset>
 	<script>
