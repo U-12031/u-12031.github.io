@@ -3,10 +3,57 @@
 <head>
 	<title>Age Calculator</title>
 	<style>
+		@font-face {
+			font-family: "titleFont";
+			src: url(../font/kazesawa-Regular.ttf);
+		}
+
+		@font-face {
+			font-family: "originalFont";
+			src: url(../font/simpleFont3-regular.ttf);
+		}
+
+		* {font-family: "originalFont";}
+
+		body {margin: 0;}
+
+		#title {
+			font-family: "titleFont";
+			display: inline-block;
+			padding: 5px 10px;
+			margin: 0;
+			border-bottom-right-radius: 10px;
+			background: linear-gradient(90deg, #aef, #eaf);
+		}
+
+		#inputField input {
+			width: 50px;
+		}
 	</style>
 </head>
 <body>
-	<div id="title">Age Calculator</div>
+	<h1 id="title">Age Calculator</h1>
+	<fieldset id="inputField">
+		<legend>入力欄 / Input field</legend>
+		<!-- <input type="date" id="dayInput"> -->
+		<table>
+			<tr style="translate: 0 7px; font-size: 15px;">
+				<td>年</td>
+				<td>月</td>
+				<td>日</td>
+			</tr>
+			<tr>
+				<td>Year</td>
+				<td>Month</td>
+				<td>Day</td>
+			</tr>
+			<tr>
+				<td><input type="num" placeholder="2025">/</td>
+				<td><input type="num" placeholder="1">/</td>
+				<td><input type="num" placeholder="1">/</td>
+			</tr>
+		</table>
+	</fieldset>
 	<script>
 		/** この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています。
 		 * @param {string} id 取得したい要素のID
