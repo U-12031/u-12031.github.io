@@ -1,7 +1,4 @@
 {
-	"type": "html",
-	"files": {
-		"olderCalc.html": "olderCalc.html"
-	},
-	"autoRun": true
+  "scripts": [],
+  "styles": []
 }
