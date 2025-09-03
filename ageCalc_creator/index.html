@@ -37,20 +37,21 @@
 		<legend>入力欄 / Input field</legend>
 		<!-- <input type="date" id="dayInput"> -->
 		<table>
-			<tr style="translate: 0 7px; font-size: 15px;">
-				<td>年</td>
-				<td>月</td>
-				<td>日</td>
+			<tr id="inputLabel">
+				<td>年<br><span>Year</span></td>
+				<td>月<br><span>Month</span></td>
+				<td>日<br><span>Day</span></td>
+				<td>時<br><span>Hour</span></td>
+				<td>分<br><span>Min</span></td>
+				<td>秒<br><span>Sec</span></td>
 			</tr>
 			<tr>
-				<td>Year</td>
-				<td>Month</td>
-				<td>Day</td>
-			</tr>
-			<tr>
-				<td><input type="num" placeholder="2025">/</td>
-				<td><input type="num" placeholder="1">/</td>
-				<td><input type="num" placeholder="1">/</td>
+				<td><input type="number" placeholder="2025">/</td>
+				<td><input type="number" placeholder="1">/</td>
+				<td><input type="number" placeholder="1">/</td>
+				<td><input type="number" placeholder="0">/</td>
+				<td><input type="number" placeholder="0">/</td>
+				<td><input type="number" placeholder="0"></td>
 			</tr>
 		</table>
 	</fieldset>
