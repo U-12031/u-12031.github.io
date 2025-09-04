@@ -26,6 +26,22 @@
 			background: linear-gradient(90deg, #aef, #eaf);
 		}
 
+		#inputField th {font-weight: normal;}
+
+		#inputField tr:nth-of-type(1) th {
+			translate: 0 7px;
+			justify-content: space-between;
+		}
+		#inputField tr:nth-of-type(1) th>span {
+			font-size: 13px;
+			margin-left: 10px;
+		}
+
+		#inputField tr:nth-of-type(2) th {
+			translate: 0 7px;
+			font-size: 14px;
+		}
+
 		#inputField input {width: 50px;}
 	</style>
 </head>
@@ -33,23 +49,30 @@
 	<h1 id="title">Age Calculator</h1>
 	<fieldset id="inputField">
 		<legend>入力欄 / Input field</legend>
-		<!-- <input type="date" id="dayInput"> -->
 		<table>
-			<tr id="inputLabel">
-				<td>年<br><span>Year</span></td>
-				<td>月<br><span>Month</span></td>
-				<td>日<br><span>Day</span></td>
-				<td>時<br><span>Hour</span></td>
-				<td>分<br><span>Min</span></td>
-				<td>秒<br><span>Sec</span></td>
-			</tr>
 			<tr>
-				<td><input type="number" placeholder="2025">/</td>
-				<td><input type="number" placeholder="1">/</td>
-				<td><input type="number" placeholder="1">/</td>
-				<td><input type="number" placeholder="0">:</td>
-				<td><input type="number" placeholder="0">:</td>
-				<td><input type="number" placeholder="0"></td>
+				<th>年<span>Year</span></th>
+				<th>月</th>
+				<th>日</th>
+				<th>時</th>
+				<th>分</th>
+				<th>秒</th>
+			</tr>
+			<!-- <tr>
+				<th>Year</th>
+				<th>Month</th>
+				<th>Day</th>
+				<th>Hour</th>
+				<th>Min</th>
+				<th>Sec</th>
+			</tr> -->
+			<tr>
+				<td><input type="number"></td>
+				<td><input type="number"></td>
+				<td><input type="number"></td>
+				<td><input type="number"></td>
+				<td><input type="number"></td>
+				<td><input type="number"></td>
 			</tr>
 		</table>
 	</fieldset>
