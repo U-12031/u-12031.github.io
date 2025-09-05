@@ -13,6 +13,11 @@
 			src: url(../font/simpleFont3-regular.ttf);
 		}
 
+		.inValid {
+			background-color: #fcc;
+			color: #f00;
+		}
+
 		* {font-family: "originalFont";}
 
 		body {margin: 0;}
@@ -26,15 +31,13 @@
 			background: linear-gradient(60deg, #aef, #eaf);
 		}
 
+		#inputField {margin: 30px 20px;}
+
 		#inputField th {font-weight: normal;}
 
-		#inputLabel {
-			height: 1em;
-		}
+		#inputLabel {height: 1em;}
 
-		#inputLabel>th {
-			position: relative;
-		}
+		#inputLabel>th {position: relative;}
 		
 		#inputLabel>th>span {position: absolute;}
 
@@ -50,6 +53,8 @@
 		}
 
 		#inputField td>input {width: 50px;}
+
+		#inputField td:nth-child(2n) {font-size: 20px;}
 	</style>
 </head>
 <body>
@@ -81,7 +86,7 @@
 				<td>:</td>
 				<td><input type="number" id="min" placeholder="0" min="0" max="59" step="1"></td>
 				<td>:</td>
-				<td><input type="number" id="sec" placeholder="0" min="0" max="0" step="1"></td>
+				<td><input type="number" id="sec" placeholder="0" min="0" max="59" step="1"></td>
 			</tr>
 		</table>
 	</fieldset>
@@ -104,7 +109,7 @@
 		function validUpdate() {
 			for (const key in Object.keys(isValid)) {
 				if(key === "all") {
-					isValid[key] = true
+					isValid[key] = true;
 				} else if(isValid[key] = false) {
 					isValid.all = false;
 				};
@@ -114,19 +119,25 @@
 		 * @param {string} id 判定したい要素のID
 		 */
 		function inputLimiter(id) {
-			el(id).addEventListener("input",() => {
-				const thisEl = el(id);
-				if(thisEl.value == "") {
+			el(id).addEventListener("input",function() {
+				const value = this.value;
+				if(value == "") {
 					isValid[id] = true;
-				};
-				if(thisEl.value < Number(thisEl.min)) {
+				} else if(((value < Number(this.min)) || (value > Number(this.max)) || (value % Number(this.step !== 0))) && value != "") {
 					isValid[id] = false;
-
+					this.classList.add("inValid");
+				} else {
+					isValid[id] = true;
+					this.classList.remove("inValid");
 				};
 			});
-		}
-
+		};
 		inputLimiter("year");
+		inputLimiter("month");
+		inputLimiter("day");
+		inputLimiter("hour");
+		inputLimiter("min");
+		inputLimiter("sec");
 		
 	</script>
 </body>
