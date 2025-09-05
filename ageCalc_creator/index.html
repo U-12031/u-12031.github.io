@@ -40,16 +40,16 @@
 
 		#inputLabel>th>span:nth-of-type(1) {
 			left: 0;
-			bottom: 0;
+			bottom: -5px;
 		}
 		
 		#inputLabel>th>span:nth-of-type(2) {
 			right: 0;
-			bottom: 0;
+			bottom: -5px;
 			font-size: 13px;
 		}
 
-		#inputField input {width: 50px;}
+		#inputField td>input {width: 50px;}
 	</style>
 </head>
 <body>
@@ -71,30 +71,54 @@
 				<th><span>秒</span><span>Sec</span></th>
 			</tr>
 			<tr>
-				<td><input type="number" placeholder="2000" min="1" step="1"></td>
+				<td><input type="number" id="year" placeholder="2000" min="1" step="1"></td>
 				<td>/</td>
-				<td><input type="number" placeholder="1" min="1" max="12" step="1"></td>
+				<td><input type="number" id="month" placeholder="1" min="1" max="12" step="1"></td>
 				<td>/</td>
-				<td><input type="number" placeholder="1" min="1" max="31" step="1"></td>
+				<td><input type="number" id="day" placeholder="1" min="1" max="31" step="1"></td>
 				<td>/</td>
-				<td><input type="number" placeholder="0" min="0" max="23" step="1"></td>
+				<td><input type="number" id="hour" placeholder="0" min="0" max="23" step="1"></td>
 				<td>:</td>
-				<td><input type="number" placeholder="0" min="0" max="59" step="1"></td>
+				<td><input type="number" id="min" placeholder="0" min="0" max="59" step="1"></td>
 				<td>:</td>
-				<td><input type="number" placeholder="0" min="0" max="0" step="1"></td>
+				<td><input type="number" id="sec" placeholder="0" min="0" max="0" step="1"></td>
 			</tr>
 		</table>
 	</fieldset>
 	<script>
+		let isValid = {
+			all: true,
+			year: true,
+			month: true,
+			day: true,
+			hour: true,
+			min: true,
+			sec: true
+		};
 		/** この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています。
 		 * @param {string} id 取得したい要素のID
 		 * @return {HTMLElement} 指定されたIDを持つ要素
-		 * */
+		 */
 		function el(id) {return document.getElementById(id)};
+		/**
+		 */
+		function isValidUpdate() {}
+
+		function inputLimiter(id,max=null,min=null) {
+			el(id).addEventListener("input",() => {
+				const thisEl = el(id);
+				if(thisEl.value == "") {
+					isValid[id] = true;
+				};
+				if(thisEl.value < Number(thisEl.min)) {
+					isValid[id] = false;
+
+				};
+			});
+		}
+
+		inputLimiter("year");
 		
-		setTimeOut(()=>{
-			
-		})
 	</script>
 </body>
 </html>
