@@ -100,11 +100,20 @@
 		 * @return {HTMLElement} 指定されたIDを持つ要素
 		 */
 		function el(id) {return document.getElementById(id)};
-		/**
+		/** この関数は、変数isValidを更新するためのものです。主にinputLimiter関数で使われています。 */
+		function validUpdate() {
+			for (const key in Object.keys(isValid)) {
+				if(key === "all") {
+					isValid[key] = true
+				} else if(isValid[key] = false) {
+					isValid.all = false;
+				};
+			};
+		};
+		/** この関数は、入力欄(Input Field)に入力された数値が有効かどうかを判定し、有効でなければその要素にCSSのclassを付与して有効でない値であることをユーザーに伝えます。
+		 * @param {string} id 判定したい要素のID
 		 */
-		function isValidUpdate() {}
-
-		function inputLimiter(id,max=null,min=null) {
+		function inputLimiter(id) {
 			el(id).addEventListener("input",() => {
 				const thisEl = el(id);
 				if(thisEl.value == "") {
