@@ -49,11 +49,6 @@
 			font-size: 13px;
 		}
 
-		#inputField tr:nth-of-type(2) th {
-			translate: 0 7px;
-			font-size: 14px;
-		}
-
 		#inputField input {width: 50px;}
 	</style>
 </head>
@@ -75,26 +70,18 @@
 				<th></th>
 				<th><span>秒</span><span>Sec</span></th>
 			</tr>
-			<!-- <tr>
-				<th>Year</th>
-				<th>Month</th>
-				<th>Day</th>
-				<th>Hour</th>
-				<th>Min</th>
-				<th>Sec</th>
-			</tr> -->
 			<tr>
-				<td><input type="number" placeholder="2000"></td>
+				<td><input type="number" placeholder="2000" min="1" step="1"></td>
 				<td>/</td>
-				<td><input type="number" placeholder="1"></td>
+				<td><input type="number" placeholder="1" min="1" max="12" step="1"></td>
 				<td>/</td>
-				<td><input type="number" placeholder="1"></td>
+				<td><input type="number" placeholder="1" min="1" max="31" step="1"></td>
 				<td>/</td>
-				<td><input type="number" placeholder="0"></td>
+				<td><input type="number" placeholder="0" min="0" max="23" step="1"></td>
 				<td>:</td>
-				<td><input type="number" placeholder="0"></td>
+				<td><input type="number" placeholder="0" min="0" max="59" step="1"></td>
 				<td>:</td>
-				<td><input type="number" placeholder="0"></td>
+				<td><input type="number" placeholder="0" min="0" max="0" step="1"></td>
 			</tr>
 		</table>
 	</fieldset>
