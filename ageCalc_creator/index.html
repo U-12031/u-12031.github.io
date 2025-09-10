@@ -109,14 +109,17 @@
 					</th>
 					<td><br>/</td>
 					<th><span>時</span><span>Hour</span>
+						<br>
 						<input type="number" id="hour" placeholder="0" min="0" max="23" step="1">
 					</th>
 					<td><br>:</td>
 					<th><span>分</span><span>Min</span>
+						<br>
 						<input type="number" id="min" placeholder="0" min="0" max="59" step="1">
 					</th>
 					<td><br>:</td>
 					<th><span>秒</span><span>Sec</span>
+						<br>
 						<input type="number" id="sec" placeholder="0" min="0" max="59" step="1">
 					</th>
 				</tr>
@@ -163,7 +166,7 @@
 				const value = this.value;
 				if(value == "") {
 					isValid[id] = true;
-				} else if(((value < Number(this.min)) || (value > Number(this.max)) || (value % Number(this.step !== 0)) || (value == Number(value))) && value != "") {
+				} else if(((value < Number(this.min)) || (value > Number(this.max)) || (value % Number(this.step !== 0)) || (value != Number(value))) && value != "") {
 					isValid[id] = false;
 					this.classList.add("inValid");
 				} else {
@@ -173,7 +176,7 @@
 				if(value == "") {
 					isValid[id] = true;
 					this.classList.remove("inValid");
-				}
+				};
 			});
 		};
 		inputLimiter("year");
