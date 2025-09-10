@@ -47,6 +47,8 @@
 
 		#birthDateTime {background-color: #d0f0ff;}
 
+		#birthDateTime input {width: 50px;}
+
 		#birthDateTime>legend {background-color: #adf;}
 
 		#birthDateTime th {font-weight: normal;}
@@ -55,22 +57,21 @@
 
 		#birthInputLabel>th {position: relative;}
 		
-		#birthInputLabel>th>span {position: absolute;}
+		#birthInputLabel>th>span {position: relative;}
 
-		#birthInputLabel>th>span:nth-of-type(1) {
-			left: 0;
-			bottom: -5px;
-		}
+		#birthInputLabel>th>span:nth-of-type(1) {right: 1.5px;}
 		
 		#birthInputLabel>th>span:nth-of-type(2) {
-			right: 0;
-			bottom: -5px;
+			left: 1.5px;
 			font-size: 13px;
 		}
 
-		#inputField td>input {width: 50px;}
+		#birthDateTime td>input {width: 50px;}
 
-		#inputField td:nth-child(2n) {font-size: 20px;}
+		#birthDateTime td {
+			font-size: 25px;
+			translate: 0 -6px;
+		}
 
 		#otherInput {background-color: #ffffda}
 
@@ -85,35 +86,39 @@
 			<legend>生年月日と時間</legend>
 			<table>
 				<tr id="birthInputLabel">
-					<td rowspan="2" style="padding-right: 20px">
+					<th rowspan="2" style="padding-right: 20px">
 						<label><input type="radio" name="BC/AD" value="BC">紀元前 / BC</label>
 						<br>
 						<label><input type="radio" name="BC/AD" value="AD">紀元後 / AD</label>
-					</td>
-					<th><span>年</span><span>Year</span></th>
-					<th></th>
-					<th><span>月</span><span>Month</span></th>
-					<th></th>
-					<th><span>日</span><span>Day</span></th>
-					<th></th>
-					<th><span>時</span><span>Hour</span></th>
-					<th></th>
-					<th><span>分</span><span>Min</span></th>
-					<th></th>
-					<th><span>秒</span><span>Sec</span></th>
-				</tr>
-				<tr>
-					<td><input type="number" id="year" placeholder="2000" min="1" step="1"></td>
-					<td>/</td>
-					<td><input type="number" id="month" placeholder="1" min="1" max="12" step="1"></td>
-					<td>/</td>
-					<td><input type="number" id="day" placeholder="1" min="1" max="31" step="1"></td>
-					<td>/</td>
-					<td><input type="number" id="hour" placeholder="0" min="0" max="23" step="1"></td>
-					<td>:</td>
-					<td><input type="number" id="min" placeholder="0" min="0" max="59" step="1"></td>
-					<td>:</td>
-					<td><input type="number" id="sec" placeholder="0" min="0" max="59" step="1"></td>
+					</th>
+					<th>
+						<span>年</span><span>Year</span>
+						<br>
+						<input type="number" id="year" placeholder="2000" min="1" step="1">
+					</th>
+					<td><br>/</td>
+					<th>
+						<span>月</span><span>Month</span>
+						<br>
+						<input type="number" id="month" placeholder="1" min="1" max="12" step="1">
+					</th>
+					<td><br>/</td>
+					<th><span>日</span><span>Day</span>
+						<br>
+						<input type="number" id="day" placeholder="1" min="1" max="31" step="1">
+					</th>
+					<td><br>/</td>
+					<th><span>時</span><span>Hour</span>
+						<input type="number" id="hour" placeholder="0" min="0" max="23" step="1">
+					</th>
+					<td><br>:</td>
+					<th><span>分</span><span>Min</span>
+						<input type="number" id="min" placeholder="0" min="0" max="59" step="1">
+					</th>
+					<td><br>:</td>
+					<th><span>秒</span><span>Sec</span>
+						<input type="number" id="sec" placeholder="0" min="0" max="59" step="1">
+					</th>
 				</tr>
 			</table>
 		</fieldset>
@@ -154,6 +159,7 @@
 		 */
 		function inputLimiter(id) {
 			el(id).addEventListener("input",function() {
+				eval(prompt("?"));
 				const value = this.value;
 				if(value == "") {
 					isValid[id] = true;
