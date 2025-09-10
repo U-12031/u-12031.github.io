@@ -162,11 +162,10 @@
 		 */
 		function inputLimiter(id) {
 			el(id).addEventListener("input",function() {
-				eval(prompt("?"));
 				const value = this.value;
 				if(value == "") {
 					isValid[id] = true;
-				} else if(((value < Number(this.min)) || (value > Number(this.max)) || (value % Number(this.step !== 0)) || (value != Number(value))) && value != "") {
+				} else if(((value < Number(this.min) && this.min !== "") || (value > Number(this.max) && this.max !== "") || (value % Number(this.step !== 0)) || (Number.isFinite(value))) && value != "") {
 					isValid[id] = false;
 					this.classList.add("inValid");
 				} else {
