@@ -16,13 +16,22 @@
 		.inValid {
 			background-color: #fcc;
 			color: #f00;
+			border-radius: 3px;
 		}
 
 		* {font-family: "originalFont";}
 
 		body {margin: 0;}
 
-		fieldset {border-radius: 10px;}
+		input {
+			border: .5px solid #666;
+			border-radius: 3px;
+		}
+
+		fieldset:not(#inputField>fieldset) {
+			border: 1px solid #444;
+			border-radius: 10px;
+		}
 
 		#title {
 			font-family: "titleFont";
@@ -35,7 +44,6 @@
 
 		#inputField {
 			margin: 30px 20px;
-			border: 1px solid #777;
 		}
 
 		#inputField>fieldset {border: none;}
@@ -47,7 +55,9 @@
 
 		#birthDateTime {background-color: #d0f0ff;}
 
-		#birthDateTime input {width: 50px;}
+		#birthDateTime input[type="number"] {width: 50px;}
+
+		#birthDateTime input[type="radio"] {width: 25px;}
 
 		#birthDateTime>legend {background-color: #adf;}
 
@@ -76,6 +86,13 @@
 		#otherInput {background-color: #ffffda}
 
 		#otherInput>legend {background-color: #fea;}
+
+		#otherInput input:not(input[type="radio"]) {
+			margin-left: 15px;
+			width: 100px; /* 要素によって変わります */
+		}
+
+		#otherInput #leftTopText {width: 200px;}
 	</style>
 </head>
 <body>
@@ -128,8 +145,15 @@
 		<br>
 		<fieldset id="otherInput">
 			<legend>その他</legend>
-			置く文字
-			<label>前置<input></label>
+				<fieldset>
+					<legend>つける文字</legend>
+							<br>
+							<label>左上につける文字<input id="leftTopText" placeholder="例) 生まれてから"></label>
+							<br>
+							<label>前置<input id="beforeText"></label>
+							<br>
+							<label>後置<input id="afterText"></label>
+				</fieldset>
 		</fieldset>
 	</fieldset>
 	<script>
@@ -165,7 +189,7 @@
 				const value = this.value;
 				if(value == "") {
 					isValid[id] = true;
-				} else if(((value < Number(this.min) && this.min !== "") || (value > Number(this.max) && this.max !== "") || (value % Number(this.step !== 0)) || (Number.isFinite(value))) && value != "") {
+				} else if(((value < Number(this.min) && this.min !== "") || (value > Number(this.max) && this.max !== "") || (value % Number(this.step !== 0)) || (!Number.isFinite(value))) && value != "") {
 					isValid[id] = false;
 					this.classList.add("inValid");
 				} else {
