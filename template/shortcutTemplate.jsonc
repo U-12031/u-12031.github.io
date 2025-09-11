@@ -22,7 +22,7 @@
 		"command": "editor.emmet.action.wrapWithAbbreviation"
 	},
 	{
-		"key": "ctrl+alt+s",
+		"key": "ctrl+s",
 		"command": "codeswing.run",
 		"when": "codeswing:inSwing"
 	},
