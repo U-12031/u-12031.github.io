@@ -93,6 +93,11 @@
 		}
 
 		#otherInput #leftTopText {width: 200px;}
+
+		#rounding {
+			background-color: #0af;
+
+		}
 	</style>
 </head>
 <body>
@@ -147,12 +152,21 @@
 			<legend>その他</legend>
 				<fieldset>
 					<legend>つける文字</legend>
-							<br>
-							<label>左上につける文字<input id="leftTopText" placeholder="例) 生まれてから"></label>
-							<br>
-							<label>前置<input id="beforeText"></label>
-							<br>
-							<label>後置<input id="afterText"></label>
+					<label>タイトル<input id="titleText" placeholder="例) 生まれてから"></label>
+					<br>
+					<label>前置<input id="beforeText" placeholder="例) 約"></label>
+					<br>
+					<label>後置<input id="afterText" placeholder="例) 年"></label>
+				</fieldset>
+				<fieldset>
+					<legend>数字</legend>
+					<label>小数点以下の桁数<input id="decimalPlace" placeholder="5" style="width: 50px;"></label>
+					<br>
+					桁数以下の丸め処理の方法
+					<br>
+					<span id="rounding">
+						<label><input></label>
+					</span>
 				</fieldset>
 		</fieldset>
 	</fieldset>
