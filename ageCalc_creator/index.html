@@ -96,7 +96,19 @@
 
 		#rounding {
 			background-color: #0af;
+			text-align: center;
+		}
 
+		#rounding input[type="radio"] {display: none;}
+
+		#rounding label {
+			background-color: #ccc;
+			display: flex;
+			width: 100px;
+		}
+
+		#rounding label:has(input:checked) {
+			background-color: #0cf;
 		}
 	</style>
 </head>
@@ -165,7 +177,9 @@
 					桁数以下の丸め処理の方法
 					<br>
 					<span id="rounding">
-						<label><input></label>
+						<label><input type="radio" name="rounding" value="roundOff" checked>四捨五入</label>
+						<label><input type="radio" name="rounding" value="roundUp">切り上げ</label>
+						<label><input type="radio" name="rounding" value="roundDown">切り捨て</label>
 					</span>
 				</fieldset>
 		</fieldset>
