@@ -11,13 +11,24 @@
 		gtag('config', 'G-G3VRHWGPB7');
 	</script>
 
-	<title>ボボボ</title>
+	<title>しかのこ</title>
 	<style>
 		#timeOut {
 			width: 50px;
 		}
 		:not(#span) {
 			font-size: 20px;
+		}
+		td,th {
+			border-width: 0px 3px;
+			border-style: solid;
+			border-color: #aaa;
+		}
+		table {
+			border-collapse: collapse;
+		}
+		td input {
+			width: 50px;
 		}
 	</style>
 </head>
@@ -35,16 +46,49 @@
 	<span style="margin-left: 50px;">完成した回数:</span>
 	<span id="times"></span>
 	<br>
-	完成した文章<input id="answer" value="ボボボーボ・ボーボボ">
-	<br>
+	完成した文章<input id="answer" value="しかのこのこのここしたんたん　　">
+	<br><!--
+	<table>
+		<tr>
+			<th>
+				てすと
+			</th>
+			<th>
+				てすと
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<input id="character1">
+			</td>
+			<td>
+				<input id="nextFn1">
+				<br>
+				<input id="prob1">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				ううう
+			</td>
+			<td>
+				test
+			</td>
+		</tr>
+	</table>
+-->
 	<div id="outside"></div>
 	<script>
 		var
 			howMany = 1,
 			contents = [
-				["ボ",[1,2,3],[0.5,0.17,0.33]],
-				["・",[1],[1]],
-				["ー",[1],[1]],
+			["し",[2,5],[0.5,0.5]],
+				["か",[3],[1]],
+				["の",[4],[1]],
+				["こ",[3,4,1],[0.5,0.25,0.25]],
+				["た",[6],[1]],
+				["ん",[5,7],[0.5,0.5]],
+				["　",[7,1],[0.5,0.5]],
 			],
 			spans = [[document.createElement("span")],[]];
 		spans[0][0].id="span1";
@@ -67,7 +111,7 @@
 					spans[0][howMany].id = "span"+(howMany+1);
 					el("outside").appendChild(spans[1][howMany-1]);
 					el("outside").appendChild(spans[0][howMany]);
-					el("times").innerHTML = howMany
+					el("times").innerHTML = howMany;
 					howMany++;
 				};
 			};
