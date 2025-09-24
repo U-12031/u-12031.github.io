@@ -1,202 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Font Compare</title>
-		<style>
-			@font-face {
-				font-family: "dotFont";
-				src: url(font/dotFont.ttf) format("truetype");
-			}
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3VRHWGPB7"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-			@font-face {
-				font-family: "englishFont";
-				src: url(font/englishFont.ttf) format("truetype");
-			}
+		gtag('config', 'G-G3VRHWGPB7');
+	</script>
 
-			@font-face {
-				font-family: "japaneseFont-Regular";
-				src: url(font/japaneseFont-Regular.ttf) format("truetype");
-			}
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Font Compare</title>
+	<style>
+		@font-face {
+			font-family: "dotFont";
+			src: url(font/dotFont.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "japaneseFont-Bold";
-				src: url(font/japaneseFont-Bold.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "englishFont";
+			src: url(font/englishFont.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "kakukaku";
-				src: url(font/kakukaku.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "japaneseFont-Regular";
+			src: url(font/japaneseFont-Regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "kazesawa-Bold";
-				src: url(font/kazesawa-Bold.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "japaneseFont-Bold";
+			src: url(font/japaneseFont-Bold.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "kazesawa-Light";
-				src: url(font/kazesawa-Light.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "kakukaku";
+			src: url(font/kakukaku.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "kazesawa-Regular";
-				src: url(font/kazesawa-Regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "kazesawa-Bold";
+			src: url(font/kazesawa-Bold.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "keifont";
-				src: url(font/keifont.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "kazesawa-Light";
+			src: url(font/kazesawa-Light.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "kogusiMaru";
-				src: url(font/kosugiMaru.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "kazesawa-Regular";
+			src: url(font/kazesawa-Regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "simpleFont2-Bold";
-				src: url(font/simpleFont2-Bold.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "keifont";
+			src: url(font/keifont.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "simpleFont2-Regular";
-				src: url(font/simpleFont2-Regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "kogusiMaru";
+			src: url(font/kosugiMaru.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "simpleFont2-Light";
-				src: url(font/simpleFont2-Light.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "simpleFont2-Bold";
+			src: url(font/simpleFont2-Bold.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "simpleFont2-SemiBold";
-				src: url(font/simpleFont2-SemiBold.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "simpleFont2-Regular";
+			src: url(font/simpleFont2-Regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "simpleFont3-medium";
-				src: url(font/simpleFont3-medium.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "simpleFont2-Light";
+			src: url(font/simpleFont2-Light.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "simpleFont3-regular";
-				src: url(font/simpleFont3-regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "simpleFont2-SemiBold";
+			src: url(font/simpleFont2-SemiBold.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "LapisiaL-Bold";
-				src: url(font/lakasaFont/LapisiaL-Bold.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "simpleFont3-medium";
+			src: url(font/simpleFont3-medium.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "LapisiaL-Elegant";
-				src: url(font/lakasaFont/LapisiaL-Elegant.ttf);
-			}
+		@font-face {
+			font-family: "simpleFont3-regular";
+			src: url(font/simpleFont3-regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "LapisiaL-Light";
-				src: url(font/lakasaFont/LapisiaL-Light.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "LapisiaL-Bold";
+			src: url(font/lakasaFont/LapisiaL-Bold.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "LapisiaL-Master";
-				src: url(font/lakasaFont/LapisiaL-Master.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "LapisiaL-Elegant";
+			src: url(font/lakasaFont/LapisiaL-Elegant.ttf);
+		}
 
-			@font-face {
-				font-family: "LapisiaL-Regular";
-				src: url(font/lakasaFont/LapisiaL-Regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "LapisiaL-Light";
+			src: url(font/lakasaFont/LapisiaL-Light.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "PitikaL-Regular";
-				src: url(font/lakasaFont/PitikaL-Regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "LapisiaL-Master";
+			src: url(font/lakasaFont/LapisiaL-Master.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG7ClassicMini-Bold";
-				src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf);
-			}
+		@font-face {
+			font-family: "LapisiaL-Regular";
+			src: url(font/lakasaFont/LapisiaL-Regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG7ClassicMini-BoldItalic";
-				src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-BoldItalic.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "PitikaL-Regular";
+			src: url(font/lakasaFont/PitikaL-Regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG7ClassicMini-Italic";
-				src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-Italic.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "DSEG7ClassicMini-Bold";
+			src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf);
+		}
 
-			@font-face {
-				font-family: "DSEG7ClassicMini-Regular";
-				src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-Regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "DSEG7ClassicMini-BoldItalic";
+			src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-BoldItalic.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG14ClassicMini-Bold";
-				src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-Bold.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "DSEG7ClassicMini-Italic";
+			src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-Italic.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG14ClassicMini-BoldItalic";
-				src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-BoldItalic.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "DSEG7ClassicMini-Regular";
+			src: url(font/fonts-DSEG_v046/DSEG7ClassicMini-Regular.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG14ClassicMini-Italic";
-				src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-Italic.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "DSEG14ClassicMini-Bold";
+			src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-Bold.ttf) format("truetype");
+		}
 
-			@font-face {
-				font-family: "DSEG14ClassicMini-Regular";
-				src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-Regular.ttf) format("truetype");
-			}
+		@font-face {
+			font-family: "DSEG14ClassicMini-BoldItalic";
+			src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-BoldItalic.ttf) format("truetype");
+		}
 
-			*:not(fieldset>span) {
-				font-family: sans-serif;
-			}
+		@font-face {
+			font-family: "DSEG14ClassicMini-Italic";
+			src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-Italic.ttf) format("truetype");
+		}
 
-			fieldset {
-				border: 1px solid #222;
-				padding: 0 10px;
-				margin: 10px;
-			}
+		@font-face {
+			font-family: "DSEG14ClassicMini-Regular";
+			src: url(font/fonts-DSEG_v046/DSEG14ClassicMini-Regular.ttf) format("truetype");
+		}
 
-			.en, .jp, .hiragana {
-				display: inline-block;
-				width: 55px;
-				text-align: center;
-				border-radius: 7px;
-				color: white;
-				margin-left: 10px;
-				margin-right: -8px;
-			}
+		*:not(fieldset>span) {
+			font-family: sans-serif;
+		}
 
-			.hiragana {width: 140px;}
+		fieldset {
+			border: 1px solid #222;
+			padding: 0 10px;
+			margin: 10px;
+		}
 
-			.en::before, .jp::before {margin-right: 3px;}
+		.en, .jp, .hiragana {
+			display: inline-block;
+			width: 55px;
+			text-align: center;
+			border-radius: 7px;
+			color: white;
+			margin-left: 10px;
+			margin-right: -8px;
+		}
 
-			.en {background-color: #471;}
+		.hiragana {width: 140px;}
 
-			.en::before {content: "🇺🇸";}
+		.en::before, .jp::before {margin-right: 3px;}
 
-			.en::after {content: "en";}
+		.en {background-color: #471;}
 
-			.jp {background-color: #259;}
+		.en::before {content: "🇺🇸";}
 
-			.jp::before {content: "🇯🇵";}
+		.en::after {content: "en";}
 
-			.jp::after {content: "jp";}
+		.jp {background-color: #259;}
 
-			.hiragana {background-color: #811;}
+		.jp::before {content: "🇯🇵";}
 
-			.hiragana::before {content: "🇯🇵";}
+		.jp::after {content: "jp";}
 
-			.hiragana::after {content: "hiragana only";}
-		</style>
+		.hiragana {background-color: #811;}
+
+		.hiragana::before {content: "🇯🇵";}
+
+		.hiragana::after {content: "hiragana only";}
+	</style>
 </head>
 <body>
 	<h1 style="font-weight: normal;">Font Compare</h1>

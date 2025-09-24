@@ -1,73 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3VRHWGPB7"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-G3VRHWGPB7');
+	</script>
 	<title>ショットガン・ゲーム</title>
-<style>
-	* {
-		font-family: "originalFont";
-	}
-	@font-face {
-		font-family: "originalFont";
-		src: url("font/dotFont.ttf");
-	}
-	body {
-		animation: color 15s linear infinite;
-	}
-	button {
-		cursor: pointer;
-	}
-	@keyframes color {
-		0%	 {background-color:#524a47;}
-		25%	{background-color:#404238;}
-		50%	{background-color:#3b3434;}
-		75%	{background-color:#2a282e;}
-		100% {background-color:#524a47;}
-	}
-	.titleAnimation {
-		animation: deg 20s ease infinite;
-	}
-	@keyframes deg {
-		0%	 {transform:rotateZ(2deg);}
-		25%	{transform:rotateZ(-2deg);}
-		50%	{transform:rotateZ(2deg);}
-		75%	{transform:rotateZ(-2deg);}
-		100% {transform:rotateZ(2deg);}
-	}
-	@keyframes fadein {
-		0%	 {opacity: 0;}
-		100% {opacity: 1;}
-	}
-	@keyframes fadeout {
-		0%	 {opacity: 1;}
-		100% {opacity: 0;}
-	}
-	@keyframes btFadein {
-		0%	 {opacity: 0;}
-		50%	 {opacity: 0;}
-		100% {opacity: 1;}
-	}
-	@keyframes playButtonA {
-		0%	 {background-color: #fff;}
-		25%	{transform: translateY(0);}
-		80%	{background-color:#524a47;}
-		100% {transform: translateY(400px)}
-	}
-	@keyframes playButtonB {
-		0%	 {background-color: #fff; transform: translateY(400px);}
-		25%	{opacity: 1; transform: translateY(400px);}
-		80%	{background-color: #524a47;}
-		100% {opacity: 0; transform: translateY(0);}
-	}
-	@keyframes titlePlayButtonA {
-		0%	 {color: #fff;}
-		100% {color: #000;}
-	}
-	@keyframes titlePlayButtonB {
-		0%	 {color: #fff}
-		25%	{opacity: 1;}
-		100% {color: #000; opacity: 0;}
-	}
-</style>
+	<style>
+		* {
+			font-family: "originalFont";
+		}
+		@font-face {
+			font-family: "originalFont";
+			src: url("font/dotFont.ttf");
+		}
+		body {
+			animation: color 15s linear infinite;
+		}
+		button {
+			cursor: pointer;
+		}
+		@keyframes color {
+			0%	 {background-color:#524a47;}
+			25%	{background-color:#404238;}
+			50%	{background-color:#3b3434;}
+			75%	{background-color:#2a282e;}
+			100% {background-color:#524a47;}
+		}
+		.titleAnimation {
+			animation: deg 20s ease infinite;
+		}
+		@keyframes deg {
+			0%	 {transform:rotateZ(2deg);}
+			25%	{transform:rotateZ(-2deg);}
+			50%	{transform:rotateZ(2deg);}
+			75%	{transform:rotateZ(-2deg);}
+			100% {transform:rotateZ(2deg);}
+		}
+		@keyframes fadein {
+			0%	 {opacity: 0;}
+			100% {opacity: 1;}
+		}
+		@keyframes fadeout {
+			0%	 {opacity: 1;}
+			100% {opacity: 0;}
+		}
+		@keyframes btFadein {
+			0%	 {opacity: 0;}
+			50%	 {opacity: 0;}
+			100% {opacity: 1;}
+		}
+		@keyframes playButtonA {
+			0%	 {background-color: #fff;}
+			25%	{transform: translateY(0);}
+			80%	{background-color:#524a47;}
+			100% {transform: translateY(400px)}
+		}
+		@keyframes playButtonB {
+			0%	 {background-color: #fff; transform: translateY(400px);}
+			25%	{opacity: 1; transform: translateY(400px);}
+			80%	{background-color: #524a47;}
+			100% {opacity: 0; transform: translateY(0);}
+		}
+		@keyframes titlePlayButtonA {
+			0%	 {color: #fff;}
+			100% {color: #000;}
+		}
+		@keyframes titlePlayButtonB {
+			0%	 {color: #fff}
+			25%	{opacity: 1;}
+			100% {color: #000; opacity: 0;}
+		}
+	</style>
 </head>
 <body>
 	<div style="text-align: center; cursor: default;">
