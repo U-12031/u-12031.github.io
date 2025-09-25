@@ -12,40 +12,18 @@
 		</script>
 
 		<style>
-			#outputParent {
-				position: relative;
-				margin: 20px auto;
-				width: 100px;
-				height: 70px;
-				background-color: #aef;
-			}
-
-			#output {
-				position: absolute;
-				left: 0;
-				display: inline-block;
-				background-color: #f006;
-				height: 70px;
-				font-size: 70px;
-				transform-origin: left center;
-				align-items: center;
-			}
-			#outputSpan {
-				display: inline-block;
-				background-color: #0f02;
-				white-space: nowrap;
-				translate: 0 -20%;
-				
-			}
+			#output {background-color: #f00;}
 		</style>
 	</head>
   <body id="body" style="text-align: center;">
 		リンク:  https://<input id="input" value="youtube.com">
-		<iframe id="iframe" src="https://youtube.com">
+		<iframe id="iframe" src="https://google.com">
+		<span id="output"></span>
 		<script>
 			function el(id) {return document.getElementById(id);}
 			el("input").addEventListener("input",()=>{
 				el("iframe").src = "https://" + el("input").value;
+				el("output").innerHTML = el("input").value;
 			});
 		</script>
   </body>
