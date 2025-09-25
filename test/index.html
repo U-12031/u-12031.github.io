@@ -45,7 +45,7 @@
 		<script>
 			function el(id) {return document.getElementById(id);}
 			el("input").addEventListener("input",()=>{
-				el("iframe").src = el("input").value;
+				el("iframe").src = "htps://" + el("input").value;
 			});
 		</script>
   </body>
