@@ -12,19 +12,20 @@
 		</script>
 
 		<style>
-			#output {background-color: #f00;}
 		</style>
 	</head>
-  <body id="body" style="text-align: center;">
-		リンク:  https://<input id="input" value="youtube.com">
-		<iframe id="iframe" src="https://google.com/maps" title="google"></iframe>
-		<span id="output"></span>
+  <body style="text-align: center;">
+		<div>/0_data/images/scoreMark.svg<br>
+			<img src="/0_data/images/scoreMark.svg">
+		</div>
+		<div>/MyAllFiles/0_data/images/scoreMark.svg<br>
+			<img src="/MyAllFiles/0_data/images/scoreMark.svg">
+		</div>
+		<div>https://u-12031.github.io/MyAllFiles/0_data/images/scoreMark.svg<br>
+			<img src="https://u-12031.github.io/MyAllFiles/0_data/images/scoreMark.svg">
+		</div>
 		<script>
 			function el(id) {return document.getElementById(id);}
-			el("input").addEventListener("input",()=>{
-				el("iframe").src = "https://" + el("input").value;
-				el("output").innerHTML = el("input").value;
-			});
 		</script>
   </body>
 </html>
