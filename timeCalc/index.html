@@ -13,7 +13,7 @@
 
 	<base href="/MyAllFiles/">
 
-	<title>Age Calculator</title>
+	<title>Time Calculator</title>
 	<link rel="icon" href="0_data/images/ageCalc_icon.svg">
 	<style>
 		@font-face {
@@ -55,9 +55,7 @@
 			background: linear-gradient(60deg, #aef, #eaf);
 		}
 
-		#inputField {
-			margin: 30px 20px;
-		}
+		#inputField {margin: 30px 20px;}
 
 		#inputField>fieldset {border: none;}
 
@@ -110,11 +108,11 @@
 	</style>
 </head>
 <body>
-	<h1 id="title">Age Calculator</h1>
+	<h1 id="title">Time Calculator</h1>
 	<fieldset id="inputField">
 		<legend>入力欄 / Input field</legend>
 		<fieldset id="birthDateTime">
-			<legend>生年月日と時間</legend>
+			<legend>年月日と時間</legend>
 			<table>
 				<tr id="birthInputLabel">
 					<th rowspan="2" style="padding-right: 20px">
@@ -158,27 +156,44 @@
 		</fieldset>
 		<br>
 		<fieldset id="otherInput">
-			<legend>その他</legend>
-				<fieldset>
-					<legend>つける文字</legend>
-					<label>タイトル<input id="titleText" placeholder="例) 生まれてから"></label>
-					<br>
-					<label>前置<input id="beforeText" placeholder="例) 約"></label>
-					<br>
-					<label>後置<input id="afterText" placeholder="例) 年"></label>
-				</fieldset>
-				<fieldset>
-					<legend>数字</legend>
-					<label>小数点以下の桁数<input type="number" id="decimalPlace" placeholder="5" min="0" step="1" style="width: 50px;"></label>
-					<br>
-					桁数以下の丸め処理の方法
-					<br>
-					<label><input type="radio" name="rounding" value="roundOff" checked>四捨五入</label>
-					<br>
-					<label><input type="radio" name="rounding" value="roundUp">切り上げ</label>
-					<br>
-					<label><input type="radio" name="rounding" value="roundDown">切り捨て</label>
-				</fieldset>
+			<legend>表示</legend>
+			<fieldset>
+				<legend>つける文字</legend>
+				<label>タイトル
+					<input id="titleText" placeholder="例) 生まれてから">
+				</label>
+				<br>
+				<label>前置
+					<input id="beforeText" placeholder="例) 約">
+				</label>
+				<br>
+				<label>後置
+					<input id="afterText" placeholder="例) 年">
+				</label>
+			</fieldset>
+			<fieldset>
+				<legend>数字</legend>
+				<label>小数点以下の桁数
+					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
+				</label>
+				<br>
+				桁数以下の丸め処理の方法
+				<br>
+				<label>
+					<input type="radio" name="rounding" value="roundOff" checked>
+					<img src="0_data/images/roundDowm.svg">
+				切り捨て</label>
+				<br>
+				<label>
+					<input type="radio" name="rounding" value="roundUp">
+					<img src="0_data/images/roundOff.svg">
+				四捨五入</label>
+				<br>
+				<label>
+					<input type="radio" name="rounding" value="roundDown">
+					<img src="0_data/images/roundUp.svg">
+				切り捨て</label>
+			</fieldset>
 		</fieldset>
 	</fieldset>
 	<script>
