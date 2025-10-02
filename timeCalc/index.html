@@ -74,44 +74,36 @@
 
 		#inputDateTime th {font-weight: normal;}
 
-		#inputInputLabel {
-			height: 1em;
+		#inputInputLabel {height: 1em;}
 
-			>th {
-				position: relative;
+		#inputInputLabel>th {position: relative;}
+		
+		#inputInputLabel>th>span {position: relative;}
 
-				>span {
-					position: relative;
-
-					&:nth-of-type(1) {right: 1.5px;}
-
-					&:nth-of-type(2) {
-						left: 1.5px;
-						font-size: 13px;
-					}
-				}
-			}
+		#inputInputLabel>th>span:nth-of-type(1) {right: 1.5px;}
+		
+		#inputInputLabel>th>span:nth-of-type(2) {
+			left: 1.5px;
+			font-size: 13px;
 		}
+
+		#inputDateTime td>input {width: 50px;}
 
 		#inputDateTime td {
 			font-size: 25px;
 			translate: 0 -6px;
-
-			>input {width: 50px;}
 		}
 
-		#otherInput {
-			background-color: #ffffda;
+		#otherInput {background-color: #ffffda}
 
-			>legend {background-color: #fea;}
-		
-			input:not(input[type="radio"]) {
-				margin-left: 15px;
-				width: 100px; /* 要素によって変わります */
-			}
+		#otherInput>legend {background-color: #fea;}
+
+		#otherInput input:not(input[type="radio"]) {
+			margin-left: 15px;
+			width: 100px; /* 要素によって変わります */
 		}
 
-		#leftTopText {width: 200px;}
+		#otherInput #leftTopText {width: 200px;}
 
 		label:has(input[name="rounding"]) {
 			display: inline-block;
@@ -129,7 +121,7 @@
 		input[name="rounding"] {
 			display: none;
 
-			+ img {margin: auto 3px;}
+			+ img {width: 20px;}
 		}
 	</style>
 </head>
