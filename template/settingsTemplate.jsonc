@@ -48,10 +48,6 @@
 				"settings": {"foreground": "#e4bc95"}
 			},
 			{
-				"scope": "meta.property-value.css", // 無効なプロパティ(全てのプロパティ-有効なプロパティ)
-				"settings": {"foreground": "#ff3c3c"}
-			},
-			{
 				"scope": "keyword.other.unit", // 単位(5pxのpxとか)
 				"settings": {"foreground": "#a7faae"}
 			},

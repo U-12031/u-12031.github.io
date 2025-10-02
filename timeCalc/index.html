@@ -64,57 +64,83 @@
 			border-radius: 5px;
 		}
 
-		#birthDateTime {background-color: #d0f0ff;}
+		#inputDateTime {background-color: #d0f0ff;}
 
-		#birthDateTime input[type="number"] {width: 50px;}
+		#inputDateTime input[type="number"] {width: 50px;}
 
-		#birthDateTime input[type="radio"] {width: 25px;}
+		#inputDateTime input[type="radio"] {width: 25px;}
 
-		#birthDateTime>legend {background-color: #adf;}
+		#inputDateTime>legend {background-color: #adf;}
 
-		#birthDateTime th {font-weight: normal;}
+		#inputDateTime th {font-weight: normal;}
 
-		#birthInputLabel {height: 1em;}
+		#inputInputLabel {
+			height: 1em;
 
-		#birthInputLabel>th {position: relative;}
-		
-		#birthInputLabel>th>span {position: relative;}
+			>th {
+				position: relative;
 
-		#birthInputLabel>th>span:nth-of-type(1) {right: 1.5px;}
-		
-		#birthInputLabel>th>span:nth-of-type(2) {
-			left: 1.5px;
-			font-size: 13px;
+				>span {
+					position: relative;
+
+					&:nth-of-type(1) {right: 1.5px;}
+
+					&:nth-of-type(2) {
+						left: 1.5px;
+						font-size: 13px;
+					}
+				}
+			}
 		}
 
-		#birthDateTime td>input {width: 50px;}
-
-		#birthDateTime td {
+		#inputDateTime td {
 			font-size: 25px;
 			translate: 0 -6px;
+
+			>input {width: 50px;}
 		}
 
-		#otherInput {background-color: #ffffda}
+		#otherInput {
+			background-color: #ffffda;
 
-		#otherInput>legend {background-color: #fea;}
-
-		#otherInput input:not(input[type="radio"]) {
-			margin-left: 15px;
-			width: 100px; /* 要素によって変わります */
+			>legend {background-color: #fea;}
+		
+			input:not(input[type="radio"]) {
+				margin-left: 15px;
+				width: 100px; /* 要素によって変わります */
+			}
 		}
 
-		#otherInput #leftTopText {width: 200px;}
+		#leftTopText {width: 200px;}
 
+		label:has(input[name="rounding"]) {
+			display: inline-block;
+			width: 200px;
+			padding: 2px 5px;
+			border: 1px solid #666;
+			border-radius: 5px;
+			background-color: #ab8;
+		}
+
+		label:has(input[name="rounding"]:checked) {
+			background-color: #cfa;
+		}
+
+		input[name="rounding"] {
+			display: none;
+
+			+ img {width: 20px;}
+		}
 	</style>
 </head>
 <body>
 	<h1 id="title">Time Calculator</h1>
 	<fieldset id="inputField">
 		<legend>入力欄 / Input field</legend>
-		<fieldset id="birthDateTime">
+		<fieldset id="inputDateTime">
 			<legend>年月日と時間</legend>
 			<table>
-				<tr id="birthInputLabel">
+				<tr id="inputInputLabel">
 					<th rowspan="2" style="padding-right: 20px">
 						<label><input type="radio" name="BC/AD" value="BC">紀元前 / BC</label>
 						<br>
@@ -159,40 +185,40 @@
 			<legend>表示</legend>
 			<fieldset>
 				<legend>つける文字</legend>
-				<label>タイトル
+				<label>タイトル / Title
 					<input id="titleText" placeholder="例) 生まれてから">
 				</label>
 				<br>
-				<label>前置
+				<label>前置 / Before-text
 					<input id="beforeText" placeholder="例) 約">
 				</label>
 				<br>
-				<label>後置
+				<label>後置 / After-text
 					<input id="afterText" placeholder="例) 年">
 				</label>
 			</fieldset>
 			<fieldset>
-				<legend>数字</legend>
-				<label>小数点以下の桁数
+				<legend>数字 / Number Settings</legend>
+				<label>小数点以下の桁数 / Decimal places
 					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
 				</label>
 				<br>
-				桁数以下の丸め処理の方法
+				桁数以下の丸め処理の方法 / Rounding method for decimal places
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundOff" checked>
-					<img src="0_data/images/roundDowm.svg">
-				切り捨て</label>
+					<img src="0_data/images/roundDown.svg" width="22px">
+				切り捨て / Round down</label>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundUp">
-					<img src="0_data/images/roundOff.svg">
-				四捨五入</label>
+					<img src="0_data/images/roundOff.svg" width="22px">
+				四捨五入 / Round off</label>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundDown">
-					<img src="0_data/images/roundUp.svg">
-				切り捨て</label>
+					<img src="0_data/images/roundUp.svg" width="22px">
+				切り上げ / Round up</label>
 			</fieldset>
 		</fieldset>
 	</fieldset>
