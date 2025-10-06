@@ -46,6 +46,11 @@
 			border-radius: 10px;
 		}
 
+		span[lang="en"] {
+			margin-left: 7px;
+			font-size: 13px;
+		}
+
 		#title {
 			font-family: "titleFont";
 			display: inline-block;
@@ -124,7 +129,7 @@
 
 		input[name="rounding"]+img {
 			margin-bottom: -10px;
-			translate: 0 -7px;
+			translate: 0 -3px;
 
 		}
 	</style>
@@ -199,7 +204,7 @@
 					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
 				</label>
 				<br>
-				桁数以下の丸め処理の方法 / Rounding method for decimal places
+				桁数以下の丸め処理の方法<span lang="en">Rounding method for decimal</span>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundOff" checked>
