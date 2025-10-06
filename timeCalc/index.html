@@ -85,12 +85,12 @@
 		
 		#inputInputLabel>th>span {position: relative;}
 
-		#inputInputLabel>th>span:nth-of-type(1) {
+		/* #inputInputLabel>th>span:nth-of-type(1) {
 			right: 1.5px;
-		}
-		
+		} */
+
 		#inputInputLabel>th>span:nth-of-type(2) {
-			left: 1.5px;
+			/* left: 1.5px; */
 			font-size: 13px;
 		}
 
@@ -129,7 +129,7 @@
 
 		input[name="rounding"]+img {
 			margin-bottom: -10px;
-			/* translate: 0 -3px; */
+			translate: 0 -4px;
 
 		}
 	</style>
@@ -174,7 +174,7 @@
 						<input type="number" id="min" placeholder="0" min="0" max="59" step="1">
 					</th>
 					<td><br>:</td>
-					<th><span>秒</span><span>Sec</span>
+					<th><span>秒</span><span lang="en">Sec</span>
 						<br>
 						<input type="number" id="sec" placeholder="0" min="0" max="59" step="1">
 					</th>
@@ -186,25 +186,30 @@
 			<legend>表示</legend>
 			<fieldset>
 				<legend>つける文字</legend>
-				<label>タイトル / Title
+				<label>タイトル
+					<span lang="en">Title</span>
 					<input id="titleText" placeholder="例) 生まれてから">
 				</label>
 				<br>
-				<label>前置 / Before-text
+				<label>前置
+					<span lang="en">Before-text</span>
 					<input id="beforeText" placeholder="例) 約">
 				</label>
 				<br>
-				<label>後置 / After-text
+				<label>後置
+					<span lang="en">After-text</span>
 					<input id="afterText" placeholder="例) 年">
 				</label>
 			</fieldset>
 			<fieldset>
-				<legend>数字 / Number Settings</legend>
-				<label>小数点以下の桁数 / Decimal places
+				<legend>数字Number Settings</legend>
+				<label>小数点以下の桁数
+					<span lang="en">Decimal places</span>
 					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
 				</label>
 				<br>
-				桁数以下の丸め処理の方法<span lang="en">Rounding method for decimal</span>
+				桁数以下の丸め処理の方法
+				<span lang="en">Rounding method for decimal</span>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundOff" checked>
