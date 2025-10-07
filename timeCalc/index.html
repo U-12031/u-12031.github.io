@@ -143,7 +143,7 @@
 
 		input[name="rounding"]+img {
 			margin-bottom: -10px;
-			translate: 0 -2.5px;
+			translate: 0 -2.2px;
 		}
 	</style>
 </head>
@@ -167,13 +167,18 @@
 						</label>
 						<br>
 						<label>
-							<input type="radio" name="BC/AD" value="AD">
+							<input type="radio" name="BC/AD" value="AD" checked>
 							<span>紀元後
 								<span lang="en">AD</span>
 							</span>
 						</label>
 					</th>
 					<td>
+						<label style="margin-bottom: 5px;">
+							<input id="autoFocus" type="checkbox" checked>
+							自動で次の入力欄に移す
+						</label>
+						<br>
 						<label>
 							<span>年</span>
 							<span lang="en">Year</span>
@@ -256,30 +261,35 @@
 				<label>
 					<input type="radio" name="rounding" value="roundOff" checked>
 					<img src="0_data/images/roundDown.svg" width="30px">
-				切り捨て / Round down</label>
+					切り捨て / Round down
+				</label>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundUp">
 					<img src="0_data/images/roundOff.svg" width="30px">
-				四捨五入 / Round off</label>
+					四捨五入 / Round off
+				</label>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundDown">
 					<img src="0_data/images/roundUp.svg" width="30px">
-				切り上げ / Round up</label>
+					切り上げ / Round up
+				</label>
 			</fieldset>
 		</fieldset>
 	</fieldset>
 	<script>
-		let isValid = {
-			all: true,
-			year: true,
-			month: true,
-			day: true,
-			hour: true,
-			min: true,
-			sec: true
-		};
+		let
+			isValid = {
+				all: true,
+				year: true,
+				month: true,
+				day: true,
+				hour: true,
+				min: true,
+				sec: true
+			},
+			dateInputList = ["month","day","hour","min","sec"];
 		/** この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています。
 		 * @param {string} id 取得したい要素のID
 		 * @return {HTMLElement} 指定されたIDを持つ要素
@@ -313,6 +323,14 @@
 				if(value == "") {
 					isValid[id] = true;
 					this.classList.remove("inValid");
+				};
+				validUpdate();
+				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && (value.length >= this.max.length || Number(value+"0") > this.max)) {
+					const nextIndex = dateInputList.indexOf(id) + 1;
+					if(nextIndex < dateInputList.length) {
+						el(dateInputList[nextIndex]).focus();
+						el(dateInputList[nextIndex]).select();
+					};
 				};
 			});
 		};
