@@ -49,7 +49,7 @@
 		span[lang="en"] {
 			font-size: 13px;
 			
-			&:not(#inputInputLabel>th>span:nth-of-type(2)) {
+			&:not(#inputLabel>th>span:nth-of-type(2)) {
 				margin-left: 2px;
 			}
 		}
@@ -85,13 +85,13 @@
 
 		#inputDateTime th {font-weight: normal;}
 
-		#inputInputLabel {height: 1em;}
+		#inputLabel {height: 1em;}
 
-		#inputInputLabel>th {position: relative;}
+		#inputLabel>th {position: relative;}
 
 		input[name="BC/AD"]+span {white-space: nowrap;}
 		
-		#inputInputLabel>th>span {
+		#inputLabel>th>span {
 			position: relative;
 
 			&:nth-of-type(1) {
@@ -151,7 +151,7 @@
 		<fieldset id="inputDateTime">
 			<legend>年月日と時間</legend>
 			<table>
-				<tr id="inputInputLabel">
+				<tr id="inputLabel">
 					<th rowspan="2" style="padding-right: 20px">
 						<label>
 							<input type="radio" name="BC/AD" value="BC">
@@ -238,8 +238,8 @@
 					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
 				</label>
 				<br>
-				桁数以下の丸め処理の方法
-				<span lang="en">Rounding method for decimal</span>
+				表示桁数未満の丸め処理の方法
+				<span lang="en">How to handle numbers below the display limit</span>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundOff" checked>

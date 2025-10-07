@@ -49,7 +49,7 @@
 		span[lang="en"] {
 			font-size: 13px;
 			
-			&:not(#inputInputLabel>th>span:nth-of-type(2)) {
+			&:not(#inputLabel>th>span:nth-of-type(2)) {
 				margin-left: 2px;
 			}
 		}
@@ -85,13 +85,19 @@
 
 		#inputDateTime th {font-weight: normal;}
 
-		#inputInputLabel {height: 1em;}
+		#inputLabel {height: 1em;}
 
-		#inputInputLabel>th {position: relative;}
+		#inputLabel>th {position: relative;}
 
 		input[name="BC/AD"]+span {white-space: nowrap;}
-		
-		#inputInputLabel>th>span {
+
+		#inputLabel>td>label {
+			white-space: nowrap;
+			display: inline-block;
+			width: 60px;
+		}
+
+		#inputLabel>td>label>span {
 			position: relative;
 
 			&:nth-of-type(1) {
@@ -104,7 +110,7 @@
 
 		#inputDateTime td>input {width: 50px;}
 
-		#inputDateTime td {
+		#inputDateTime td>span {
 			font-size: 25px;
 			translate: 0 -6px;
 		}
@@ -151,8 +157,8 @@
 		<fieldset id="inputDateTime">
 			<legend>年月日と時間</legend>
 			<table>
-				<tr id="inputInputLabel">
-					<th rowspan="2" style="padding-right: 20px">
+				<tr id="inputLabel">
+					<th style="padding-right: 20px">
 						<label>
 							<input type="radio" name="BC/AD" value="BC">
 							<span>紀元前
@@ -167,43 +173,49 @@
 							</span>
 						</label>
 					</th>
-					<th>
-						<span>年</span>
-						<span lang="en">Year</span>
-						<br>
-						<input type="number" id="year" placeholder="2000" min="1" step="1">
-					</th>
-					<td><br>/</td>
-					<th>
-						<span>月</span>
-						<span lang="en">Month</span>
-						<br>
-						<input type="number" id="month" placeholder="1" min="1" max="12" step="1">
-					</th>
-					<td><br>/</td>
-					<th><span>日</span>
-						<span lang="en">Day</span>
-						<br>
-						<input type="number" id="day" placeholder="1" min="1" max="31" step="1">
-					</th>
-					<td><br>/</td>
-					<th><span>時</span>
-						<span lang="en">Hour</span>
-						<br>
-						<input type="number" id="hour" placeholder="0" min="0" max="23" step="1">
-					</th>
-					<td><br>:</td>
-					<th><span>分</span>
-						<span lang="en">Min</span>
-						<br>
-						<input type="number" id="min" placeholder="0" min="0" max="59" step="1">
-					</th>
-					<td><br>:</td>
-					<th><span>秒</span>
-						<span lang="en">Sec</span>
-						<br>
-						<input type="number" id="sec" placeholder="0" min="0" max="59" step="1">
-					</th>
+					<td>
+						<label>
+							<span>年</span>
+							<span lang="en">Year</span>
+							<br>
+							<input type="number" id="year" placeholder="2000" min="1" step="1">
+						</label>
+						<span>/</span>
+							<label>
+								<span>月</span>
+								<span lang="en">Month</span>
+								<br>
+								<input type="number" id="month" placeholder="1" min="1" max="12" step="1">
+							</label>
+						<span>/</span>
+						<label>
+							<span>日</span>
+							<span lang="en">Day</span>
+							<br>
+							<input type="number" id="day" placeholder="1" min="1" max="31" step="1">
+						</label>
+						<span>/</span>
+						<label>
+							<span>時</span>
+							<span lang="en">Hour</span>
+							<br>
+							<input type="number" id="hour" placeholder="0" min="0" max="23" step="1">
+						</label>
+						<span>:</span>
+						<label>
+							<span>分</span>
+							<span lang="en">Min</span>
+							<br>
+							<input type="number" id="min" placeholder="0" min="0" max="59" step="1">
+						</label>
+						<span>:</span>
+						<label>
+							<span>秒</span>
+							<span lang="en">Sec</span>
+							<br>
+							<input type="number" id="sec" placeholder="0" min="0" max="59" step="1">
+						</label>
+					</td>
 				</tr>
 			</table>
 		</fieldset>
@@ -238,8 +250,8 @@
 					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
 				</label>
 				<br>
-				桁数以下の丸め処理の方法
-				<span lang="en">Rounding method for decimal</span>
+				表示桁数未満の丸め処理の方法
+				<span lang="en">How to handle numbers below the display limit</span>
 				<br>
 				<label>
 					<input type="radio" name="rounding" value="roundOff" checked>
