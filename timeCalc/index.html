@@ -330,6 +330,8 @@
 					if(nextIndex < dateInputList.length) {
 						el(dateInputList[nextIndex]).focus();
 						el(dateInputList[nextIndex]).select();
+					} else {
+						this.blur();
 					};
 				};
 			});
