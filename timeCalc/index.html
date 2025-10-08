@@ -41,11 +41,9 @@
 			border-radius: 3px;
 		}
 
-		fieldset:not(#inputField>fieldset) {
-			border: 1px solid #444;
-			border-radius: 10px;
-		}
+		fieldset>fieldset>fieldset {border: none !important;}
 
+		
 		span[lang="en"] {
 			font-size: 13px;
 			
@@ -63,7 +61,11 @@
 			background: linear-gradient(60deg, #aef, #eaf);
 		}
 
-		#inputField {margin: 30px 20px;}
+		#inputField {
+			margin: 30px 20px;
+			border: 1px solid #444;
+			border-radius: 10px;
+		}
 
 		#inputField>fieldset {
 			border: none;
@@ -134,14 +136,12 @@
 		}
 
 		label:has(input[name="rounding"]:checked) {
-			background-color: #cfa;
+			background-color: #cef;
 		}
 
 		input[name="rounding"] {display: none;}
 
 		input[name="rounding"]+img {
-			margin-bottom: -10px;
-			translate: 0 -2.2px;
 		}
 	</style>
 </head>
@@ -227,7 +227,8 @@
 			<legend>表示
 				<span lang="en">Display Settings</span>
 			</legend>
-			<fieldset>
+		<ol>
+			<li>
 				<legend>つける文字</legend>
 				<label>タイトル
 					<span lang="en">Title</span>
@@ -243,8 +244,8 @@
 					<span lang="en">After-text</span>
 					<input id="afterText" placeholder="例) 年">
 				</label>
-			</fieldset>
-			<fieldset>
+			</li>
+			<li>
 				<legend>数字
 					<span lang="en">Number Settings</span>
 				</legend>
@@ -274,7 +275,8 @@
 					切り上げ<span lang="en">Round up</span>
 				</label>
 				</select>
-			</fieldset>
+			</li>
+		</ol>
 		</fieldset>
 	</fieldset>
 	<script>
