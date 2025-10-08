@@ -32,9 +32,14 @@
 			border-radius: 3px;
 		}
 
-		* {font-family: "originalFont";}
+		* {
+			font-family: "originalFont";
+			font-size: 16px;
+		}
 
 		body {margin: 0;}
+
+		h1 {font-size: 30px;}
 
 		input {
 			border: .5px solid #666;
@@ -129,20 +134,23 @@
 		#otherInput #leftTopText {width: 200px;}
 
 		label:has(input[name="rounding"]) {
-			display: inline-block;
+			display: inline-flex;
+			align-items: center;
 			width: 220px;
 			padding: 2px 5px;
 			border-radius: 5px;
+			height: 30px;
 		}
 
 		label:has(input[name="rounding"]:checked) {
 			background-color: #cef;
 		}
 
-		input[name="rounding"] {display: none;}
-
-		input[name="rounding"]+img {
+		label:has(input[name="rounding"])>span {
+			margin-left: 5px;
 		}
+
+		input[name="rounding"] {display: none;}
 	</style>
 </head>
 <body>
@@ -227,56 +235,54 @@
 			<legend>表示
 				<span lang="en">Display Settings</span>
 			</legend>
-		<ol>
-			<li>
-				<legend>つける文字</legend>
-				<label>タイトル
-					<span lang="en">Title</span>
-					<input id="titleText" placeholder="例) 生まれてから">
-				</label>
-				<br>
-				<label>前置
-					<span lang="en">Before-text</span>
-					<input id="beforeText" placeholder="例) 約">
-				</label>
-				<br>
-				<label>後置
-					<span lang="en">After-text</span>
-					<input id="afterText" placeholder="例) 年">
-				</label>
-			</li>
-			<li>
-				<legend>数字
-					<span lang="en">Number Settings</span>
-				</legend>
-				<label>小数点以下の桁数
-					<span lang="en">Decimal places</span>
-					<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
-				</label>
-				<br>
-				表示桁数未満の丸め処理の方法
-				<span lang="en">How to handle numbers below the display limit</span>
-				<br>
-				<label>
-					<input type="radio" name="rounding" value="roundOff" checked>
-					<img src="0_data/images/roundDown.svg" width="30px">
-					切り捨て<span lang="en">Round down</span>
-				</label>
-				<br>
-				<label>
-					<input type="radio" name="rounding" value="roundUp">
-					<img src="0_data/images/roundOff.svg" width="30px">
-					四捨五入<span lang="en">Round off</span>
-				</label>
-				<br>
-				<label>
-					<input type="radio" name="rounding" value="roundDown">
-					<img src="0_data/images/roundUp.svg" width="30px">
-					切り上げ<span lang="en">Round up</span>
-				</label>
-				</select>
-			</li>
-		</ol>
+			<ul>
+				<li>つける文字<span lang="en">Text Settings</span>
+					<br>
+					<label>タイトル
+						<span lang="en">Title</span>
+						<input id="titleText" placeholder="例) 生まれてから">
+					</label>
+					<br>
+					<label>前置
+						<span lang="en">Before-text</span>
+						<input id="beforeText" placeholder="例) 約">
+					</label>
+					<br>
+					<label>後置
+						<span lang="en">After-text</span>
+						<input id="afterText" placeholder="例) 年">
+					</label>
+				</li>
+				<li>数字<span lang="en">Number Settings</span>
+					<br>
+					<label>小数点以下の桁数
+						<span lang="en">Decimal places</span>
+						<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
+					</label>
+					<br>
+					表示桁数未満の丸め処理の方法
+					<span lang="en">How to handle numbers below the display limit</span>
+					<br>
+					<label>
+						<input type="radio" name="rounding" value="roundOff" checked>
+						<img src="../0_data/images/roundDown.svg" width="30px">
+						<span>切り捨て<span lang="en">Round down</span></span>
+					</label>
+					<br>
+					<label>
+						<input type="radio" name="rounding" value="roundUp">
+						<img src="../0_data/images/roundOff.svg" width="30px">
+						<span>四捨五入<span lang="en">Round off</span></span>
+					</label>
+					<br>
+					<label>
+						<input type="radio" name="rounding" value="roundDown">
+						<img src="../0_data/images/roundUp.svg" width="30px">
+						<span>切り上げ<span lang="en">Round up</span></span>
+					</label>
+					</select>
+				</li>
+			</ul>
 		</fieldset>
 	</fieldset>
 	<script>
