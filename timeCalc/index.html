@@ -332,7 +332,7 @@
 					this.classList.remove("inValid");
 				};
 				validUpdate();
-				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && (value.length >= this.max.length || Number(value+"0") > this.max)) {
+				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && (value.length >= this.max.length || Number(value+"0") > this.max || value == 0)) {
 					const nextIndex = dateInputList.indexOf(id) + 1;
 					if(nextIndex < dateInputList.length) {
 						el(dateInputList[nextIndex]).focus();
