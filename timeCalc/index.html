@@ -46,9 +46,6 @@
 			border-radius: 3px;
 		}
 
-		fieldset>fieldset>fieldset {border: none !important;}
-
-		
 		span[lang="en"] {
 			font-size: 13px;
 			
@@ -126,6 +123,15 @@
 
 		#otherInput>legend {background-color: #fea;}
 
+		#otherInput>ul {
+			list-style: none;
+			padding-left:  30px;
+		}
+
+		.listTitle {
+			margin-left: -20px;
+		}
+
 		#otherInput input:not(input[type="radio"]) {
 			margin-left: 15px;
 			width: 100px; /* 要素によって変わります */
@@ -139,18 +145,18 @@
 			width: 220px;
 			padding: 2px 5px;
 			border-radius: 5px;
-			height: 30px;
+			margin: 1px auto;
 		}
 
 		label:has(input[name="rounding"]:checked) {
-			background-color: #cef;
+			color: #3cf
 		}
 
 		label:has(input[name="rounding"])>span {
 			margin-left: 5px;
 		}
 
-		input[name="rounding"] {display: none;}
+		/* input[name="rounding"] {display: none;} */
 	</style>
 </head>
 <body>
@@ -236,7 +242,7 @@
 				<span lang="en">Display Settings</span>
 			</legend>
 			<ul>
-				<li>つける文字<span lang="en">Text Settings</span>
+				<li><span class="listTitle">つける文字<span lang="en">Text Settings</span></span>
 					<br>
 					<label>タイトル
 						<span lang="en">Title</span>
@@ -265,19 +271,19 @@
 					<br>
 					<label>
 						<input type="radio" name="rounding" value="roundOff" checked>
-						<img src="../0_data/images/roundDown.svg" width="30px">
+						<img src="0_data/images/roundDown.svg" width="30px">
 						<span>切り捨て<span lang="en">Round down</span></span>
 					</label>
 					<br>
 					<label>
 						<input type="radio" name="rounding" value="roundUp">
-						<img src="../0_data/images/roundOff.svg" width="30px">
+						<img src="0_data/images/roundOff.svg" width="30px">
 						<span>四捨五入<span lang="en">Round off</span></span>
 					</label>
 					<br>
 					<label>
 						<input type="radio" name="rounding" value="roundDown">
-						<img src="../0_data/images/roundUp.svg" width="30px">
+						<img src="0_data/images/roundUp.svg" width="30px">
 						<span>切り上げ<span lang="en">Round up</span></span>
 					</label>
 					</select>
@@ -296,7 +302,7 @@
 				min: true,
 				sec: true
 			},
-			dateInputList = ["month","day","hour","min","sec"];
+			dateInputList = ["year","month","day","hour","min","sec"];
 		/** この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています。
 		 * @param {string} id 取得したい要素のID
 		 * @return {HTMLElement} 指定されたIDを持つ要素
@@ -332,7 +338,7 @@
 					this.classList.remove("inValid");
 				};
 				validUpdate();
-				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && (value.length >= this.max.length || Number(value+"0") > this.max || value == 0)) {
+				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && ((value.length >= this.max.length && this.max != "") || (Number(value+"0") > this.max && this.max != "") || value == 0 || (this.id == "year" && value.length >= 4))) {
 					const nextIndex = dateInputList.indexOf(id) + 1;
 					if(nextIndex < dateInputList.length) {
 						el(dateInputList[nextIndex]).focus();
