@@ -128,7 +128,18 @@
 			padding-left:  30px;
 		}
 
+		li:has(.listTitle) {
+			border-image-width: 0 0 0 2px;
+			border-image-slice: 0 0 0 100%;
+			border-image-outset: 1 1 1 10px;
+			border-image-source: linear-gradient(to bottom, transparent 2em, #777 2em, #777);
+		}
+
 		.listTitle {
+			display:inline-block;
+			/* border: 2px dashed #af0; */
+			margin-top: 10px;
+			margin-bottom: 5px;
 			margin-left: -20px;
 		}
 
@@ -259,7 +270,7 @@
 						<input id="afterText" placeholder="例) 年">
 					</label>
 				</li>
-				<li>数字<span lang="en">Number Settings</span>
+				<li><span class="listTitle">数字<span lang="en">Number Settings</span></span>
 					<br>
 					<label>小数点以下の桁数
 						<span lang="en">Decimal places</span>
