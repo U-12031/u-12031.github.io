@@ -82,9 +82,10 @@
 			top: 42.5vh;
 			left: calc(50vw - 10px);
 			translate: -50% -50%;
+			white-space: nowrap;
 		}
 
-		#numberOutput {font-size: 60px;}
+		#numberOutput {font-size: 70px;}
 
 		#beforeOutput, #afterOutput {
 			font-size: 40px;
@@ -208,7 +209,7 @@
 			<span id="afterOutput">年</span>
 		</div>
 	</div>
-	<input id="textTest" style="width: 200px; position: absolute; top: 10px; right: 10px;">
+	<input id="textTest" value="12.345" style="width: 200px; position: absolute; top: 10px; right: 10px;">
 	<span id="textOutput" style="position: absolute; top: 10px; right: 220px;"></span>
 	<fieldset id="inputField">
 		<legend>入力欄
@@ -407,6 +408,11 @@
 
 		el("textTest").addEventListener("input",function() {
 			el("numberOutput").textContent = this.value;
+			if(el("numberOutput").clientWidth > document.body.clientWidth * 0.85) {
+				console.log("数字が大きすぎて表示できません");
+			} else {
+				console.log(`大丈夫だよ\n${el("numberOutput").clientWidth} / ${document.body.clientWidth * 0.85}`);
+			};
 		});
 	</script>
 </body>
