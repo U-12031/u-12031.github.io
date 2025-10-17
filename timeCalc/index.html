@@ -408,10 +408,15 @@
 
 		el("textTest").addEventListener("input",function() {
 			el("numberOutput").textContent = this.value;
-			if(el("numberOutput").clientWidth > document.body.clientWidth * 0.85) {
-				console.log("数字が大きすぎて表示できません");
+			const maxWidth = document.body.clientWidth * 0.85;
+			const textWidth = el("mainOutput").clientWidth;
+			if(textWidth > maxWidth) {
+				const newFontScale = maxWidth / textWidth;
+				el("numberOutput").style.fontSize = (70 * newFontScale) + "px";
+				console.log(`ちっちゃくしたよ  textWidth=${textWidth}, maxWidth=${maxWidth}, newFontScale=${newFontScale}, fontSize=${70 * newFontScale}`);
 			} else {
-				console.log(`大丈夫だよ\n${el("numberOutput").clientWidth} / ${document.body.clientWidth * 0.85}`);
+				el("numberOutput").style.fontSize = "70px";
+				console.log(`大丈夫だよ  ${textWidth} / ${maxWidth}`);
 			};
 		});
 	</script>
