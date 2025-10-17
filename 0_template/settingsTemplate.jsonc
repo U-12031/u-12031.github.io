@@ -88,5 +88,6 @@
 	"color-highlight.matchRgbWithNoFunction": true,
 	"color-highlight.matchWords": true,
 	"editor.colorDecorators": false,
-	"workbench.colorTheme": "Default Dark Modern"
+	"workbench.colorTheme": "Default Dark Modern",
+	"editor.wordWrap": "on"
 }

@@ -63,6 +63,33 @@
 			background: linear-gradient(60deg, #aef, #eaf);
 		}
 
+		#outputParent {
+			position: relative;
+			width: calc(100vw - 20px);
+			height: 85vh;
+			background-image: linear-gradient(315deg,#aaf,#cae,#aaf);
+			margin: auto 10px;
+			margin-top: 20px;
+		}
+
+		#outputParent>* {position: absolute;}
+
+		#titleOutput {
+			top: 20vh;
+		}
+
+		#mainOutput {
+			top: 42.5vh;
+			left: calc(50vw - 10px);
+			translate: -50% -50%;
+		}
+
+		#numberOutput {font-size: 60px;}
+
+		#beforeOutput, #afterOutput {
+			font-size: 40px;
+		}
+
 		#inputField {
 			margin: 30px 20px;
 			border: 1px solid #444;
@@ -148,7 +175,7 @@
 			width: 100px; /* 要素によって変わります */
 		}
 
-		#otherInput #leftTopText {width: 200px;}
+		#otherInput #titleText {width: 200px;}
 
 		label:has(input[name="rounding"]) {
 			display: inline-flex;
@@ -172,7 +199,17 @@
 </head>
 <body>
 	<h1 id="title">Time Calculator</h1>
-	<span id="version"></span>
+	<span id="version">version 0.0</span>
+	<div id="outputParent">
+		<div id="titleOutput">Title test</div>
+		<div id="mainOutput">
+			<span id="beforeOutput">約</span>
+			<span id="numberOutput">12.345</span>
+			<span id="afterOutput">年</span>
+		</div>
+	</div>
+	<input id="textTest" style="width: 200px; position: absolute; top: 10px; right: 10px;">
+	<span id="textOutput" style="position: absolute; top: 10px; right: 220px;"></span>
 	<fieldset id="inputField">
 		<legend>入力欄
 			<span lang="en">Input field</span>
@@ -367,6 +404,10 @@
 		inputLimiter("min");
 		inputLimiter("sec");
 		inputLimiter("decimalPlace");
+
+		el("textTest").addEventListener("input",function() {
+			el("numberOutput").textContent = this.value;
+		});
 	</script>
 </body>
 </html>
