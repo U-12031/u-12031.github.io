@@ -204,13 +204,13 @@
 	<div id="outputParent">
 		<div id="titleOutput">Title test</div>
 		<div id="mainOutput">
-			<span id="beforeOutput">約</span>
-			<span id="numberOutput">12.345</span>
-			<span id="afterOutput">年</span>
+			<div id="beforeOutput">約</div>
+			<div id="numberOutput">12.345</div>
+			<div id="afterOutput">年</div>
 		</div>
 	</div>
 	<input id="textTest" value="12.345" style="width: 200px; position: absolute; top: 10px; right: 10px;">
-	<span id="textOutput" style="position: absolute; top: 10px; right: 220px;"></span>
+	<button id="updateTextBt" style="position: absolute; right: 230px;top: 0;">Update</button>
 	<fieldset id="inputField">
 		<legend>入力欄
 			<span lang="en">Input field</span>
@@ -406,19 +406,25 @@
 		inputLimiter("sec");
 		inputLimiter("decimalPlace");
 
-		el("textTest").addEventListener("input",function() {
-			el("numberOutput").textContent = this.value;
+		let index = 0;
+		/*el("textTest").addEventListener("input",function() {
+			el("numberOutput").textContent = el("textTest").value;
+			index++;
 			const maxWidth = document.body.clientWidth * 0.85;
-			const textWidth = el("mainOutput").clientWidth;
-			if(textWidth > maxWidth) {
-				const newFontScale = maxWidth / textWidth;
-				el("numberOutput").style.fontSize = (70 * newFontScale) + "px";
-				console.log(`ちっちゃくしたよ  textWidth=${textWidth}, maxWidth=${maxWidth}, newFontScale=${newFontScale}, fontSize=${70 * newFontScale}`);
+			const nowFontSize = el("numberOutput").style.fontSize.replace("px","");
+			console.log("nowFontSize: " + nowFontSize);
+			const defaultFontSize = 70;
+			const defaultWidth = el("numberOutput").clientWidth * (defaultFontSize / nowFontSize);
+			if(defaultWidth > maxWidth) {
+				el("numberOutput").style.fontSize = (maxWidth / defaultWidth) * defaultFontSize + "px";
+				console.log(`小さくしたよ defaultWidth=${defaultWidth} maxWidth=${maxWidth} defaultFontSize=${defaultFontSize} nowFontSize=${nowFontSize} elWidth=${el("numberOutput").clientWidth} `);
 			} else {
 				el("numberOutput").style.fontSize = "70px";
-				console.log(`大丈夫だよ  ${textWidth} / ${maxWidth}`);
-			};
+				console.log(`そのまま defaultWidth=${defaultWidth} maxWidth=${maxWidth} defaultFontSize=${defaultFontSize} nowFontSize=${nowFontSize} elWidth=${el("numberOutput").clientWidth} elFontSize=${el("numberOutput").style.fontSize} thisValue=${this.value}`);
+			}
+			console.log(index)
 		});
+		*/
 	</script>
 </body>
 </html>
