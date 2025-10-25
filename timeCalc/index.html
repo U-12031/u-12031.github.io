@@ -147,11 +147,22 @@
 			translate: 0 -6px;
 		}
 
-		#otherInput {background-color: #ffffda}
+		#otherInput {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			padding: 5px;
+			background-color: #ffffda;
+		}
 
 		#otherInput>legend {background-color: #fea;}
 
-		#otherInput>ul {
+		#otherInput>div {
+			/* border: 2px dashed #af0; */
+			margin: 0;
+			padding: 0;
+		}
+
+		#otherInput>div>ul {
 			list-style: none;
 			padding-left:  30px;
 		}
@@ -204,9 +215,9 @@
 	<div id="outputParent">
 		<div id="titleOutput">Title test</div>
 		<div id="mainOutput">
-			<div id="beforeOutput">約</div>
-			<div id="numberOutput">12.345</div>
-			<div id="afterOutput">年</div>
+			<span id="beforeOutput">約</span>
+			<span id="numberOutput">12.345</span>
+			<span id="afterOutput">年</span>
 		</div>
 	</div>
 	<fieldset id="inputField">
@@ -288,54 +299,59 @@
 			<legend>表示
 				<span lang="en">Display Settings</span>
 			</legend>
-			<ul>
-				<li><span class="listTitle">つける文字<span lang="en">Text Settings</span></span>
-					<br>
-					<label>タイトル
-						<span lang="en">Title</span>
-						<input id="titleText" placeholder="例) 生まれてから">
-					</label>
-					<br>
-					<label>前置
-						<span lang="en">Before-text</span>
-						<input id="beforeText" placeholder="例) 約">
-					</label>
-					<br>
-					<label>後置
-						<span lang="en">After-text</span>
-						<input id="afterText" placeholder="例) 年">
-					</label>
-				</li>
-				<li><span class="listTitle">数字<span lang="en">Number Settings</span></span>
-					<br>
-					<label>小数点以下の桁数
-						<span lang="en">Decimal places</span>
-						<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
-					</label>
-					<br>
-					表示桁数未満の丸め処理の方法
-					<span lang="en">How to handle numbers below the display limit</span>
-					<br>
-					<label>
-						<input type="radio" name="rounding" value="roundOff" checked>
-						<img src="0_data/images/roundDown.svg" width="30px">
-						<span>切り捨て<span lang="en">Round down</span></span>
-					</label>
-					<br>
-					<label>
-						<input type="radio" name="rounding" value="roundUp">
-						<img src="0_data/images/roundOff.svg" width="30px">
-						<span>四捨五入<span lang="en">Round off</span></span>
-					</label>
-					<br>
-					<label>
-						<input type="radio" name="rounding" value="roundDown">
-						<img src="0_data/images/roundUp.svg" width="30px">
-						<span>切り上げ<span lang="en">Round up</span></span>
-					</label>
-					</select>
-				</li>
-			</ul>
+			<div>
+				<ul>
+					<li><span class="listTitle">つける文字<span lang="en">Text Settings</span></span>
+						<br>
+						<label>タイトル
+							<span lang="en">Title</span>
+							<input id="titleText" placeholder="例) 生まれてから">
+						</label>
+						<br>
+						<label>前置
+							<span lang="en">Before-text</span>
+							<input id="beforeText" placeholder="例) 約">
+						</label>
+						<br>
+						<label>後置
+							<span lang="en">After-text</span>
+							<input id="afterText" placeholder="例) 年">
+						</label>
+					</li>
+					<li><span class="listTitle">数字<span lang="en">Number Settings</span></span>
+						<br>
+						<label>小数点以下の桁数
+							<span lang="en">Decimal places</span>
+							<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
+						</label>
+						<br>
+						表示桁数未満の丸め処理の方法
+						<span lang="en">How to handle numbers below the display limit</span>
+						<br>
+						<label>
+							<input type="radio" name="rounding" value="roundOff" checked>
+							<img src="0_data/images/roundDown.svg" width="30px">
+							<span>切り捨て<span lang="en">Round down</span></span>
+						</label>
+						<br>
+						<label>
+							<input type="radio" name="rounding" value="roundUp">
+							<img src="0_data/images/roundOff.svg" width="30px">
+							<span>四捨五入<span lang="en">Round off</span></span>
+						</label>
+						<br>
+						<label>
+							<input type="radio" name="rounding" value="roundDown">
+							<img src="0_data/images/roundUp.svg" width="30px">
+							<span>切り上げ<span lang="en">Round up</span></span>
+						</label>
+						</select>
+					</li>
+				</ul>
+			</div>
+			<div>
+				siaueo
+			</div>
 		</fieldset>
 	</fieldset>
 	<script>
