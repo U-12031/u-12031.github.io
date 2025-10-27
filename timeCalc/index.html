@@ -156,17 +156,11 @@
 
 		#otherInput>legend {background-color: #fea;}
 
-		#otherInput>div {
-			/* border: 2px dashed #af0; */
-			margin: 0;
-			padding: 0;
-			padding-top: 10px;
-		}
+		#otherInput>div {padding-top: 10px;}
 
 		#otherInput>div>ul {
-			list-style: none;
-			padding-left:  30px;
 			margin: 0;
+			list-style: none;
 		}
 
 		li:has(.listTitle) {
@@ -352,7 +346,20 @@
 				</ul>
 			</div>
 			<div>
-				siaueo
+				<ul>
+					<li><span class="listTitle">その他の設定
+						<span lang="en">Other Settings</span>
+					</span>
+						<br>
+						<label>
+							<span>文字の大きさ
+								<span lang="en">Font size of number</span>
+							</span>
+							<input type="number" id="fontSize" min="1" value="70">
+							<input type="range" id="fontSizeRange" min="50" max="200" value="70">
+						</label>
+					</li>
+				</ul>
 			</div>
 		</fieldset>
 	</fieldset>
@@ -421,26 +428,6 @@
 		inputLimiter("min");
 		inputLimiter("sec");
 		inputLimiter("decimalPlace");
-
-		let index = 0;
-		/*el("textTest").addEventListener("input",function() {
-			el("numberOutput").textContent = el("textTest").value;
-			index++;
-			const maxWidth = document.body.clientWidth * 0.85;
-			const nowFontSize = el("numberOutput").style.fontSize.replace("px","");
-			console.log("nowFontSize: " + nowFontSize);
-			const defaultFontSize = 70;
-			const defaultWidth = el("numberOutput").clientWidth * (defaultFontSize / nowFontSize);
-			if(defaultWidth > maxWidth) {
-				el("numberOutput").style.fontSize = (maxWidth / defaultWidth) * defaultFontSize + "px";
-				console.log(`小さくしたよ defaultWidth=${defaultWidth} maxWidth=${maxWidth} defaultFontSize=${defaultFontSize} nowFontSize=${nowFontSize} elWidth=${el("numberOutput").clientWidth} `);
-			} else {
-				el("numberOutput").style.fontSize = "70px";
-				console.log(`そのまま defaultWidth=${defaultWidth} maxWidth=${maxWidth} defaultFontSize=${defaultFontSize} nowFontSize=${nowFontSize} elWidth=${el("numberOutput").clientWidth} elFontSize=${el("numberOutput").style.fontSize} thisValue=${this.value}`);
-			}
-			console.log(index)
-		});
-		*/
 	</script>
 </body>
 </html>
