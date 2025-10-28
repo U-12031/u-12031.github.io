@@ -201,8 +201,6 @@
 		label:has(input[name="rounding"])>span {
 			margin-left: 5px;
 		}
-
-		/* input[name="rounding"] {display: none;} */
 	</style>
 </head>
 <body>
@@ -355,8 +353,8 @@
 							<span>文字の大きさ
 								<span lang="en">Font size of number</span>
 							</span>
-							<input type="number" id="fontSize" min="1" value="70">
-							<input type="range" id="fontSizeRange" min="50" max="200" value="70">
+							<input type="range" id="fontSizeRange" min="50" max="200" value="70" style="width: 150px;">
+							<input type="number" id="fontSize" min="1" value="70" style="width: 50px;">px
 						</label>
 					</li>
 				</ul>
