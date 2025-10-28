@@ -11,20 +11,18 @@
 		gtag('config', 'G-G3VRHWGPB7');
 	</script>
 
-	<base href="/MyAllFiles/">
-
 	<title>Idle Dice</title>
 	<style>
 		@font-face {
 			font-family: "original";
-			src: url("0_data/fonts//simpleFont3-regular.ttf");
+			src: url("/0_data/fonts//simpleFont3-regular.ttf");
 		}
 
 		* {font-family: "original";}
 
 		@font-face {
 			font-family: "bold";
-			src: url("0_data/fonts//simpleFont3-medium.ttf");
+			src: url("/0_data/fonts//simpleFont3-medium.ttf");
 		}
 
 		.bold {font-family: "bold";}
@@ -323,7 +321,7 @@
 </head>
 <body>
 	<h1 class="bold" id="scoreParent">
-		<img src="0_data/images/scoreMark.svg">
+		<img src="/0_data/images/scoreMark.svg">
 		<span id="score">0</span>
 		<span id="addedScore"></span>
 		<br>
@@ -721,12 +719,12 @@
 						createEl("span", `${type}Parent`, {innerHTML: "+", style: "translate: 0 -35px;"});
 					};
 					addTypeDiceInfo[addTypeDiceInfo.length] = {min: 1, max: 6, value: null, amountMax: 20n, amountMin: 300n}; //初期値として 
-					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"><table><tr><td>Max値UP ${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}</td></tr><tr><td><img src=\"0_data/images/scoreMark.svg\">800</td></tr></table></div>`;
+					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"><table><tr><td>Max値UP ${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}</td></tr><tr><td><img src=\"/0_data/images/scoreMark.svg\">800</td></tr></table></div>`;
 					break;
 				case 2:
 					createEl("span", `${type}Parent`, {innerHTML: "×", style: "translate: 0 -35px;"});
 					addTypeDiceInfo[addTypeDiceInfo.length] = {min: 1, max: 2, chance: 0.5, value: null, amountMax: 3000n, amountMin: 8000n}; //初期値として
-					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"><table><tr><td>Max値UP ${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}</td></tr><tr><td><img src=\"0_data/images/scoreMark.svg\">800</td></tr></table></div>`
+					btPart = `<div id=\"${type}-${addTypeDiceInfo.length}MaxBuyBt\" class=\"buyBt\"><table><tr><td>Max値UP ${addTypeDiceInfo[addTypeDiceInfo.length - 1].max}</td></tr><tr><td><img src=\"/0_data/images/scoreMark.svg\">800</td></tr></table></div>`
 					break;
 				case 3:
 					createEl("span", `${type}Parent`, {innerHTML: "^", style: "translate: 0 -35px;"});
