@@ -228,14 +228,14 @@
 						<label>
 							<input type="radio" name="BC/AD" value="BC">
 							<span>紀元前
-								<span lang="en">BC</span>
+								<span lang="en">B.C.</span>
 							</span>
 						</label>
 						<br>
 						<label>
 							<input type="radio" name="BC/AD" value="AD" checked>
 							<span>紀元後
-								<span lang="en">AD</span>
+								<span lang="en">A.D.</span>
 							</span>
 						</label>
 					</th>
@@ -393,22 +393,22 @@
 		/** この関数は、入力欄(Input Field)に入力された数値が有効かどうかを判定し、有効でなければその要素にCSSのclassを付与して有効でない値であることをユーザーに伝えます。
 		 * @param {string} id 判定したい要素のID
 		 */
-		function inputLimiter(id) {
+		function inputLimiter(id, doAllowWhiteSpace=true) {
 			el(id).addEventListener("input",function() {
 				const value = this.value;
 				if(value == "") {
 					isValid[id] = true;
-				} else if((value < Number(this.min) && this.min != "") || (value > Number(this.max) && this.max != "") || (value % Number(this.step) != 0)) {
-					isValid[id] = false;
+				} else if((value < Number(this.min) && this.min != "") || (value > Number(this.max) && this.max != "") || (value % Number(this.step) != 0 && this.step != "")) {
+					isValid[id] = false
 					this.classList.add("inValid");
 				} else {
 					isValid[id] = true;
 					this.classList.remove("inValid");
 				};
-				if(value == "") {
+				if(value == "" && doAllowWhiteSpace) {
 					isValid[id] = true;
 					this.classList.remove("inValid");
-				};
+				} else {};
 				validUpdate();
 				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && ((value.length >= this.max.length && this.max != "") || (Number(value+"0") > this.max && this.max != "") || value == 0 || (this.id == "year" && value.length >= 4))) {
 					const nextIndex = dateInputList.indexOf(id) + 1;
@@ -428,6 +428,7 @@
 		inputLimiter("min");
 		inputLimiter("sec");
 		inputLimiter("decimalPlace");
+		inputLimiter("fontSize", false);
 	</script>
 </body>
 </html>
