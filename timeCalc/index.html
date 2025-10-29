@@ -13,9 +13,9 @@
 
 	<!-- Color picker:
 		I used picer(https://github.com/Simonwep/pickr?tab=readme-ov-file).
-		Thank you so much for simonwep. -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
-	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
+		A big thank you to simonwep. -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/themes/monolith.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
 
 	<title>Time Calculator</title>
 	<link rel="icon" href="/0_data/images/ageCalc_icon.svg">
@@ -370,12 +370,12 @@
 		const pickr = {
 			fontColor: Pickr.create({
 				el: '.color-picker',
-				theme: 'monolith',
+				theme: 'monolith', // or 'monolith', or 'nano'
 				default: '#000000',
 				components: {
 					// 主要なパネル部分
 					preview: true, // 色プレビュー
-					opacity: true, // 透明度バー
+					opacity: false, // 透明度バー
 					hue: true,     // 色相バー
 
 					// 下部の入力・操作部分
