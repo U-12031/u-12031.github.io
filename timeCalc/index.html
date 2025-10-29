@@ -351,7 +351,7 @@
 							<span>文字の大きさ
 								<span lang="en">Font size of number</span>
 							</span>
-							<input type="range" id="fontSizeRange" min="50" max="200" value="70" style="width: 150px;">
+							<input type="range" id="fontSizeRange" min="50" max="200" value="70" style="width: 200px;">
 							<input type="number" id="fontSize" min="1" value="70" style="width: 50px;">px
 						</label>
 					</li>
@@ -425,6 +425,15 @@
 		inputLimiter("sec");
 		inputLimiter("decimalPlace");
 		inputLimiter("fontSize", false);
+
+		el("fontSize").addEventListener("input", function() {
+			el("fontSizeRange").value = this.value;
+			el("numberOutput").style.fontSize = this.value + "px";
+		});
+		el("fontSizeRange").addEventListener("input", function() {
+			el("fontSize").value = this.value;
+			el("numberOutput").style.fontSize = this.value + "px";
+		});
 	</script>
 </body>
 </html>
