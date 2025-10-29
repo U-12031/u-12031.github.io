@@ -388,6 +388,11 @@
 					}
 				}
 			}),
+		};
+		for(const prop in pickr) {
+			pickr[prop].on('change', (color) => {
+				pickr[prop].setColor(color.toHEXA().toString());
+			});
 		}
 	</script>
 	<script>
