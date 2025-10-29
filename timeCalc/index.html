@@ -86,7 +86,7 @@
 		#numberOutput {font-size: 70px;}
 
 		#beforeOutput, #afterOutput {
-			font-size: 40px;
+			font-size: 42px;
 		}
 
 		#inputField {
@@ -429,10 +429,14 @@
 		el("fontSize").addEventListener("input", function() {
 			el("fontSizeRange").value = this.value;
 			el("numberOutput").style.fontSize = this.value + "px";
+			el("beforeOutput").style.fontSize = this.value * 0.6 + "px";
+			el("afterOutput").style.fontSize = this.value * 0.6 + "px";
 		});
 		el("fontSizeRange").addEventListener("input", function() {
 			el("fontSize").value = this.value;
 			el("numberOutput").style.fontSize = this.value + "px";
+			el("beforeOutput").style.fontSize = this.value * 0.6 + "px";
+			el("afterOutput").style.fontSize = this.value * 0.6 + "px";
 		});
 	</script>
 </body>
