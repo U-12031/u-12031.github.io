@@ -11,6 +11,12 @@
 		gtag('config', 'G-G3VRHWGPB7');
 	</script>
 
+	<!-- Color picker:
+		I used picer(https://github.com/Simonwep/pickr?tab=readme-ov-file).
+		Thank you so much for simonwep. -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
+
 	<title>Time Calculator</title>
 	<link rel="icon" href="/0_data/images/ageCalc_icon.svg">
 	<style>
@@ -351,14 +357,39 @@
 							<span>文字の大きさ
 								<span lang="en">Font size of number</span>
 							</span>
-							<input type="range" id="fontSizeRange" min="50" max="200" value="70" style="width: 200px;">
-							<input type="number" id="fontSize" min="1" value="70" style="width: 50px;">px
+							<input type="range" id="fontSizeRange" min="50" max="200" value="100" style="width: 200px;">
+							<input type="number" id="fontSize" min="1" value="100" style="width: 50px;">px
 						</label>
+						<div class="color-picker"></div>
 					</li>
 				</ul>
 			</div>
 		</fieldset>
 	</fieldset>
+		<script>
+		const pickr = {
+			fontColor: Pickr.create({
+				el: '.color-picker',
+				theme: 'monolith',
+				default: '#000000',
+				components: {
+					// 主要なパネル部分
+					preview: true, // 色プレビュー
+					opacity: true, // 透明度バー
+					hue: true,     // 色相バー
+
+					// 下部の入力・操作部分
+					interaction: {
+						hex: true,   // HEX形式表示
+						rgba: true,  // RGBA形式表示
+						input: true, // 入力ボックス
+						clear: false, // クリアボタン
+						save: false   // 保存ボタン
+					}
+				}
+			}),
+		}
+	</script>
 	<script>
 		let
 			isValid = {
