@@ -360,40 +360,70 @@
 							<input type="range" id="fontSizeRange" min="50" max="200" value="100" style="width: 200px;">
 							<input type="number" id="fontSize" min="1" value="100" style="width: 50px;">px
 						</label>
-						<div class="color-picker"></div>
+						<div id="fontColor"></div>
 					</li>
 				</ul>
 			</div>
 		</fieldset>
 	</fieldset>
-		<script>
-		const pickr = {
-			fontColor: Pickr.create({
-				el: '.color-picker',
-				theme: 'monolith', // or 'monolith', or 'nano'
-				default: '#000000',
+	<script>
+		function el(id) {return document.getElementById(id)};
+		/** 新しいPickrを作成します。
+		 * @class
+		 * @param {string} id Pickrを設置する要素のID
+		 * @param {string} defaultColor Pickrの初期色
+		 * @param {boolean} opacity 透明度バーを表示するかどうか
+		 * @return {Pickr} 作成されたPickrオブジェクト
+		 */
+		function PickrClass(id, defaultColor, opacity=false) {
+			const newPickr = Pickr.create({
+				el: "#" + id,
+				theme: "monolith",
+				default: defaultColor,
+				swatches: [
+					"#000000",
+					"#ffffff",
+					"#ff0000",
+					"#00ff00",
+					"#0000ff",
+					"#ffff00",
+					"#00ffff",
+					"#ff00ff",
+					"#505050",
+					"#a0a0a0",
+					"#800000",
+					"#808000",
+					"#008000",
+					"#008080",
+					"#000080",
+					"#800080"
+				],
 				components: {
 					// 主要なパネル部分
-					preview: true, // 色プレビュー
-					opacity: false, // 透明度バー
-					hue: true,     // 色相バー
+					preview: true,  // 色プレビュー
+					opacity: opacity, // 透明度バー
+					hue: true,      // 色相バー
 
 					// 下部の入力・操作部分
 					interaction: {
-						hex: true,   // HEX形式表示
-						rgba: true,  // RGBA形式表示
-						input: true, // 入力ボックス
+						hex: true,    // HEX形式表示
+						rgba: true,   // RGBA形式表示
+						input: true,  // 入力ボックス
 						clear: false, // クリアボタン
 						save: false   // 保存ボタン
 					}
 				}
-			}),
-		};
-		for(const prop in pickr) {
-			pickr[prop].on('change', (color) => {
-				pickr[prop].setColor(color.toHEXA().toString());
 			});
-		}
+			// 色が変更されたときに毎回保存する
+			newPickr.on("change", (color) => {
+				newPickr.setColor(color.toHEXA().toString());
+			});
+			// el(id).classList.add("colorPickr");
+			return newPickr;
+		};
+		const pickr = {
+			fontColor: new PickrClass("fontColor", "#000000", true),
+		};
 	</script>
 	<script>
 		let
