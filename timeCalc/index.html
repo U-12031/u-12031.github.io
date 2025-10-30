@@ -41,7 +41,10 @@
 			font-size: 16px;
 		}
 
-		body {margin: 0;}
+		body {
+			margin: 0;
+			overflow-x: hidden;
+		}
 
 		h1 {font-size: 30px;}
 
@@ -410,17 +413,13 @@
 						rgba: true,   // RGBA形式表示
 						input: true,  // 入力ボックス
 						clear: false, // クリアボタン
-						save: false   // 保存ボタン
+						save: true    // 保存ボタン
 					}
 				}
 			});
-			// 色が変更されたときに毎回保存する
-			newPickr.on("change", (color) => {
-				newPickr.setColor(color.toHEXA().toString());
-			});
-			// el(id).classList.add("colorPickr");
 			return newPickr;
 		};
+		
 		const pickr = {
 			fontColor: new PickrClass("fontColor", "#000000", true),
 		};
