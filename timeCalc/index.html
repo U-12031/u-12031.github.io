@@ -235,7 +235,7 @@
 				<tr id="inputLabel">
 					<th style="padding-right: 20px">
 						<label>
-							<input type="radio" name="BC/AD" value="BC">
+							<input type="radio" name="BC/AD" value="BC" disabled>
 							<span>紀元前
 								<span lang="en">B.C.</span>
 							</span>
@@ -380,13 +380,13 @@
 							</span>
 							<br>
 							<label>
-								<input type="radio" name="fontColor" checked>
+								<input type="radio" name="fontColor" value="same" checked>
 								前後置も同じ色にする
 								<span lang="en">Use the same color for Prefix and Suffix</span>
 							</label>
 							<br>
 							<label>
-								<input type="radio" name="fontColor">
+								<input type="radio" name="fontColor" value="different">
 								数字と前置、後置で色を分ける
 								<span lang="en">Use different color for the number, prefix, and suffix</span>
 							</label>
@@ -410,6 +410,7 @@
 									<span lang="en">Suffix color</span>:
 								</span>
 								<div id="fontColorSuffix"></div>
+							</div>
 						</span>
 					</li>
 				</ul>
@@ -430,6 +431,7 @@
 				el: "#" + id,
 				theme: "monolith",
 				default: defaultColor,
+				/*
 				swatches: [
 					"#000000",
 					"#ffffff",
@@ -448,6 +450,7 @@
 					"#000080",
 					"#800080"
 				],
+				*/
 				components: {
 					// 主要なパネル部分
 					preview: true,  // 色プレビュー
@@ -466,8 +469,8 @@
 			});
 			return newPickr;
 		};
-
-		const pickr = {
+U
+		const PICKR = {
 			fontColor: new PickrClass("fontColor", "#000000", true),
 			fontColorNumber: new PickrClass("fontColorNumber", "#000000", true),
 			fontColorPrefix: new PickrClass("fontColorPrefix", "#000000", true),
@@ -475,22 +478,25 @@
 		};
 	</script>
 	<script>
-		let
-			isValid = {
-				all: true,
-				year: true,
-				month: true,
-				day: true,
-				hour: true,
-				min: true,
-				sec: true
-			},
-			dateInputList = ["year","month","day","hour","min","sec"];
+		let isValid = {
+			all: true,
+			year: true,
+			month: true,
+			day: true,
+			hour: true,
+			min: true,
+			sec: true
+		};
+		const DATE_INPUT_LIST = ["year","month","day","hour","min","sec"];
 		/** この関数は、入力したIDを持つHTMLドキュメント内の要素を取得します。このJSプログラムで基本的な要素を担っています。
 		 * @param {string} id 取得したい要素のID
 		 * @return {HTMLElement} 指定されたIDを持つ要素
 		 */
 		function el(id) {return document.getElementById(id)};
+		function nameValue(name) {
+			const checkedEl = document.querySelector('input[name="' + name + '"]:checked');
+			return checkedEl ? checkedEl.value : null;
+		} 
 		/** この関数は、変数isValidを更新するためのものです。主にinputLimiter関数で使われています。 */
 		function validUpdate() {
 			for (const key in Object.keys(isValid)) {
@@ -521,11 +527,11 @@
 					this.classList.remove("inValid");
 				} else {};
 				validUpdate();
-				if(el("autoFocus").checked && isValid[id] && value != "" && dateInputList.indexOf(id) != -1 && ((value.length >= this.max.length && this.max != "") || (Number(value+"0") > this.max && this.max != "") || value == 0 || (this.id == "year" && value.length >= 4))) {
-					const nextIndex = dateInputList.indexOf(id) + 1;
-					if(nextIndex < dateInputList.length) {
-						el(dateInputList[nextIndex]).focus();
-						el(dateInputList[nextIndex]).select();
+				if(el("autoFocus").checked && isValid[id] && value != "" && DATE_INPUT_LIST.indexOf(id) != -1 && ((value.length >= this.max.length && this.max != "") || (Number(value+"0") > this.max && this.max != "") || value == 0 || (this.id == "year" && value.length >= 4))) {
+					const nextIndex = DATE_INPUT_LIST.indexOf(id) + 1;
+					if(nextIndex < DATE_INPUT_LIST.length) {
+						el(DATE_INPUT_LIST[nextIndex]).focus();
+						el(DATE_INPUT_LIST[nextIndex]).select();
 					} else {
 						this.blur();
 					};
@@ -553,7 +559,21 @@
 			el("beforeOutput").style.fontSize = this.value * 0.6 + "px";
 			el("afterOutput").style.fontSize = this.value * 0.6 + "px";
 		});
-		
+		document.getElementsByName("fontColor").forEach(function(radio) {
+			radio.addEventListener("input", function() {
+				const value = nameValue("fontColor");
+				switch(value) {
+					case "same":
+						el("sameFontColor").style.display = "block";
+						el("differentFontColor").style.display = "none";
+						break;
+					case "different":
+						el("sameFontColor").style.display = "none";
+						el("differentFontColor").style.display = "block";
+						break;
+				}
+			});
+		});
 	</script>
 </body>
 </html>
