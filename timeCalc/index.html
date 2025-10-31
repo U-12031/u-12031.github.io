@@ -36,8 +36,14 @@
 			border-radius: 3px;
 		}
 
-		/*.pcr-button {
-		}*/
+		div:has(> .pcr-button) {
+			display: inline-block;
+		}
+		
+		.pcr-button {
+			width: 25px !important;
+			height: 25px !important;
+		}
 
 		* {
 			font-family: "originalFont";
@@ -380,35 +386,37 @@
 							<br>
 							<label>
 								<input type="radio" name="fontColor" value="same" checked>
-								前後置も同じ色にする
-								<span lang="en">Use the same color for Prefix and Suffix</span>
+								すべて同じ色にする
+								<span lang="en">Use the same color for All</span>
 							</label>
 							<br>
 							<label>
 								<input type="radio" name="fontColor" value="different">
-								数字と前置、後置で色を分ける
-								<span lang="en">Use different color for the number, prefix, and suffix</span>
+								タイトルと数字と前置･後置で色を分ける
+								<span lang="en">Use different color for the Title, Number, Prefix/Suffix</span>
 							</label>
 							<br>
 							<div id="sameFontColor">
 								<span>色を選択
-									<span lang="en">choose color</span>:
+									<span lang="en">Color</span>:
 								</span>
 								<div id="fontColor"></div>
 							</div>
 							<div id="differentFontColor" style="display: none;">
+								<span>タイトルの色
+									<span lang="en">Title color</span>:
+								</span>
+								<div id="fontColorSuffix"></div>
+								<br>
 								<span>数字の色
 									<span lang="en">Number color</span>:
 								</span>
 								<div id="fontColorNumber"></div>
+								<br>
 								<span>前置の色
-									<span lang="en">Prefix color</span>:
+									<span lang="en">Prefix/Suffix color</span>:
 								</span>
 								<div id="fontColorPrefix"></div>
-								<span>後置の色
-									<span lang="en">Suffix color</span>:
-								</span>
-								<div id="fontColorSuffix"></div>
 							</div>
 						</span>
 					</li>
@@ -458,12 +466,7 @@
 					}
 				}
 			});
-			newPickr.on("hide", instance => {
-				instance.applyColor();
-				try {
-				console.log(instance);
-				}catch(error) {console.log(`${error.name}\n${error.stack}`)}
-			});
+			newPickr.on("hide", instance => instance.applyColor());
 			return newPickr;
 		};
 		const PICKR = {
