@@ -36,9 +36,8 @@
 			border-radius: 3px;
 		}
 
-		.pcr-button {
-			/* margin: 10px; */
-		}
+		/*.pcr-button {
+		}*/
 
 		* {
 			font-family: "originalFont";
@@ -431,7 +430,7 @@
 				el: "#" + id,
 				theme: "monolith",
 				default: defaultColor,
-				/*
+				// /*
 				swatches: [
 					"#000000",
 					"#ffffff",
@@ -440,17 +439,9 @@
 					"#0000ff",
 					"#ffff00",
 					"#00ffff",
-					"#ff00ff",
-					"#505050",
-					"#a0a0a0",
-					"#800000",
-					"#808000",
-					"#008000",
-					"#008080",
-					"#000080",
-					"#800080"
+					"#ff00ff"
 				],
-				*/
+				// */
 				components: {
 					// 主要なパネル部分
 					preview: true,  // 色プレビュー
@@ -466,6 +457,12 @@
 						save: true    // 保存ボタン
 					}
 				}
+			});
+			newPickr.on("hide", instance => {
+				instance.applyColor();
+				try {
+				console.log(instance);
+				}catch(error) {console.log(`${error.name}\n${error.stack}`)}
 			});
 			return newPickr;
 		};
