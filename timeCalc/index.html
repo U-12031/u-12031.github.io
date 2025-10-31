@@ -36,6 +36,10 @@
 			border-radius: 3px;
 		}
 
+		.pcr-button {
+			/* margin: 10px; */
+		}
+
 		* {
 			font-family: "originalFont";
 			font-size: 16px;
@@ -310,50 +314,56 @@
 						</label>
 						<br>
 						<label>前置
-							<span lang="en">Before-text</span>
+							<span lang="en">Prefix</span>
 							<input id="beforeText" placeholder="例) 約">
 						</label>
 						<br>
 						<label>後置
-							<span lang="en">After-text</span>
+							<span lang="en">Suffix</span>
 							<input id="afterText" placeholder="例) 年">
 						</label>
 					</li>
-					<li><span class="listTitle">数字<span lang="en">Number Settings</span></span>
+					<li><span class="listTitle">数字
+							<span lang="en">Number Settings</span>
+						</span>
 						<br>
 						<label>小数点以下の桁数
 							<span lang="en">Decimal places</span>
 							<input type="number" id="decimalPlace" placeholder="3" min="0" step="1" style="width: 50px;">
 						</label>
 						<br>
-						表示桁数未満の丸め処理の方法
-						<span lang="en">How to handle numbers below the display limit</span>
-						<br>
-						<label>
-							<input type="radio" name="rounding" value="roundOff" checked>
-							<img src="/0_data/images/roundDown.svg" width="30px">
-							<span>切り捨て<span lang="en">Round down</span></span>
-						</label>
-						<br>
-						<label>
-							<input type="radio" name="rounding" value="roundUp">
-							<img src="/0_data/images/roundOff.svg" width="30px">
-							<span>四捨五入<span lang="en">Round off</span></span>
-						</label>
-						<br>
-						<label>
-							<input type="radio" name="rounding" value="roundDown">
-							<img src="/0_data/images/roundUp.svg" width="30px">
-							<span>切り上げ<span lang="en">Round up</span></span>
-						</label>
-						</select>
+						<span>表示桁数未満の丸め処理の方法
+								<span lang="en">How to handle numbers below the display limit</span>
+							<br>
+							<label>
+								<input type="radio" name="rounding" value="roundOff" checked>
+								<img src="/0_data/images/roundDown.svg" width="30px">
+								<span>切り捨て
+									<span lang="en">Round down</span>
+								</span>
+							</label>
+							<br>
+							<label>
+								<input type="radio" name="rounding" value="roundUp">
+								<img src="/0_data/images/roundOff.svg" width="30px">
+								<span>四捨五入
+									<span lang="en">Round off</span>
+								</span>
+							</label>
+							<br>
+							<label>
+								<input type="radio" name="rounding" value="roundDown">
+								<img src="/0_data/images/roundUp.svg" width="30px">
+								<span>切り上げ<span lang="en">Round up</span></span>
+							</label>
+						</span>
 					</li>
 				</ul>
 			</div>
 			<div>
 				<ul>
-					<li><span class="listTitle">その他の設定
-						<span lang="en">Other Settings</span>
+					<li><span class="listTitle">文字の装飾
+						<span lang="en">Decoration of letters</span>
 					</span>
 						<br>
 						<label>
@@ -363,7 +373,44 @@
 							<input type="range" id="fontSizeRange" min="50" max="200" value="100" style="width: 200px;">
 							<input type="number" id="fontSize" min="1" value="100" style="width: 50px;">px
 						</label>
-						<div id="fontColor"></div>
+						<br>
+						<span>
+							<span>文字の色
+								<span lang="en">Font color</span>
+							</span>
+							<br>
+							<label>
+								<input type="radio" name="fontColor" checked>
+								前後置も同じ色にする
+								<span lang="en">Use the same color for Prefix and Suffix</span>
+							</label>
+							<br>
+							<label>
+								<input type="radio" name="fontColor">
+								数字と前置、後置で色を分ける
+								<span lang="en">Use different color for the number, prefix, and suffix</span>
+							</label>
+							<br>
+							<div id="sameFontColor">
+								<span>色を選択
+									<span lang="en">choose color</span>:
+								</span>
+								<div id="fontColor"></div>
+							</div>
+							<div id="differentFontColor" style="display: none;">
+								<span>数字の色
+									<span lang="en">Number color</span>:
+								</span>
+								<div id="fontColorNumber"></div>
+								<span>前置の色
+									<span lang="en">Prefix color</span>:
+								</span>
+								<div id="fontColorPrefix"></div>
+								<span>後置の色
+									<span lang="en">Suffix color</span>:
+								</span>
+								<div id="fontColorSuffix"></div>
+						</span>
 					</li>
 				</ul>
 			</div>
@@ -419,9 +466,12 @@
 			});
 			return newPickr;
 		};
-		
+
 		const pickr = {
 			fontColor: new PickrClass("fontColor", "#000000", true),
+			fontColorNumber: new PickrClass("fontColorNumber", "#000000", true),
+			fontColorPrefix: new PickrClass("fontColorPrefix", "#000000", true),
+			fontColorSuffix: new PickrClass("fontColorSuffix", "#000000", true)
 		};
 	</script>
 	<script>
@@ -503,6 +553,7 @@
 			el("beforeOutput").style.fontSize = this.value * 0.6 + "px";
 			el("afterOutput").style.fontSize = this.value * 0.6 + "px";
 		});
+		
 	</script>
 </body>
 </html>
