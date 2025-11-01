@@ -65,6 +65,10 @@
 		span[lang="en"] {
 			font-size: 13px;
 			
+			&:not(#doDisplayEnglish~span) {
+				display: none;
+			}
+			
 			&:not(#inputLabel>th>span:nth-of-type(2)) {
 				margin-left: 2px;
 			}
@@ -111,6 +115,11 @@
 			margin: 30px 20px;
 			border: 1px solid #444;
 			border-radius: 10px;
+		}
+
+		label:has(#doDisplayEnglish) {
+			display: block;
+			margin: 10px auto;
 		}
 
 		#inputField>fieldset {
@@ -234,6 +243,7 @@
 		<legend>入力欄
 			<span lang="en">Input field</span>
 		</legend>
+		<label><input type="checkbox" id="doDisplayEnglish">🇺🇸英語を表示する<span lang="en">Display English</span></label>
 		<fieldset id="inputDateTime">
 			<legend>年月日と時間</legend>
 			<table>
@@ -545,6 +555,19 @@
 		inputLimiter("sec");
 		inputLimiter("decimalPlace");
 		inputLimiter("fontSize", false);
+
+		el("doDisplayEnglish").addEventListener("input", function() {
+			const langElements = document.querySelectorAll("span[lang='en']:not(#doDisplayEnglish~span)");
+			if(this.checked) {
+				langElements.forEach(function(element) {
+					element.style.display = "inline";
+				});
+			} else {
+				langElements.forEach(function(element) {
+					element.style.display = "none";
+				});
+			};
+		});
 
 		el("fontSize").addEventListener("input", function() {
 			el("fontSizeRange").value = this.value;
