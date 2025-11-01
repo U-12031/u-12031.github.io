@@ -245,7 +245,9 @@
 		</legend>
 		<label><input type="checkbox" id="doDisplayEnglish">🇺🇸英語を表示する<span lang="en">Display English</span></label>
 		<fieldset id="inputDateTime">
-			<legend>年月日と時間</legend>
+			<legend>年月日と時間
+				<span lang="en">Date and Time</span>
+			</legend>
 			<table>
 				<tr id="inputLabel">
 					<th style="padding-right: 20px">
@@ -267,6 +269,7 @@
 						<label style="margin-bottom: 5px;">
 							<input id="autoFocus" type="checkbox" checked>
 							自動で次の入力欄に移す
+							<span lang="en">Auto move to the next field</span>
 						</label>
 						<br>
 						<label>
@@ -485,8 +488,8 @@
 			fontColorPrefix: new PickrClass("fontColorPrefix", "#000000", true),
 			fontColorSuffix: new PickrClass("fontColorSuffix", "#000000", true)
 		};
-	</script>
-	<script>
+		// ここまでPickr関連のコード
+
 		let isValid = {
 			all: true,
 			year: true,
@@ -596,6 +599,9 @@
 				}
 			});
 		});
+		// ここまで入力欄関連のコード
+
+		const DATE_TIME = new Date();
 	</script>
 </body>
 </html>
