@@ -601,6 +601,7 @@
 			});
 		});
 		// ここまで入力欄関連のコード
+	try {
 
 		const DEFAULT_DATE = {
 			year: 2000,
@@ -611,7 +612,7 @@
 			sec: 0
 		};
 		const MAX_VALUE = {
-			year: infinity,
+			year: Infinity,
 			month: 12,
 			day: 31,
 			hour: 24,
@@ -656,12 +657,10 @@
 		};
 		setTimeout(() => {
 			setInterval(function()  {
-				try {
 				getInputDate();
 				getNowDate();
 				el("titleOutput").innerHTML = `now: ${now.year}/${now.month}/${now.day} ${now.hour}:${now.min}:${now.sec}.${now.milliSec}`;
-				console.log(now.sec);
-				const TIME_LEFT = {
+				let timeLeft = {
 					year: inputDate.year - now.year,
 					month: inputDate.month - now.month,
 					day: inputDate.day - now.day,
@@ -669,19 +668,18 @@
 					min: inputDate.min - now.min,
 					sec: inputDate.sec - now.sec
 				};
-				for(let i=0;i<Object.keys(TIME_LEFT).length;i++) {
-					const key = Object.keys(TIME_LEFT)[i];
-					const element = TIME_LEFT[key];
+				for(let i=0;i<Object.keys(timeLeft).length;i++) {
+					const key = Object.keys(timeLeft)[i];
 					// keyが"year"のときも考慮しなきゃ
-					if(element < 0) {
-						TIME_LEFT[Object.keys(TIME_LEFT)[i-1]] -= 1;
-						element += Object.values(MAX_VALUE)[i]
+					if(timeLeft[key] < 0) {
+						timeLeft[Object.keys(timeLeft)[i-1]] -= 1;
+						timeLeft[key] += Object.values(MAX_VALUE)[i]
 					};
 				};
-				el("numberOutput").innerText = TIME_LEFT.year + "年" + TIME_LEFT.month + "月" + TIME_LEFT.day + "日 " + TIME_LEFT.hour + "時" + TIME_LEFT.min + "分" + TIME_LEFT.sec + "秒";
-			}catch(error) {console.log(`${error.name}\n${error.stack}`)};
+				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "月" + timeLeft.day + "日 " + timeLeft.hour + "時" + timeLeft.min + "分" + timeLeft.sec + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
+	}catch(error) {console.log(`${error.name}\n${error.stack}`)};
 	</script>
 </body>
 </html>
