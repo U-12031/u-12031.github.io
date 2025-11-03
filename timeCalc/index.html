@@ -437,6 +437,7 @@
 			</div>
 		</fieldset>
 	</fieldset>
+	<!-- アイデア　数字が変わるたびにすこし数字たちが大きくなるアニメーションをする ON/OFF、大きくなる割合、時間 -->
 	<script>
 		function el(id) {return document.getElementById(id)};
 		/** 新しいPickrを作成します。
@@ -601,7 +602,86 @@
 		});
 		// ここまで入力欄関連のコード
 
-		const DATE_TIME = new Date();
+		const DEFAULT_DATE = {
+			year: 2000,
+			month: 1,
+			day: 1,
+			hour: 0,
+			min: 0,
+			sec: 0
+		};
+		const MAX_VALUE = {
+			year: infinity,
+			month: 12,
+			day: 31,
+			hour: 24,
+			min: 60,
+			sec: 60
+		}
+		let inputDate = {
+			year: el("year").value ? el("year").value : DEFAULT_DATE.year,
+			month: el("month").value ? el("month").value : DEFAULT_DATE.month,
+			day: el("day").value ? el("day").value : DEFAULT_DATE.day,
+			hour: el("hour").value ? el("hour").value : DEFAULT_DATE.hour,
+			min: el("min").value ? el("min").value : DEFAULT_DATE.min,
+			sec: el("sec").value ? el("sec").value : DEFAULT_DATE.sec
+		}
+		let nowDate = new Date();
+		let now = {
+			milliSec: nowDate.getMilliseconds(),
+			sec: nowDate.getSeconds(),
+			min: nowDate.getMinutes(),
+			hour: nowDate.getHours(),
+			day: nowDate.getDate(),
+			month: nowDate.getMonth() + 1,
+			year: nowDate.getFullYear()
+		};
+		function getInputDate() {
+			inputDate.year = el("year").value ? el("year").value : DEFAULT_DATE.year;
+			inputDate.month = el("month").value ? el("month").value : DEFAULT_DATE.month;
+			inputDate.day = el("day").value ? el("day").value : DEFAULT_DATE.day;
+			inputDate.hour = el("hour").value ? el("hour").value : DEFAULT_DATE.hour;
+			inputDate.min = el("min").value ? el("min").value : DEFAULT_DATE.min;
+			inputDate.sec = el("sec").value ? el("sec").value : DEFAULT_DATE.sec;
+		}
+		function getNowDate() {
+			nowDate = new Date();
+			now.milliSec = nowDate.getMilliseconds();
+			now.sec = nowDate.getSeconds();
+			now.min = nowDate.getMinutes();
+			now.hour = nowDate.getHours();
+			now.day = nowDate.getDate();
+			now.month = nowDate.getMonth() + 1;
+			now.year = nowDate.getFullYear();
+		};
+		setTimeout(() => {
+			setInterval(function()  {
+				try {
+				getInputDate();
+				getNowDate();
+				el("titleOutput").innerHTML = `now: ${now.year}/${now.month}/${now.day} ${now.hour}:${now.min}:${now.sec}.${now.milliSec}`;
+				console.log(now.sec);
+				const TIME_LEFT = {
+					year: inputDate.year - now.year,
+					month: inputDate.month - now.month,
+					day: inputDate.day - now.day,
+					hour: inputDate.hour - now.hour,
+					min: inputDate.min - now.min,
+					sec: inputDate.sec - now.sec
+				};
+				for(let i=0;i<Object.keys(TIME_LEFT).length;i++) {
+					const key = Object.keys(TIME_LEFT)[i];
+					const element = TIME_LEFT[key];
+					// keyが"year"のときも考慮しなきゃ
+					if(element < 0) {
+						TIME_LEFT[Object.keys(TIME_LEFT)[i-1]] -= 1;
+						element += Object.values(MAX_VALUE)[i]
+					};
+				};
+				el("numberOutput").innerText = TIME_LEFT.year + "年" + TIME_LEFT.month + "月" + TIME_LEFT.day + "日 " + TIME_LEFT.hour + "時" + TIME_LEFT.min + "分" + TIME_LEFT.sec + "秒";
+			}catch(error) {console.log(`${error.name}\n${error.stack}`)};
+			}, 1000);
+		},1000 - now.milliSec);
 	</script>
 </body>
 </html>
