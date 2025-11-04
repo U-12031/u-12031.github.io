@@ -672,11 +672,36 @@
 					const key = Object.keys(timeLeft)[i];
 					// keyが"year"のときも考慮しなきゃ
 					if(timeLeft[key] < 0) {
-						timeLeft[Object.keys(timeLeft)[i-1]] -= 1;
-						timeLeft[key] += Object.values(MAX_VALUE)[i]
+						switch(key) {
+							case "year":
+								// 年の場合は特に処理しない
+								break;
+							case "day":
+								timeLeft.month -= 1;
+								switch(timeLeft.month+1) { // 月によって1ヶ月に何日あるかが違うのでその処理
+									case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+										timeLeft.day += 31;
+										break;
+									case 4: case 6: case 9: case 11:
+										timeLeft.day += 30;
+										break;
+									case 2:
+										// 閏年の処理
+										if(now.year+1 % 4 == 0) {
+											timeLeft.day += 29;
+										} else {
+											timeLeft.day += 28;
+										};
+										break;
+								};
+								break;
+							default:
+								timeLeft[Object.keys(timeLeft)[i-1]] -= 1;
+								timeLeft[key] += Object.values(MAX_VALUE)[i]
+						}
 					};
 				};
-				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "月" + timeLeft.day + "日 " + timeLeft.hour + "時" + timeLeft.min + "分" + timeLeft.sec + "秒";
+				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時" + timeLeft.min + "分" + timeLeft.sec + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
 	}catch(error) {console.log(`${error.name}\n${error.stack}`)};
