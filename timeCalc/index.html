@@ -419,17 +419,17 @@
 								<span>タイトルの色
 									<span lang="en">Title color</span>:
 								</span>
-								<div id="fontColorSuffix"></div>
+								<div id="fontColorOfSuffix"></div>
 								<br>
 								<span>数字の色
 									<span lang="en">Number color</span>:
 								</span>
-								<div id="fontColorNumber"></div>
+								<div id="fontColorOfNumber"></div>
 								<br>
 								<span>前置の色
 									<span lang="en">Prefix/Suffix color</span>:
 								</span>
-								<div id="fontColorPrefix"></div>
+								<div id="fontColorOfPrefixSuffix"></div>
 							</div>
 						</span>
 					</li>
@@ -680,17 +680,17 @@
 								timeLeft.month -= 1;
 								switch(timeLeft.month+1) { // 月によって1ヶ月に何日あるかが違うのでその処理
 									case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-										timeLeft.day += 31;
+										timeLeft.day += 31; // 1,3,5,7,8,10,12月は31日
 										break;
 									case 4: case 6: case 9: case 11:
-										timeLeft.day += 30;
+										timeLeft.day += 30; // 4,6,9,11月は30日
 										break;
 									case 2:
-										// 閏年の処理
+										// 2月の場合の閏年の処理
 										if(now.year+1 % 4 == 0) {
-											timeLeft.day += 29;
+											timeLeft.day += 29; // うるう年の2月は29日
 										} else {
-											timeLeft.day += 28;
+											timeLeft.day += 28; // うるう年でない2月は28日
 										};
 										break;
 								};
