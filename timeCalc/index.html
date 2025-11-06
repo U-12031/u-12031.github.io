@@ -697,8 +697,9 @@
 								break;
 							default:
 								timeLeft[Object.keys(timeLeft)[i-1]] -= 1;
-								timeLeft[key] += Object.values(MAX_VALUE)[i]
-						}
+								timeLeft[key] += Object.values(MAX_VALUE)[i];
+								break;
+						};
 					};
 				};
 				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時" + timeLeft.min + "分" + timeLeft.sec + "秒";
