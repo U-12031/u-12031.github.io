@@ -38,6 +38,7 @@
 
 		div:has(> .pcr-button) {
 			display: inline-block;
+			margin: 3px;
 		}
 		
 		.pcr-button {
@@ -60,7 +61,7 @@
 		input,select {
 			border-radius: 3px;
 			border: .5px solid #666;
-			margin: 1.5px auto;
+			margin-top: 1.5px initial;
 		}
 
 		span[lang="en"] {
@@ -349,7 +350,7 @@
 							表示する数字の単位
 							<span lang="en">Unit of number</span>
 							<br>
-							<select name="numType" id="numTypeSelect">
+							<select id="numTypeSelect">
 								<option value="all" selected>そのまま</option>
 								<option value="year">年</option>
 								<option value="month">月</option>
