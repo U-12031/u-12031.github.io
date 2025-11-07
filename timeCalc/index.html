@@ -435,7 +435,7 @@
 								<span>タイトルの色
 									<span lang="en">Title color</span>:
 								</span>
-								<div id="fontColorOfSuffix"></div>
+								<div id="fontColorOfTitle"></div>
 								<br>
 								<span>数字の色
 									<span lang="en">Number color</span>:
@@ -453,6 +453,7 @@
 			</div>
 		</fieldset>
 	</fieldset>
+	<div id="testPickr"></div>
 	<!-- アイデア　数字が変わるたびにすこし数字たちが大きくなるアニメーションをする ON/OFF、大きくなる割合、時間 -->
 	<script>
 		function el(id) {return document.getElementById(id)};
@@ -468,7 +469,6 @@
 				el: "#" + id,
 				theme: "monolith",
 				default: defaultColor,
-				// /*
 				swatches: [
 					"#000000",
 					"#ffffff",
@@ -479,7 +479,6 @@
 					"#00ffff",
 					"#ff00ff"
 				],
-				// */
 				components: {
 					// 主要なパネル部分
 					preview: true,  // 色プレビュー
@@ -501,11 +500,11 @@
 		};
 		const PICKR = {
 			fontColor: new PickrClass("fontColor", "#000000", true),
-			fontColorNumber: new PickrClass("fontColorNumber", "#000000", true),
-			fontColorPrefix: new PickrClass("fontColorPrefix", "#000000", true),
-			fontColorSuffix: new PickrClass("fontColorSuffix", "#000000", true)
+			fontColorOfTitle: new PickrClass("fontColorOfTitle", "#000000", true),
+			fontColorOfNumber: new PickrClass("fontColorOfNumber", "#000000", true),
+			fontColorOfPrefixSuffix: new PickrClass("fontColorOfPrefixSuffix", "#000000", true)
 		};
-		// ここまでPickr関連のコード
+	// ここまでPickr関連のコード
 
 		let isValid = {
 			all: true,
