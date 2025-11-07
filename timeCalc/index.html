@@ -57,9 +57,10 @@
 
 		h1 {font-size: 30px;}
 
-		input {
-			border: .5px solid #666;
+		input,select {
 			border-radius: 3px;
+			border: .5px solid #666;
+			margin: 1.5px auto;
 		}
 
 		span[lang="en"] {
@@ -215,7 +216,6 @@
 			align-items: center;
 			width: 220px;
 			padding: 2px 5px;
-			border-radius: 5px;
 			margin: 1px auto;
 		}
 
@@ -344,6 +344,21 @@
 					<li><span class="listTitle">数字
 							<span lang="en">Number Settings</span>
 						</span>
+						<br>
+						<label>
+							表示する数字の単位
+							<span lang="en">Unit of number</span>
+							<br>
+							<select name="numType" id="numTypeSelect">
+								<option value="all" selected>そのまま</option>
+								<option value="year">年</option>
+								<option value="month">月</option>
+								<option value="day">日</option>
+								<option value="hour">時</option>
+								<option value="min">分</option>
+								<option value="sec">秒</option>
+							</select>
+						</label>
 						<br>
 						<label>小数点以下の桁数
 							<span lang="en">Decimal places</span>
