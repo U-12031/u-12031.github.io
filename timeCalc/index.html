@@ -616,7 +616,6 @@
 			});
 		});
 		// ここまで入力欄関連のコード
-	try {
 
 		const DEFAULT_DATE = {
 			year: 2025,
@@ -720,7 +719,6 @@
 				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時" + timeLeft.min + "分" + timeLeft.sec + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
-	}catch(error) {console.log(`${error.name}\n${error.stack}`)};
 	</script>
 </body>
 </html>
