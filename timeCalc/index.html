@@ -352,11 +352,11 @@
 							<br>
 							<select id="numTypeSelect">
 								<option value="all" selected>そのまま</option>
-								<option value="year">年</option>
-								<option value="month">月</option>
-								<option value="day">日</option>
-								<option value="hour">時</option>
-								<option value="min">分</option>
+								<option value="0">年</option>
+								<option value="1">月</option>
+								<option value="2">日</option>
+								<option value="3">時</option>
+								<option value="4">分</option>
 								<option value="sec">秒</option>
 							</select>
 						</label>
@@ -521,6 +521,10 @@
 		 * @return {HTMLElement} 指定されたIDを持つ要素
 		 */
 		function el(id) {return document.getElementById(id)};
+		/** この関数は、指定された名前を持つラジオボタンの中で選択されているものの値を取得します。
+		 * @param {string} name 取得したいラジオボタンのname属性の値
+		 * @return {string|null} 選択されているラジオボタンの値、または選択されていない場合はnull
+		 */
 		function nameValue(name) {
 			const checkedEl = document.querySelector('input[name="' + name + '"]:checked');
 			return checkedEl ? checkedEl.value : null;
@@ -651,6 +655,7 @@
 			month: nowDate.getMonth() + 1,
 			year: nowDate.getFullYear()
 		};
+		/** この関数は、入力欄から日付と時間の情報を取得し、inputDateオブジェクトに格納します。 */
 		function getInputDate() {
 			inputDate.year = el("year").value ? el("year").value : DEFAULT_DATE.year;
 			inputDate.month = el("month").value ? el("month").value : DEFAULT_DATE.month;
@@ -658,7 +663,8 @@
 			inputDate.hour = el("hour").value ? el("hour").value : DEFAULT_DATE.hour;
 			inputDate.min = el("min").value ? el("min").value : DEFAULT_DATE.min;
 			inputDate.sec = el("sec").value ? el("sec").value : DEFAULT_DATE.sec;
-		}
+		};
+		/** この関数は、現在の日付と時間の情報を取得し、nowオブジェクトに格納します。 */
 		function getNowDate() {
 			nowDate = new Date();
 			now.milliSec = nowDate.getMilliseconds();
@@ -716,7 +722,11 @@
 						};
 					};
 				};
-				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時" + timeLeft.min + "分" + timeLeft.sec + "秒";
+				// const;
+				for(let i=0;i<Object.keys(timeLeft).length;i++) { // もういっちょ
+					// if()
+				};
+				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時間" + timeLeft.min + "分" + timeLeft.sec + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
 	</script>
