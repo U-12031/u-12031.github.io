@@ -730,9 +730,12 @@
 							timeLeft[i+1] += timeLeft[i] * Object.values(MAX_VALUE)[i];
 							timeLeft[i] = 0;
 						} else if(i == NUM_TYPE) {
-							result[0] = BigInt(timeLeft[i]) + BigInt(timeLeft[i-1])
-						
-						}
+							if(i == 0) {
+								result[0] = BigInt(timeLeft[i]);
+							} else {
+								result[0] = BigInt(timeLeft[i]) + BigInt(timeLeft[i-1]);
+							};
+						};
 					};
 				} else {
 					
