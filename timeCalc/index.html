@@ -722,10 +722,14 @@
 						};
 					};
 				};
-				// const;
-				for(let i=0;i<Object.keys(timeLeft).length;i++) { // もういっちょ
-					// if()
-				};
+				const NUM_TYPE = el("numTypeSelect").value;
+				if(NUM_TYPE != "all") {
+					for(let i=0;i<Object.keys(timeLeft).length;i++) { // もういっちょ
+						// if()
+					};
+				} else {
+					
+				}
 				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時間" + timeLeft.min + "分" + timeLeft.sec + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
