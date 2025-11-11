@@ -724,13 +724,20 @@
 				};
 				const NUM_TYPE = el("numTypeSelect").value;
 				if(NUM_TYPE != "all") {
+					let result = [0n,0]; // 整数部分と小数部分
 					for(let i=0;i<Object.keys(timeLeft).length;i++) { // もういっちょ
-						// if()
+						if(i < NUM_TYPE) {
+							timeLeft[i+1] += timeLeft[i] * Object.values(MAX_VALUE)[i];
+							timeLeft[i] = 0;
+						} else if(i == NUM_TYPE) {
+							result[0] = BigInt(timeLeft[i]) + BigInt(timeLeft[i-1])
+						
+						}
 					};
 				} else {
 					
 				}
-				el("numberOutput").innerText = timeLeft.year + "年" + timeLeft.month + "か月" + timeLeft.day + "日 " + timeLeft.hour + "時間" + timeLeft.min + "分" + timeLeft.sec + "秒";
+				el("numberOutput").innerText = timeLeft[0] + "年" + timeLeft[1] + "か月" + timeLeft[2] + "日 " + timeLeft[3] + "時間" + timeLeft[4] + "分" + timeLeft[5] + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
 	</script>
