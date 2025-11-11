@@ -680,44 +680,44 @@
 				getInputDate();
 				getNowDate();
 				el("titleOutput").innerHTML = `now: ${now.year}/${now.month}/${now.day} ${now.hour}:${now.min}:${now.sec}.${now.milliSec}`;
-				let timeLeft = {
-					year: inputDate.year - now.year,
-					month: inputDate.month - now.month,
-					day: inputDate.day - now.day,
-					hour: inputDate.hour - now.hour,
-					min: inputDate.min - now.min,
-					sec: inputDate.sec - now.sec
-				};
-				for(let i=0;i<Object.keys(timeLeft).length;i++) {
-					const key = Object.keys(timeLeft)[i];
-					// keyが"year"のときも考慮しなきゃ
-					if(timeLeft[key] < 0) {
-						switch(key) {
-							case "year":
+				let timeLeft = [
+					inputDate.year - now.year,
+					inputDate.month - now.month,
+					inputDate.day - now.day,
+					inputDate.hour - now.hour,
+					inputDate.min - now.min,
+					inputDate.sec - now.sec
+				];
+				for(let i=0;i<timeLeft.length;i++) {
+					// "year"のときも考慮しなきゃ
+					if(timeLeft[i] < 0) {
+						switch(i) {
+							case 0:
 								// 年の場合は特に処理しない
 								break;
-							case "day":
-								timeLeft.month -= 1;
-								switch(timeLeft.month+1) { // 月によって1ヶ月に何日あるかが違うのでその処理
+							case 2:
+								timeLeft[1] -= 1;
+								switch(timeLeft[1]+1) { // 月によって1ヶ月に何日あるかが違うのでその処理
 									case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-										timeLeft.day += 31; // 1,3,5,7,8,10,12月は31日
+										timeLeft[2] += 31; // 1,3,5,7,8,10,12月は31日
 										break;
 									case 4: case 6: case 9: case 11:
-										timeLeft.day += 30; // 4,6,9,11月は30日
+										timeLeft[2] += 30; // 4,6,9,11月は30日
 										break;
 									case 2:
-										// 2月の場合の閏年の処理
+										// アップデートするときに作る予定 2月の場合の閏年の処理
+										/*
 										if(now.year+1 % 4 == 0) {
-											timeLeft.day += 29; // うるう年の2月は29日
-										} else {
-											timeLeft.day += 28; // うるう年でない2月は28日
-										};
+											timeLeft[2] += 29; // うるう年の2月は29日
+										} else {*/
+											timeLeft[2] += 28; // うるう年でない2月は28日
+										// };
 										break;
 								};
 								break;
 							default:
-								timeLeft[Object.keys(timeLeft)[i-1]] -= 1;
-								timeLeft[key] += Object.values(MAX_VALUE)[i];
+								timeLeft[i-1] -= 1;
+								timeLeft[i] += Object.values(MAX_VALUE)[i];
 								break;
 						};
 					};
