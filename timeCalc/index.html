@@ -665,6 +665,7 @@
 			inputDate.sec = el("sec").value ? el("sec").value : DEFAULT_DATE.sec;
 		};
 		/** この関数は、現在の日付と時間の情報を取得し、nowオブジェクトに格納します。 */
+		/*
 		function getNowDate() {
 			nowDate = new Date();
 			now.milliSec = nowDate.getMilliseconds();
@@ -711,6 +712,7 @@
 											if(now.year+1 % 4 == 0) {
 												timeLeft[2] += 29; // うるう年の2月は29日
 											} else {*/
+											/*
 												timeLeft[2] += 28; // うるう年でない2月は28日
 											// };
 											break;
@@ -724,6 +726,8 @@
 						};
 					};
 				};
+				*/
+				/*
 				const NUM_TYPE = el("numTypeSelect").value;
 				if(NUM_TYPE != "all") {
 					let result = [0n,0]; // 整数部分と小数部分
@@ -745,6 +749,7 @@
 				el("numberOutput").innerText = timeLeft[0] + "年" + timeLeft[1] + "か月" + timeLeft[2] + "日 " + timeLeft[3] + "時間" + timeLeft[4] + "分" + timeLeft[5] + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
+		*/
 	</script>
 </body>
 </html>
