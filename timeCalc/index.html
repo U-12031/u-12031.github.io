@@ -707,22 +707,22 @@
 										// };
 										break;
 										};
-									default:
-										timeLeft[i-1] -= 1;
-										timeLeft[i] += MAX_VALUE[i];
-										break;
-								};
+									};
+							default:
+								timeLeft[i-1] -= 1;
+								timeLeft[i] += MAX_VALUE[i];
+								break;
 						};
 					};
 				};
-				const NUM_TYPE = el("numTypeSelect").value;
-				if(NUM_TYPE != "all") {
+				const numType = el("numTypeSelect").value;
+				if(numType != "all") {
 					let result = [0n,0]; // 整数部分と小数部分
 					for(let i=0;i<Object.keys(timeLeft).length;i++) { // もういっちょ
 						if(i < NUM_TYPE) {
 							timeLeft[i+1] += timeLeft[i] * MAX_VALUE[i+1];
 							timeLeft[i] = 0;
-						} else if(i == NUM_TYPE) {
+						} else if(i == numType) {
 							if(i == 0) {
 								result[0] = BigInt(timeLeft[i]);
 							} else {
