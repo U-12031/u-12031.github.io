@@ -713,14 +713,16 @@
 										// };
 										break;
 										};
-									default:
-										timeLeft[i-1] -= 1;
-										timeLeft[i] += Object.values(MAX_VALUE)[i];
-										break;
 								};
+							default:
+								timeLeft[i-1] -= 1;
+								timeLeft[i] += Object.values(MAX_VALUE)[i];
+								console.log(Object.values(MAX_VALUE)[i]);
+								break;
 						};
 					};
 				};
+				/*
 				const NUM_TYPE = el("numTypeSelect").value;
 				if(NUM_TYPE != "all") {
 					let result = [0n,0]; // 整数部分と小数部分
@@ -739,6 +741,7 @@
 				} else {
 					
 				}
+				*/
 				el("numberOutput").innerText = timeLeft[0] + "年" + timeLeft[1] + "か月" + timeLeft[2] + "日 " + timeLeft[3] + "時間" + timeLeft[4] + "分" + timeLeft[5] + "秒";
 			}, 1000);
 		},1000 - now.milliSec);
