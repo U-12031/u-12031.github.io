@@ -630,6 +630,7 @@
 			sec: 0
 		};
 		const MAX_VALUE = [Infinity, 12, 31, 24, 60, 60];
+		const DIVIDE_VALUE = [31536000, 2678400, 86400, 3600, 60, 0];
 		let inputDate = {
 			year: el("year").value ? el("year").value : DEFAULT_DATE.year,
 			month: el("month").value ? el("month").value : DEFAULT_DATE.month,
@@ -719,9 +720,13 @@
 				if(numType != "all") {
 					let result = [0n,0]; // 整数部分と小数部分
 					for(let i=0;i<Object.keys(timeLeft).length;i++) { // もういっちょ
-						if(i < NUM_TYPE) {
-							timeLeft[i+1] += timeLeft[i] * MAX_VALUE[i+1];
-							timeLeft[i] = 0;
+						if(i != numType){
+							if(i != Object.keys(timeLeft).length - 1) {
+								timeLeft[i+1] += timeLeft[i] * MAX_VALUE[i+1];
+								timeLeft[i] = 0;
+							} else {
+								result[1] = timeLeft[i] / DIVIDE_VALUE[numType];
+							};
 						} else if(i == numType) {
 							if(i == 0) {
 								result[0] = BigInt(timeLeft[i]);
@@ -730,6 +735,7 @@
 							};
 						};
 					};
+					el("numberOutput").innerText = result[0] + "." + result[1];
 				} else {
 					el("numberOutput").innerText = timeLeft[0] + "年" + timeLeft[1] + "か月" + timeLeft[2] + "日 " + timeLeft[3] + "時間" + timeLeft[4] + "分" + timeLeft[5] + "秒";
 				}
