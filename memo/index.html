@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>超シンプルなメモ</title>
+
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1 id="title">高機能メモ</h1>
+	<details open id="pageOverview"><summary>概要</summary>
+		<p>
+			高機能なメモ
+		</p>
+		<p>
+			メモをいくらでも追加できる・保存するか選べる・クリップボードにコピーできる・文字数カウント・検索、置換機能・URLの一覧をリンク化して表示・NOデータ送信・あとページ自体が軽い
+		</p>
+		<blockquote>検索・置換のコツ:<br>
+			<code>[改行]</code>で改行、<code>[インデント]</code>でインデントを検索・置換するよ<br>
+			何か文字を入れないと検索・置換できないよ<br>
+			「置換後」に<code>[削除]</code>を入れると「置換」の文字は全て削除されるよ
+		</blockquote>
+	</details>
+	<div id="break"></div>
+	<div id="memosParent">
+		<details open class="memo" id="memo1">
+			<summary class="memoTitle">メモ1</summary>
+			<label>タイトル:<textarea class="memoTitleInput" rows="1" placeholder="メモ1"></textarea></label>
+			|
+			<label><input type="checkbox" class="isSave" checked>保存する</label></label>
+			|
+			<button class="copyBt">全てコピー</button>
+			|
+			<span><span class="charCount">0</span>文字</span>
+			|
+			<span>
+				<label>検索・置換
+					<input class="replaceFrom" placeholder="検索・置換">
+				</label>
+				<button class="searchBt" disabled>検索する</button>
+				<label>→
+					<input class="replaceTo" placeholder="(置換用)置換後">
+				</label>
+				<button class="replaceBt" disabled>置換する</button>
+				<span class="replaceResult"></span>
+			</span>
+			|
+			<span class="deleteMemoParent">
+				<button class="deleteMemoBt">メモを削除</button>
+				<dialog class="deleteMemoModal" closedBy="any">
+					<p>メモを削除しますか?</p>
+					<button class="deleteMemoCancelBt">キャンセル</button>
+					<button class="deleteMemoYesBt">削除する</button>
+				</dialog>
+			</span>
+			<textarea class="body" name="memoBody1"></textarea>
+			URLたち
+			<ul class="URLs">
+			</ul>
+		</details>
+	</div>
+	<button id="addMemoBt">メモを追加</button>
+
+	<script src="script.js"></script>
+</body>
+</html>

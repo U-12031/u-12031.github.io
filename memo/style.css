@@ -1,0 +1,105 @@
+#title {margin-bottom: 5px;}
+
+details {margin-bottom: 10px;}
+
+blockquote {
+	font-size: .8em;
+	width: 390px;
+	padding: 5px;
+	background-color: #def;
+}
+
+code {
+	background-color: #eee;
+	padding: 3px;
+	border-radius: 4px;
+}
+
+button {
+	padding: 1px 2px;
+	background-color: #f8ffff;
+	border: 1.5px solid #000;
+	border-radius: 4px;
+	box-shadow: 2px 2px #0005;
+	translate: 0 -1px;
+	cursor: pointer;
+
+	&:disabled {
+		color: black;
+		filter: brightness(.8);
+		cursor: not-allowed;
+	}
+}
+
+#pageOverview * {margin: 0;}
+
+#break {
+	width: calc(100% - 20px);
+	height: 1px;
+	margin: 10px 0;
+	background-color: #ccc;
+}
+
+summary {cursor: pointer;}
+
+details.memo>summary:not(#pageOverview summary) {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+textarea.memoTitleInput {
+	margin: 0;
+	margin-left: 5px;
+	resize: horizontal;
+	width: 120px;
+	vertical-align: top;
+	font-size: 1rem;
+}
+
+input.replaceFrom, input.replaceTo {
+	width: 100px;
+}
+
+span.replaceResult {
+	background-color: #ffe;
+}
+
+span.deleteMemoParent {position: relative;}
+
+button.deleteMemoBt, button.deleteMemoYesBt {
+	background-color: #f66;
+	color: #fff;
+}
+
+dialog.deleteMemoModal {
+	position: absolute;
+	bottom: calc(100% + 7px);
+	left: 50%;
+	translate: -50% 0;
+	width: 150px;
+	padding: 5px;
+	text-align: center;
+	font-size: .9em;
+	border: 2px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 5px #0005;
+	background-color: #fff8f8;
+}
+
+button.deleteMemoCancelBt, button.deleteMemoYesBt {
+	margin: 0 2px;
+}
+
+textarea.body {
+	display: block;
+	margin-top: 3px;
+	width: calc(100vw - 20px);
+	height: 50px;
+}
+
+#addMemoBt {
+	font-size: 1.1em;
+	box-shadow: 3px 3px #0005;
+	margin-bottom: 5px;
+}
