@@ -169,12 +169,14 @@ document.addEventListener("DOMContentLoaded", () => { // ロード時にCookie�
 	if(document.cookie != "") {
 		const cookies = document.cookie.split("; ");
 		cookies.forEach(cookie => {
+			if(cookie.slice(0, 4) != "memo") return;
 			const [cookieName, cookieValue] = cookie.split("=");
-			const isTitleCookie = Boolean(cookieName.split("Title")[1]); // キーに"Title"を含むか
+			const isTitleCookie = Boolean(cookieName.split("Title")[1] === ""); // キーに"Title"を含むか
+			let cookieMemoNum;
 			if(isTitleCookie) {
-				const cookieMemoNum = Number(cookieName.split("Title")[1].slice(4)); // "Title"の前の"memo"を除いた数字
+				cookieMemoNum = Number(cookieName.split("Title")[0].slice(4)); // "Title"の前の"memo"を除いた数字
 			} else {
-				const cookieMemoNum = cookieName.slice(4); // "memo"を除いた数字
+				cookieMemoNum = cookieName.slice(4); // "memo"を除いた数字
 			};
 			if(cookieMemoNum > memoCount) {
 				for(let i=memoCount; i<cookieMemoNum; i++) addMemo();
