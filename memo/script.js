@@ -130,12 +130,16 @@ const ELEMENT_EVENTS = {
 		query(`#memo${memoNum} .replaceBt`).disabled = (el.value == "") || (replaceFrom == "");
 	},
 	replaceBt: (el, memoNum) => {
-		const replaceFrom = query(`#memo${memoNum} .replaceFrom`).value;
-		const replaceTo = query(`#memo${memoNum} .replaceTo`).value;
+		const replaceFrom = query(`#memo${memoNum} .replaceFrom`).value.replaceAll("[改行]", "\n").replaceAll("[タブ]", "\t");
+		const replaceTo = query(`#memo${memoNum} .replaceTo`).value.replaceAll("[改行]", "\n").replaceAll("[タブ]", "\t").replaceAll("[削除]", "");
 		const hitTimes = query(`#memo${memoNum} .body`).value.split(replaceFrom).length - 1;
 		query(`#memo${memoNum} .body`).value = query(`#memo${memoNum} .body`).value.replaceAll(replaceFrom, replaceTo);
 		query(`#memo${memoNum} .charCount`).innerHTML = query(`#memo${memoNum} .body`).value.length;
-		query(`#memo${memoNum} .replaceResult`).innerHTML = `${hitTimes}個の「${replaceFrom}」を「${replaceTo}」に置換しました`;
+		if(replaceTo === "") {
+			query(`#memo${memoNum} .replaceResult`).innerHTML = `${hitTimes}個の「${replaceFrom}」を削除しました`;
+		} else {
+			query(`#memo${memoNum} .replaceResult`).innerHTML = `${hitTimes}個の「${replaceFrom}」を「${replaceTo}」に置換しました`;
+		}
 	},
 	deleteMemoBt: (el, memoNum) => {
 		query(`#memo${memoNum} .deleteMemoModal`).style.display = "block";
@@ -155,7 +159,7 @@ const ELEMENT_EVENTS = {
 			cookieSave(`memo${memoNum}`, el.value);
 		}
 		// 正規表現からURLを探し、.URLsに追加する
-		const URLs = el.value.match(/https?:\/\/[\w\-]+\.[\w\-]+[\w/:%#\$&\?\(\)~\.=\+\-]*/g);
+		const URLs = el.value.match(/https?:\/\/\S+\.\S+/g);
 		query(`#memo${memoNum} .URLs`).innerHTML = "";
 		if(URLs) {
 			URLs.forEach(URL => {
